@@ -1,0 +1,5 @@
+# 분석·실험용 최소 의존성 (UTF-8). CPU만 쓴다.
+# 설치: python3 -m venv .venv && .venv/bin/pip install -r requirements-analysis.txt
+pandas>=2.0
+numpy>=1.24
+pytest>=7

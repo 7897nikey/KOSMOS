@@ -95,3 +95,6 @@ reexperiment_20261009/
 research/design_v2_20261112/team_packages/
 tmp/
 .harness/
+
+# 팀 공용 에이전트 안내는 추적한다 (개인 CLAUDE.md는 계속 무시)
+!/AGENTS.md

@@ -7,6 +7,20 @@ LLM에 인구통계 페르소나를 프롬프트로 부여해 한국 여론조�
 > 실험 설계·조건·상태는 [`research/design_v2_20261112/DESIGN.md`](research/design_v2_20261112/DESIGN.md)가 기준이다.
 > 아래 "v2 실험 환경"만 읽어도 실행할 수 있다. 맨 아래 **v1**(초기 구상, Colab GPU 기반)은 접어 두었다.
 
+## 빠른 시작 (CPU만, 5분)
+
+```bash
+git clone <이 레포> && cd KOSMOS
+python3 -m venv .venv && .venv/bin/pip install -r requirements-analysis.txt
+.venv/bin/python -m pytest -q tests/test_silicon.py                 # 환경 점검
+.venv/bin/python experiments/20261115-baseline-calibration/run.py   # 기준선 재현
+```
+
+- 지금까지 모은 응답은 한 장의 표 `research/design_v2_20261112/dataset/kosmos_long.csv.gz`에 들어 있다. 모델 × 페르소나 × 문항 × 보기 단위이고, 사람 분포가 같이 붙어 있다.
+- `silicon.py`(pandas·numpy)로 보정과 평가를 수 초 안에 돌린다. API 키·GPU·KGSS 원자료는 필요 없다.
+- 새 실험과 기록은 [`experiments/`](experiments/)에서 한다. 목록은 [`experiments/LOG.md`](experiments/LOG.md)에 있다.
+- **AI 에이전트에게 맡길 때**: 클론한 뒤 "AGENTS.md를 읽고 진행해줘"라고 하면 된다. 규칙(test 문항 비공개, 유료 API 금지, 기록 형식)은 [`AGENTS.md`](AGENTS.md)에 있다.
+
 ## 처음 읽는 사람용 요약
 
 **한 줄 요약**: LLM 3종에게 KGSS 2023의 246문항을 페르소나 없이, "한국 성인"으로,
