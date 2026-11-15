@@ -1,0 +1,40 @@
+{
+ "exaone": {
+  "files": [
+   "KOSMOS_EXAONE_결과_m2_정주희.zip",
+   "KOSMOS_EXAONE_결과_m3_허다교.zip",
+   "exaone_m1_p1.jsonl"
+  ],
+  "records": 213288
+ },
+ "deepseek": {
+  "files": [
+   "deepseek_ultrafast_p1.jsonl"
+  ],
+  "records": 295200
+ },
+ "haiku": {
+  "files": [
+   "haiku_p1.jsonl"
+  ],
+  "records": 295200
+ },
+ "k_per_prompt": {
+  "deepseek": {
+   "min": 100,
+   "median": 100.0,
+   "max": 100
+  },
+  "exaone": {
+   "min": 69,
+   "median": 72.0,
+   "max": 73
+  },
+  "haiku": {
+   "min": 100,
+   "median": 100.0,
+   "max": 100
+  }
+ },
+ "built_at": "2026-11-15T13:21:19"
+}
