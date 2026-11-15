@@ -3,6 +3,6 @@
  "author": "태우",
  "date": "2026-11-15",
  "question": "모델별로 프롬프트당 표본 수 k를 늘리면 보정 후 validation TVD가 얼마나 줄어드는가?",
- "status": "진행",
- "conclusion": ""
+ "status": "완료",
+ "conclusion": "k 50→90 감소 모두 0.01 미만(EXAONE L0 0.008). Haiku는 k=5부터 평평, 모델 순서 불변"
 }

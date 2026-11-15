@@ -1,0 +1,41 @@
+{
+ "params": {
+  "ks": [
+   5,
+   10,
+   20,
+   30,
+   50,
+   70,
+   90
+  ],
+  "reps": 5,
+  "beta_full": {
+   "deepseek|c0": 0.32,
+   "deepseek|L0": 0.32,
+   "deepseek|L1": 0.31,
+   "exaone|c0": 0.32,
+   "exaone|L0": 0.36,
+   "exaone|L1": 0.37,
+   "haiku|c0": 0.24,
+   "haiku|L0": 0.25,
+   "haiku|L1": 0.25
+  },
+  "alpha": 1.0
+ },
+ "tables": [
+  "full_data_tvd",
+  "k_curve",
+  "uniform_baseline"
+ ],
+ "notes": "",
+ "include_test": false,
+ "time": "2026-11-15T14:51:56",
+ "git_commit": "12ee35b",
+ "git_dirty": false,
+ "data_sha256": "eff54b43fe0cacc1",
+ "data_built_at": "2026-11-15T14:37:21",
+ "python": "3.13.13",
+ "pandas": "2.3.1",
+ "numpy": "2.3.1"
+}
