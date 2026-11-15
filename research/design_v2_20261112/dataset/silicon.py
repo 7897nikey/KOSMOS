@@ -94,15 +94,22 @@ def uniform_baseline(df):
 
 
 # ── 기록 ─────────────────────────────────────────────────
-def provenance():
-    """결과를 다시 만들 수 있게 하는 최소 정보: 커밋, 작업트리 변경 여부, 데이터 해시, 버전."""
-    root = Path(__file__).resolve().parent
-    git = lambda *a: subprocess.run(["git", *a], cwd=root, capture_output=True, text=True).stdout.strip()
+def provenance(exclude=None):
+    """결과를 다시 만들 수 있게 하는 최소 정보: 커밋, 작업트리 변경 여부, 데이터 해시, 버전.
+    exclude: 변경 여부에서 뺄 경로(이번 실행의 out/ 폴더).
+    """
+    here = Path(__file__).resolve().parent
+    git = lambda *a: subprocess.run(["git", *a], cwd=here, capture_output=True, text=True).stdout.strip()
+    top = git("rev-parse", "--show-toplevel")
+    spec = []
+    if top and exclude:
+        rel = Path(exclude).resolve().relative_to(Path(top).resolve())
+        spec = [":(top)", f":(exclude,top){rel.as_posix()}"]
     build = Path(__file__).with_name("kosmos_build.json")
     return {
         "time": datetime.datetime.now().isoformat(timespec="seconds"),
         "git_commit": git("rev-parse", "--short", "HEAD") or None,
-        "git_dirty": bool(git("status", "--porcelain")),
+        "git_dirty": bool(git("status", "--porcelain", "--", *spec)) if top else None,
         "data_sha256": hashlib.sha256(DATA.read_bytes()).hexdigest()[:16],
         "data_built_at": json.loads(build.read_text()).get("built_at") if build.exists() else None,
         "python": platform.python_version(), "pandas": pd.__version__, "numpy": np.__version__,
@@ -117,6 +124,6 @@ def save_run(out_dir, params=None, tables=None, notes=""):
         t.to_csv(out / f"{name}.csv", float_format="%.6g")
     fix = lambda o: {"|".join(map(str, k)) if isinstance(k, tuple) else k: fix(v) for k, v in o.items()} \
         if isinstance(o, dict) else o
-    run = {"params": fix(params or {}), "tables": sorted(tables or {}), "notes": notes, **provenance()}
+    run = {"params": fix(params or {}), "tables": sorted(tables or {}), "notes": notes, **provenance(exclude=out)}
     (out / "run.json").write_text(json.dumps(run, ensure_ascii=False, indent=1, default=str))
     return run
