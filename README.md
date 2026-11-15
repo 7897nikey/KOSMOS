@@ -55,7 +55,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements-analysis.txt
 | Claude Haiku 5.5 | Anthropic Message Batches | `runners/run_haiku_batch.py` | `ANTHROPIC_API_KEY` (`.env.anthropic`) | thinking 끔, 최대 5토큰, temperature 미전송 |
 
 실행기는 모두 `research/design_v2_20261112/`에 있고, KOSMOS 루트에서 실행한다.
-**API 키 파일은 저장소에 없다.** 각자 발급받아 루트에 `.env.*`로 만들면 된다(`.gitignore` 처리됨).
+**API 키는 각자 자기 것을 쓴다.** `cp .env.example .env`로 양식을 복사해 키를 넣고, 실행 전에 `set -a; . ./.env; set +a`로 불러온다(`.env`는 `.gitignore` 처리됨). 아래 예시의 `.env.opengateway` 등은 예전 개별 파일 이름이고, 루트 `.env` 하나로 대신해도 된다.
 
 ```bash
 # DeepSeek (OpenGateway)

@@ -60,7 +60,8 @@ sl.summary(df[df.split == "validation"], beta)
 ## 4. 지켜야 할 것
 
 - **test 49문항(`split == "test"`)을 열지 않는다.** 사전등록 규칙이다. EXAONE 100표본이 모인 뒤 팀이 정해서 한 번만 연다. `load(include_test=True)`는 사람이 명시적으로 지시할 때만 쓴다.
-- **유료 API를 호출하지 않는다.** 응답 수집(`research/design_v2_20261112/runners/`)은 비용이 드니 사람의 승인을 받는다. 키(`.env*`)는 커밋하지 않는다.
+- **유료 API를 호출하지 않는다.** 응답 수집(`research/design_v2_20261112/runners/`)은 비용이 드니 사람의 승인을 받는다.
+- API 키는 사람마다 자기 것을 쓴다. 양식은 `.env.example`이다(`cp .env.example .env` → 키 입력 → `set -a; . ./.env; set +a`). `.env`는 커밋하지 않고, 키 값을 출력·로그·대화에 남기지 않는다. 분석·실험에는 키가 필요 없다.
 - 다음은 설계를 고정하는 파일이라 고치지 않는다: `MANIFEST.json`, `prompts_v2.csv`, `item_manifest_v2.csv`, `cells.csv`, `analysis/out_calib/frozen_beta.json`, 원응답(`raw/`, `results/raw_gz/`).
 - 문서에 쓰는 숫자는 실행 결과 파일에서 옮긴다. 기억이나 추정으로 쓰지 않는다.
 - 기각된 결과도 지우지 않고 기록한다.

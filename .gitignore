@@ -98,3 +98,4 @@ tmp/
 
 # 팀 공용 에이전트 안내는 추적한다 (개인 CLAUDE.md는 계속 무시)
 !/AGENTS.md
+!.env.example
