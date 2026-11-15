@@ -1,0 +1,492 @@
+[시작] 2026-11-15T22:31:19  스크립트 exaone_final_v2.py
+표본 수: 세 모델 모두 프롬프트 2952 개 × 표본 번호 0~99 (k=100)
+EXAONE β 고정: 이번 실행에서 고정 (2026-11-15T22:31:44) → frozen_beta_exaone_k100.json
+   model level  n_total  n_valid  valid_rate  refusal
+  exaone    c0    24600    24580      0.9992        9
+  exaone    L0    24600    24588      0.9995        6
+  exaone    L1   246000   245925      0.9997       23
+deepseek    c0    24600    24593      0.9997        1
+deepseek    L0    24600    24599      1.0000        0
+deepseek    L1   246000   245966      0.9999        1
+   haiku    c0    24600    22263      0.9050     1040
+   haiku    L0    24600    24182      0.9830      172
+   haiku    L1   246000   244198      0.9927      505
+
+[β 고정값 점검]
+    model  level  beta_frozen  beta_recomputed  lam_frozen  lam_recomputed  beta_jeffreys_recomputed                  frozen_file  match
+  exaone     c0        0.320            0.320        0.55            0.55                     0.290 frozen_beta_exaone_k100.json   True
+  exaone     L0        0.355            0.355        0.52            0.52                     0.315 frozen_beta_exaone_k100.json   True
+  exaone L1cell        0.365            0.365        0.50            0.50                     0.330 frozen_beta_exaone_k100.json   True
+deepseek     c0        0.315            0.315        0.59            0.59                     0.290             frozen_beta.json   True
+deepseek     L0        0.315            0.315        0.58            0.58                     0.285             frozen_beta.json   True
+deepseek L1cell        0.310            0.310        0.60            0.60                     0.280             frozen_beta.json   True
+   haiku     c0        0.240            0.240        0.70            0.70                     0.210             frozen_beta.json   True
+   haiku     L0        0.245            0.245        0.68            0.68                     0.215             frozen_beta.json   True
+   haiku L1cell        0.250            0.250        0.66            0.66                     0.220             frozen_beta.json   True
+
+[test · tvd · β*]
+ model   exaone  deepseek  haiku  uniform
+level                                   
+c0       0.254     0.235  0.288    0.360
+L0       0.200     0.228  0.271    0.360
+L1cell   0.222     0.257  0.284    0.372
+
+[test · w1 · β*]
+ model   exaone  deepseek  haiku  uniform
+level                                   
+c0       0.122     0.115  0.143    0.183
+L0       0.096     0.113  0.138    0.183
+L1cell   0.106     0.121  0.140    0.191
+
+[test · mode · β*]
+ model   exaone  deepseek  haiku
+level                          
+c0       0.612     0.714  0.612
+L0       0.633     0.612  0.633
+L1cell   0.620     0.543  0.586
+
+[test · tvd · β=1]
+ model   exaone  deepseek  haiku  uniform
+level                                   
+c0       0.410     0.371  0.513    0.360
+L0       0.343     0.361  0.485    0.360
+L1cell   0.365     0.393  0.487    0.372
+
+[test · w1 · β=1]
+ model   exaone  deepseek  haiku  uniform
+level                                   
+c0       0.149     0.146  0.193    0.183
+L0       0.125     0.148  0.182    0.183
+L1cell   0.138     0.156  0.184    0.191
+
+[test · mode · β=1]
+ model   exaone  deepseek  haiku
+level                          
+c0       0.612     0.714  0.612
+L0       0.633     0.612  0.633
+L1cell   0.620     0.543  0.586
+
+[validation · tvd · β*]
+ model   exaone  deepseek  haiku  uniform
+level                                   
+c0       0.299     0.282  0.300    0.335
+L0       0.238     0.261  0.293    0.335
+L1cell   0.246     0.285  0.285    0.353
+
+[validation · w1 · β*]
+ model   exaone  deepseek  haiku  uniform
+level                                   
+c0       0.144     0.140  0.154    0.185
+L0       0.121     0.128  0.148    0.185
+L1cell   0.124     0.140  0.144    0.194
+
+[validation · mode · β*]
+ model   exaone  deepseek  haiku
+level                          
+c0       0.449     0.469  0.510
+L0       0.510     0.490  0.531
+L1cell   0.482     0.480  0.582
+
+[cal+val · tvd · β=1]
+ model   exaone  deepseek  haiku  uniform
+level                                   
+c0       0.428     0.432  0.500    0.347
+L0       0.366     0.415  0.488    0.347
+L1cell   0.361     0.426  0.488    0.361
+
+[cal+val · w1 · β=1]
+ model   exaone  deepseek  haiku  uniform
+level                                   
+c0       0.171     0.185  0.220    0.204
+L0       0.151     0.181  0.213    0.204
+L1cell   0.152     0.189  0.209    0.211
+
+[cal+val · mode · β=1]
+ model   exaone  deepseek  haiku
+level                          
+c0       0.513     0.487  0.528
+L0       0.508     0.503  0.528
+L1cell   0.527     0.479  0.560
+
+[균등혼합 λ*, test]
+ model   exaone  deepseek  haiku
+level                          
+c0       0.268     0.254  0.292
+L0       0.221     0.248  0.281
+L1cell   0.242     0.281  0.292
+
+      split      setting metric          contrast  level   diff     lo     hi
+      test           β*    tvd exaone − deepseek     c0  0.019 -0.013  0.050
+      test           β*    tvd exaone − deepseek     L0 -0.028 -0.061  0.004
+      test           β*    tvd exaone − deepseek L1cell -0.035 -0.070 -0.003
+      test           β*    tvd    exaone − haiku     c0 -0.034 -0.076  0.009
+      test           β*    tvd    exaone − haiku     L0 -0.071 -0.105 -0.037
+      test           β*    tvd    exaone − haiku L1cell -0.062 -0.095 -0.029
+      test           β*    tvd  deepseek − haiku     c0 -0.053 -0.087 -0.018
+      test           β*    tvd  deepseek − haiku     L0 -0.043 -0.072 -0.012
+      test           β*    tvd  deepseek − haiku L1cell -0.026 -0.054  0.003
+      test           β*     w1 exaone − deepseek     c0  0.007 -0.009  0.024
+      test           β*     w1 exaone − deepseek     L0 -0.018 -0.030 -0.006
+      test           β*     w1 exaone − deepseek L1cell -0.015 -0.027 -0.004
+      test           β*     w1    exaone − haiku     c0 -0.021 -0.040  0.000
+      test           β*     w1    exaone − haiku     L0 -0.042 -0.058 -0.027
+      test           β*     w1    exaone − haiku L1cell -0.034 -0.048 -0.020
+      test           β*     w1  deepseek − haiku     c0 -0.028 -0.046 -0.011
+      test           β*     w1  deepseek − haiku     L0 -0.025 -0.039 -0.010
+      test           β*     w1  deepseek − haiku L1cell -0.019 -0.033 -0.006
+      test           β*   mode exaone − deepseek     c0 -0.102 -0.245  0.041
+      test           β*   mode exaone − deepseek     L0  0.020 -0.143  0.184
+      test           β*   mode exaone − deepseek L1cell  0.078 -0.045  0.194
+      test           β*   mode    exaone − haiku     c0  0.000 -0.184  0.184
+      test           β*   mode    exaone − haiku     L0  0.000 -0.184  0.163
+      test           β*   mode    exaone − haiku L1cell  0.035 -0.088  0.157
+      test           β*   mode  deepseek − haiku     c0  0.102 -0.061  0.265
+      test           β*   mode  deepseek − haiku     L0 -0.020 -0.184  0.143
+      test           β*   mode  deepseek − haiku L1cell -0.043 -0.165  0.084
+      test          β=1    tvd exaone − deepseek     c0  0.039 -0.023  0.098
+      test          β=1    tvd exaone − deepseek     L0 -0.018 -0.080  0.042
+      test          β=1    tvd exaone − deepseek L1cell -0.027 -0.087  0.031
+      test          β=1    tvd    exaone − haiku     c0 -0.103 -0.183 -0.026
+      test          β=1    tvd    exaone − haiku     L0 -0.142 -0.201 -0.088
+      test          β=1    tvd    exaone − haiku L1cell -0.122 -0.178 -0.069
+      test          β=1    tvd  deepseek − haiku     c0 -0.142 -0.206 -0.079
+      test          β=1    tvd  deepseek − haiku     L0 -0.124 -0.179 -0.071
+      test          β=1    tvd  deepseek − haiku L1cell -0.094 -0.140 -0.051
+      test          β=1     w1 exaone − deepseek     c0  0.003 -0.023  0.032
+      test          β=1     w1 exaone − deepseek     L0 -0.023 -0.048  0.001
+      test          β=1     w1 exaone − deepseek L1cell -0.017 -0.039  0.004
+      test          β=1     w1    exaone − haiku     c0 -0.043 -0.079 -0.008
+      test          β=1     w1    exaone − haiku     L0 -0.057 -0.089 -0.030
+      test          β=1     w1    exaone − haiku L1cell -0.045 -0.068 -0.023
+      test          β=1     w1  deepseek − haiku     c0 -0.047 -0.082 -0.012
+      test          β=1     w1  deepseek − haiku     L0 -0.034 -0.062 -0.008
+      test          β=1     w1  deepseek − haiku L1cell -0.028 -0.052 -0.005
+      test          β=1   mode exaone − deepseek     c0 -0.102 -0.245  0.041
+      test          β=1   mode exaone − deepseek     L0  0.020 -0.143  0.184
+      test          β=1   mode exaone − deepseek L1cell  0.078 -0.041  0.194
+      test          β=1   mode    exaone − haiku     c0  0.000 -0.184  0.204
+      test          β=1   mode    exaone − haiku     L0  0.000 -0.163  0.163
+      test          β=1   mode    exaone − haiku L1cell  0.035 -0.088  0.159
+      test          β=1   mode  deepseek − haiku     c0  0.102 -0.061  0.265
+      test          β=1   mode  deepseek − haiku     L0 -0.020 -0.184  0.143
+      test          β=1   mode  deepseek − haiku L1cell -0.043 -0.163  0.080
+validation           β*    tvd exaone − deepseek     c0  0.016 -0.015  0.048
+validation           β*    tvd exaone − deepseek     L0 -0.022 -0.059  0.013
+validation           β*    tvd exaone − deepseek L1cell -0.039 -0.069 -0.012
+validation           β*    tvd    exaone − haiku     c0 -0.001 -0.043  0.042
+validation           β*    tvd    exaone − haiku     L0 -0.054 -0.090 -0.020
+validation           β*    tvd    exaone − haiku L1cell -0.040 -0.068 -0.011
+validation           β*    tvd  deepseek − haiku     c0 -0.017 -0.056  0.020
+validation           β*    tvd  deepseek − haiku     L0 -0.032 -0.062  0.001
+validation           β*    tvd  deepseek − haiku L1cell -0.000 -0.026  0.027
+validation           β*     w1 exaone − deepseek     c0  0.004 -0.015  0.025
+validation           β*     w1 exaone − deepseek     L0 -0.006 -0.022  0.010
+validation           β*     w1 exaone − deepseek L1cell -0.016 -0.030 -0.002
+validation           β*     w1    exaone − haiku     c0 -0.010 -0.039  0.021
+validation           β*     w1    exaone − haiku     L0 -0.026 -0.048 -0.003
+validation           β*     w1    exaone − haiku L1cell -0.020 -0.035 -0.003
+validation           β*     w1  deepseek − haiku     c0 -0.014 -0.040  0.012
+validation           β*     w1  deepseek − haiku     L0 -0.020 -0.039 -0.000
+validation           β*     w1  deepseek − haiku L1cell -0.004 -0.016  0.009
+validation           β*   mode exaone − deepseek     c0 -0.020 -0.143  0.102
+validation           β*   mode exaone − deepseek     L0  0.020 -0.143  0.204
+validation           β*   mode exaone − deepseek L1cell  0.002 -0.108  0.112
+validation           β*   mode    exaone − haiku     c0 -0.061 -0.245  0.122
+validation           β*   mode    exaone − haiku     L0 -0.020 -0.204  0.164
+validation           β*   mode    exaone − haiku L1cell -0.100 -0.208  0.008
+validation           β*   mode  deepseek − haiku     c0 -0.041 -0.204  0.122
+validation           β*   mode  deepseek − haiku     L0 -0.041 -0.204  0.122
+validation           β*   mode  deepseek − haiku L1cell -0.102 -0.192 -0.010
+   cal+val          β=1    tvd exaone − deepseek     c0 -0.004 -0.037  0.029
+   cal+val          β=1    tvd exaone − deepseek     L0 -0.049 -0.082 -0.016
+   cal+val          β=1    tvd exaone − deepseek L1cell -0.064 -0.091 -0.040
+   cal+val          β=1    tvd    exaone − haiku     c0 -0.073 -0.110 -0.034
+   cal+val          β=1    tvd    exaone − haiku     L0 -0.121 -0.153 -0.091
+   cal+val          β=1    tvd    exaone − haiku L1cell -0.127 -0.149 -0.105
+   cal+val          β=1    tvd  deepseek − haiku     c0 -0.068 -0.104 -0.031
+   cal+val          β=1    tvd  deepseek − haiku     L0 -0.072 -0.106 -0.036
+   cal+val          β=1    tvd  deepseek − haiku L1cell -0.063 -0.086 -0.039
+   cal+val          β=1     w1 exaone − deepseek     c0 -0.014 -0.035  0.007
+   cal+val          β=1     w1 exaone − deepseek     L0 -0.030 -0.047 -0.012
+   cal+val          β=1     w1 exaone − deepseek L1cell -0.037 -0.053 -0.022
+   cal+val          β=1     w1    exaone − haiku     c0 -0.049 -0.073 -0.023
+   cal+val          β=1     w1    exaone − haiku     L0 -0.061 -0.083 -0.040
+   cal+val          β=1     w1    exaone − haiku L1cell -0.057 -0.073 -0.042
+   cal+val          β=1     w1  deepseek − haiku     c0 -0.034 -0.061 -0.008
+   cal+val          β=1     w1  deepseek − haiku     L0 -0.032 -0.056 -0.007
+   cal+val          β=1     w1  deepseek − haiku L1cell -0.020 -0.036 -0.004
+   cal+val          β=1   mode exaone − deepseek     c0  0.025 -0.041  0.096
+   cal+val          β=1   mode exaone − deepseek     L0  0.005 -0.081  0.091
+   cal+val          β=1   mode exaone − deepseek L1cell  0.048 -0.007  0.101
+   cal+val          β=1   mode    exaone − haiku     c0 -0.015 -0.107  0.076
+   cal+val          β=1   mode    exaone − haiku     L0 -0.020 -0.112  0.071
+   cal+val          β=1   mode    exaone − haiku L1cell -0.033 -0.084  0.017
+   cal+val          β=1   mode  deepseek − haiku     c0 -0.041 -0.127  0.046
+   cal+val          β=1   mode  deepseek − haiku     L0 -0.025 -0.112  0.056
+   cal+val          β=1   mode  deepseek − haiku L1cell -0.081 -0.131 -0.030
+       all          β=1    tvd exaone − deepseek     c0  0.004 -0.025  0.033
+       all          β=1    tvd exaone − deepseek     L0 -0.043 -0.072 -0.013
+       all          β=1    tvd exaone − deepseek L1cell -0.057 -0.081 -0.034
+       all          β=1    tvd    exaone − haiku     c0 -0.079 -0.113 -0.045
+       all          β=1    tvd    exaone − haiku     L0 -0.125 -0.154 -0.098
+       all          β=1    tvd    exaone − haiku L1cell -0.126 -0.147 -0.105
+       all          β=1    tvd  deepseek − haiku     c0 -0.083 -0.115 -0.050
+       all          β=1    tvd  deepseek − haiku     L0 -0.083 -0.113 -0.052
+       all          β=1    tvd  deepseek − haiku L1cell -0.069 -0.089 -0.048
+       all          β=1     w1 exaone − deepseek     c0 -0.011 -0.029  0.007
+       all          β=1     w1 exaone − deepseek     L0 -0.028 -0.043 -0.014
+       all          β=1     w1 exaone − deepseek L1cell -0.033 -0.047 -0.020
+       all          β=1     w1    exaone − haiku     c0 -0.048 -0.069 -0.026
+       all          β=1     w1    exaone − haiku     L0 -0.061 -0.079 -0.043
+       all          β=1     w1    exaone − haiku L1cell -0.055 -0.068 -0.042
+       all          β=1     w1  deepseek − haiku     c0 -0.037 -0.060 -0.015
+       all          β=1     w1  deepseek − haiku     L0 -0.032 -0.053 -0.011
+       all          β=1     w1  deepseek − haiku L1cell -0.022 -0.035 -0.008
+       all          β=1   mode exaone − deepseek     c0  0.000 -0.065  0.061
+       all          β=1   mode exaone − deepseek     L0  0.008 -0.069  0.085
+       all          β=1   mode exaone − deepseek L1cell  0.054  0.005  0.102
+       all          β=1   mode    exaone − haiku     c0 -0.012 -0.093  0.069
+       all          β=1   mode    exaone − haiku     L0 -0.016 -0.093  0.061
+       all          β=1   mode    exaone − haiku L1cell -0.020 -0.066  0.027
+       all          β=1   mode  deepseek − haiku     c0 -0.012 -0.085  0.065
+       all          β=1   mode  deepseek − haiku     L0 -0.024 -0.102  0.053
+       all          β=1   mode  deepseek − haiku L1cell -0.074 -0.121 -0.027
+      test β* − 균등혼합 λ*    tvd            exaone     c0 -0.013 -0.024 -0.003
+      test β* − 균등혼합 λ*    tvd            exaone     L0 -0.021 -0.031 -0.011
+      test β* − 균등혼합 λ*    tvd            exaone L1cell -0.020 -0.028 -0.012
+      test β* − 균등혼합 λ*    tvd          deepseek     c0 -0.019 -0.028 -0.011
+      test β* − 균등혼합 λ*    tvd          deepseek     L0 -0.020 -0.029 -0.011
+      test β* − 균등혼합 λ*    tvd          deepseek L1cell -0.024 -0.032 -0.017
+      test β* − 균등혼합 λ*    tvd             haiku     c0 -0.004 -0.013  0.005
+      test β* − 균등혼합 λ*    tvd             haiku     L0 -0.011 -0.020 -0.001
+      test β* − 균등혼합 λ*    tvd             haiku L1cell -0.009 -0.016 -0.002
+
+[persona_steps]
+    model        step  tvd_change     lo     hi  improved_share  mean_shift_tvd  mode_changed   scope
+  exaone     c0 → L0      -0.067 -0.110 -0.026           0.592           0.201         0.204    test
+  exaone L0 → L1cell       0.023  0.001  0.046           0.367             NaN           NaN    test
+deepseek     c0 → L0      -0.010 -0.065  0.046           0.510           0.271         0.306    test
+deepseek L0 → L1cell       0.032 -0.009  0.083           0.469             NaN           NaN    test
+   haiku     c0 → L0      -0.028 -0.076  0.013           0.347           0.193         0.184    test
+   haiku L0 → L1cell       0.002 -0.033  0.039           0.490             NaN           NaN    test
+  exaone     c0 → L0      -0.061 -0.089 -0.034           0.604           0.260         0.289 cal+val
+  exaone L0 → L1cell      -0.005 -0.021  0.011           0.528             NaN           NaN cal+val
+deepseek     c0 → L0      -0.017 -0.041  0.007           0.548           0.251         0.284 cal+val
+deepseek L0 → L1cell       0.010 -0.005  0.026           0.477             NaN           NaN cal+val
+   haiku     c0 → L0      -0.013 -0.037  0.013           0.330           0.228         0.249 cal+val
+   haiku L0 → L1cell       0.001 -0.020  0.022           0.503             NaN           NaN cal+val
+  exaone     c0 → L0      -0.062 -0.086 -0.039           0.602           0.248         0.272     all
+  exaone L0 → L1cell       0.001 -0.013  0.014           0.496             NaN           NaN     all
+deepseek     c0 → L0      -0.015 -0.037  0.007           0.541           0.255         0.289     all
+deepseek L0 → L1cell       0.015 -0.001  0.031           0.476             NaN           NaN     all
+   haiku     c0 → L0      -0.016 -0.039  0.007           0.333           0.221         0.236     all
+   haiku L0 → L1cell       0.001 -0.017  0.019           0.500             NaN           NaN     all
+
+[collapse_ladder]
+    model  level  entropy  top_share  top_ge90  invalid   scope
+  exaone     c0    0.222      0.874     0.653    0.000    test
+  exaone     L0    0.299      0.812     0.490    0.000    test
+  exaone L1cell    0.268      0.833     0.469    0.000    test
+deepseek     c0    0.352      0.777     0.367    0.000    test
+deepseek     L0    0.313      0.815     0.490    0.000    test
+deepseek L1cell    0.322      0.811     0.420    0.000    test
+   haiku     c0    0.121      0.934     0.776    0.026    test
+   haiku     L0    0.130      0.925     0.755    0.001    test
+   haiku L1cell    0.119      0.930     0.784    0.002    test
+   human     c0    0.740      0.520     0.020      NaN    test
+   human     L0    0.740      0.520     0.020      NaN    test
+   human L1cell    0.721      0.535     0.024      NaN    test
+  exaone     c0    0.252      0.847     0.553    0.001 cal+val
+  exaone     L0    0.345      0.787     0.335    0.001 cal+val
+  exaone L1cell    0.361      0.772     0.310    0.000 cal+val
+deepseek     c0    0.323      0.824     0.477    0.000 cal+val
+deepseek     L0    0.318      0.821     0.416    0.000 cal+val
+deepseek L1cell    0.329      0.811     0.410    0.000 cal+val
+   haiku     c0    0.159      0.908     0.761    0.112 cal+val
+   haiku     L0    0.167      0.897     0.711    0.021 cal+val
+   haiku L1cell    0.138      0.920     0.760    0.009 cal+val
+   human     c0    0.744      0.527     0.036      NaN cal+val
+   human     L0    0.744      0.527     0.036      NaN cal+val
+   human L1cell    0.719      0.540     0.043      NaN cal+val
+  exaone     c0    0.246      0.853     0.573    0.001     all
+  exaone     L0    0.336      0.792     0.366    0.000     all
+  exaone L1cell    0.343      0.784     0.341    0.000     all
+deepseek     c0    0.329      0.814     0.455    0.000     all
+deepseek     L0    0.317      0.819     0.431    0.000     all
+deepseek L1cell    0.327      0.811     0.412    0.000     all
+   haiku     c0    0.152      0.913     0.764    0.095     all
+   haiku     L0    0.160      0.902     0.720    0.017     all
+   haiku L1cell    0.134      0.922     0.765    0.007     all
+   human     c0    0.743      0.526     0.033      NaN     all
+   human     L0    0.743      0.526     0.033      NaN     all
+   human L1cell    0.720      0.539     0.039      NaN     all
+
+[mode_radius]
+                   기준    c0    L0  L1cell   scope
+  exaone · 엄격(1위 일치) 0.612 0.633   0.620    test
+     exaone · RADIUS 0.714 0.735   0.857    test
+deepseek · 엄격(1위 일치) 0.714 0.612   0.543    test
+   deepseek · RADIUS 0.755 0.735   0.743    test
+   haiku · 엄격(1위 일치) 0.612 0.633   0.586    test
+      haiku · RADIUS 0.714 0.735   0.765    test
+             우연 · 엄격 0.245 0.245   0.245    test
+         우연 · RADIUS 0.311 0.315   0.385    test
+  모집단 사람 분포 · RADIUS 1.000 1.000   0.988    test
+사람 재표집 · RADIUS (상한) 0.999 1.000   0.999    test
+  exaone · 엄격(1위 일치) 0.513 0.508   0.527 cal+val
+     exaone · RADIUS 0.612 0.599   0.758 cal+val
+deepseek · 엄격(1위 일치) 0.487 0.503   0.479 cal+val
+   deepseek · RADIUS 0.569 0.579   0.678 cal+val
+   haiku · 엄격(1위 일치) 0.528 0.528   0.560 cal+val
+      haiku · RADIUS 0.595 0.619   0.755 cal+val
+             우연 · 엄격 0.256 0.256   0.256 cal+val
+         우연 · RADIUS 0.301 0.304   0.407 cal+val
+  모집단 사람 분포 · RADIUS 1.000 1.000   0.984 cal+val
+사람 재표집 · RADIUS (상한) 0.999 1.000   0.999 cal+val
+  exaone · 엄격(1위 일치) 0.533 0.533   0.546     all
+     exaone · RADIUS 0.632 0.626   0.778     all
+deepseek · 엄격(1위 일치) 0.533 0.524   0.491     all
+   deepseek · RADIUS 0.606 0.610   0.691     all
+   haiku · 엄격(1위 일치) 0.545 0.549   0.565     all
+      haiku · RADIUS 0.619 0.642   0.757     all
+             우연 · 엄격 0.254 0.254   0.254     all
+         우연 · RADIUS 0.303 0.306   0.402     all
+  모집단 사람 분포 · RADIUS 1.000 1.000   0.985     all
+사람 재표집 · RADIUS (상한) 0.999 1.000   0.999     all
+
+[pairs_radius]
+      쌍      범위    model   AUC    lo    hi    쌍수  모델동점   scope
+    전체 유의쌍만(주)   exaone 0.726 0.635 0.815   358 0.061    test
+    전체     전체쌍   exaone 0.576 0.539 0.611  2070 0.131    test
+    전체 유의쌍만(주) deepseek 0.735 0.631 0.826   358 0.034    test
+    전체     전체쌍 deepseek 0.581 0.535 0.628  2070 0.052    test
+    전체 유의쌍만(주)    haiku 0.641 0.578 0.704   358 0.422    test
+    전체     전체쌍    haiku 0.544 0.515 0.572  2070 0.480    test
+성별만 다름 유의쌍만(주)   exaone 0.771 0.609 0.900    35 0.057    test
+성별만 다름     전체쌍   exaone 0.583 0.513 0.646   230 0.139    test
+성별만 다름 유의쌍만(주) deepseek 0.714 0.530 0.859    35 0.057    test
+성별만 다름     전체쌍 deepseek 0.565 0.500 0.630   230 0.070    test
+성별만 다름 유의쌍만(주)    haiku 0.700 0.578 0.800    35 0.371    test
+성별만 다름     전체쌍    haiku 0.526 0.467 0.583   230 0.478    test
+연령만 다름 유의쌍만(주)   exaone 0.704 0.556 0.826   152 0.079    test
+연령만 다름     전체쌍   exaone 0.569 0.525 0.612   920 0.136    test
+연령만 다름 유의쌍만(주) deepseek 0.750 0.608 0.868   152 0.039    test
+연령만 다름     전체쌍 deepseek 0.565 0.513 0.613   920 0.055    test
+연령만 다름 유의쌍만(주)    haiku 0.576 0.483 0.666   152 0.467    test
+연령만 다름     전체쌍    haiku 0.527 0.491 0.561   920 0.491    test
+    전체 유의쌍만(주)   exaone 0.762 0.715 0.806  1741 0.051 cal+val
+    전체     전체쌍   exaone 0.597 0.575 0.622  8439 0.069 cal+val
+    전체 유의쌍만(주) deepseek 0.731 0.685 0.774  1741 0.064 cal+val
+    전체     전체쌍 deepseek 0.587 0.565 0.608  8439 0.070 cal+val
+    전체 유의쌍만(주)    haiku 0.639 0.599 0.680  1741 0.337 cal+val
+    전체     전체쌍    haiku 0.547 0.531 0.564  8439 0.428 cal+val
+성별만 다름 유의쌍만(주)   exaone 0.622 0.532 0.709   111 0.090 cal+val
+성별만 다름     전체쌍   exaone 0.534 0.503 0.566   938 0.082 cal+val
+성별만 다름 유의쌍만(주) deepseek 0.617 0.515 0.710   111 0.063 cal+val
+성별만 다름     전체쌍 deepseek 0.534 0.503 0.566   938 0.081 cal+val
+성별만 다름 유의쌍만(주)    haiku 0.568 0.495 0.642   111 0.486 cal+val
+성별만 다름     전체쌍    haiku 0.520 0.497 0.544   938 0.455 cal+val
+연령만 다름 유의쌍만(주)   exaone 0.787 0.736 0.828   785 0.045 cal+val
+연령만 다름     전체쌍   exaone 0.608 0.581 0.634  3751 0.067 cal+val
+연령만 다름 유의쌍만(주) deepseek 0.756 0.709 0.800   785 0.078 cal+val
+연령만 다름     전체쌍 deepseek 0.595 0.569 0.621  3751 0.073 cal+val
+연령만 다름 유의쌍만(주)    haiku 0.646 0.599 0.692   785 0.352 cal+val
+연령만 다름     전체쌍    haiku 0.552 0.533 0.572  3751 0.438 cal+val
+    전체 유의쌍만(주)   exaone 0.756 0.712 0.798  2099 0.053     all
+    전체     전체쌍   exaone 0.592 0.572 0.614 10509 0.081     all
+    전체 유의쌍만(주) deepseek 0.732 0.688 0.771  2099 0.059     all
+    전체     전체쌍 deepseek 0.585 0.566 0.606 10509 0.067     all
+    전체 유의쌍만(주)    haiku 0.639 0.601 0.674  2099 0.351     all
+    전체     전체쌍    haiku 0.546 0.532 0.561 10509 0.439     all
+성별만 다름 유의쌍만(주)   exaone 0.658 0.579 0.739   146 0.082     all
+성별만 다름     전체쌍   exaone 0.543 0.514 0.572  1168 0.093     all
+성별만 다름 유의쌍만(주) deepseek 0.640 0.557 0.720   146 0.062     all
+성별만 다름     전체쌍 deepseek 0.540 0.511 0.569  1168 0.079     all
+성별만 다름 유의쌍만(주)    haiku 0.599 0.531 0.664   146 0.459     all
+성별만 다름     전체쌍    haiku 0.521 0.500 0.544  1168 0.460     all
+연령만 다름 유의쌍만(주)   exaone 0.773 0.725 0.815   937 0.050     all
+연령만 다름     전체쌍   exaone 0.601 0.576 0.625  4671 0.081     all
+연령만 다름 유의쌍만(주) deepseek 0.755 0.707 0.798   937 0.072     all
+연령만 다름     전체쌍 deepseek 0.589 0.565 0.614  4671 0.070     all
+연령만 다름 유의쌍만(주)    haiku 0.634 0.590 0.675   937 0.370     all
+연령만 다름     전체쌍    haiku 0.547 0.530 0.564  4671 0.449     all
+
+[bpr_option_pairs]
+          model  level   AUC  가중AUC   scope
+        exaone     c0 0.746  0.830    test
+        exaone     L0 0.793  0.888    test
+        exaone L1cell 0.779  0.875    test
+      deepseek     c0 0.763  0.851    test
+      deepseek     L0 0.762  0.859    test
+      deepseek L1cell 0.736  0.818    test
+         haiku     c0 0.656  0.715    test
+         haiku     L0 0.697  0.795    test
+         haiku L1cell 0.669  0.748    test
+기준선: 모집단 사람 순서 L1cell 0.938  0.985    test
+        exaone     c0 0.716  0.791 cal+val
+        exaone     L0 0.768  0.853 cal+val
+        exaone L1cell 0.774  0.856 cal+val
+      deepseek     c0 0.706  0.793 cal+val
+      deepseek     L0 0.722  0.796 cal+val
+      deepseek L1cell 0.708  0.777 cal+val
+         haiku     c0 0.663  0.723 cal+val
+         haiku     L0 0.665  0.733 cal+val
+         haiku L1cell 0.670  0.741 cal+val
+기준선: 모집단 사람 순서 L1cell 0.937  0.984 cal+val
+        exaone     c0 0.722  0.799     all
+        exaone     L0 0.773  0.860     all
+        exaone L1cell 0.775  0.860     all
+      deepseek     c0 0.718  0.805     all
+      deepseek     L0 0.730  0.810     all
+      deepseek L1cell 0.714  0.785     all
+         haiku     c0 0.661  0.721     all
+         haiku     L0 0.672  0.746     all
+         haiku L1cell 0.670  0.742     all
+기준선: 모집단 사람 순서 L1cell 0.937  0.984     all
+
+[cell_spread]
+               지표  exaone  deepseek  haiku  human   scope
+      셀 간 평균 TVD   0.126     0.164  0.186  0.112    test
+SD 비 모델/사람 (중앙값)   0.880     1.320  0.736  1.000    test
+ 셀 평균점수 상관 (중앙값)   0.273     0.216  0.276  1.000    test
+  L0 대비 셀 이동 TVD   0.124     0.209  0.246  0.075    test
+      셀 간 평균 TVD   0.151     0.170  0.193  0.118 cal+val
+SD 비 모델/사람 (중앙값)   1.047     1.159  1.037  1.000 cal+val
+ 셀 평균점수 상관 (중앙값)   0.244     0.271  0.182  1.000 cal+val
+  L0 대비 셀 이동 TVD   0.160     0.199  0.234  0.080 cal+val
+      셀 간 평균 TVD   0.146     0.169  0.192  0.116     all
+SD 비 모델/사람 (중앙값)   0.993     1.221  0.941  1.000     all
+ 셀 평균점수 상관 (중앙값)   0.252     0.258  0.184  1.000     all
+  L0 대비 셀 이동 TVD   0.153     0.201  0.236  0.079     all
+
+[sensitivity_collapse]
+    model level  rho_sens_excess     lo     hi  mean_excess   scope
+  exaone    c0           -0.299 -0.541  0.006        0.354    test
+  exaone    L0            0.037 -0.219  0.300        0.292    test
+  exaone    L1            0.113 -0.173  0.372        0.298    test
+deepseek    c0           -0.123 -0.409  0.213        0.257    test
+deepseek    L0           -0.025 -0.290  0.264        0.295    test
+deepseek    L1           -0.112 -0.405  0.204        0.275    test
+   haiku    c0           -0.165 -0.450  0.147        0.414    test
+   haiku    L0           -0.287 -0.513 -0.020        0.405    test
+   haiku    L1           -0.187 -0.463  0.100        0.394    test
+  exaone    c0           -0.079 -0.220  0.063        0.320 cal+val
+  exaone    L0            0.062 -0.084  0.185        0.260 cal+val
+  exaone    L1            0.075 -0.056  0.209        0.232 cal+val
+deepseek    c0            0.007 -0.126  0.150        0.297 cal+val
+deepseek    L0           -0.007 -0.156  0.139        0.293 cal+val
+deepseek    L1            0.099 -0.040  0.238        0.270 cal+val
+   haiku    c0            0.110 -0.039  0.259        0.381 cal+val
+   haiku    L0            0.007 -0.140  0.153        0.369 cal+val
+   haiku    L1            0.014 -0.130  0.166        0.380 cal+val
+  exaone    c0           -0.112 -0.234  0.010        0.327     all
+  exaone    L0            0.059 -0.065  0.177        0.266     all
+  exaone    L1            0.083 -0.048  0.200        0.245     all
+deepseek    c0           -0.017 -0.138  0.118        0.289     all
+deepseek    L0           -0.012 -0.147  0.129        0.294     all
+deepseek    L1            0.065 -0.069  0.186        0.271     all
+   haiku    c0            0.071 -0.068  0.205        0.387     all
+   haiku    L0           -0.028 -0.161  0.102        0.376     all
+   haiku    L1           -0.019 -0.148  0.113        0.383     all
+
+[끝] 2026-11-15T22:31:56  git 0bf0219 dirty=True  → research/design_v2_20261112/analysis/out_final_k100

@@ -1,0 +1,32 @@
+{
+ "frozen_at": "2026-11-15T22:31:44",
+ "model": "k-exaone_v2.5 (reasoning_effort=low)",
+ "k_per_prompt": 100,
+ "source": "research/design_v2_20261112/team_packages/KOSMOS_EXAONE_m1_태우/exaone_p1_merged.jsonl",
+ "counts_sha256": "e1c9bbd271a20ff4dd59a91608ddccf734d8aac55887920fce49599a54211f59",
+ "primary_alpha": "laplace",
+ "alphas": {
+  "laplace": 1.0,
+  "jeffreys": 0.5
+ },
+ "beta_grid": [
+  0.05,
+  1.5,
+  0.005
+ ],
+ "criterion": "calibration(148) mean TVD",
+ "beta": {
+  "laplace|exaone|c0": 0.32,
+  "laplace|exaone|L0": 0.355,
+  "laplace|exaone|L1cell": 0.365,
+  "jeffreys|exaone|c0": 0.29,
+  "jeffreys|exaone|L0": 0.315,
+  "jeffreys|exaone|L1cell": 0.33
+ },
+ "lam": {
+  "exaone|c0": 0.55,
+  "exaone|L0": 0.52,
+  "exaone|L1cell": 0.5
+ },
+ "script": "exaone_final_v2.py"
+}

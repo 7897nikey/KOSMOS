@@ -1,0 +1,10 @@
+model,level,beta_frozen,beta_recomputed,lam_frozen,lam_recomputed,beta_jeffreys_recomputed,frozen_file,match
+exaone,c0,0.32,0.32,0.55,0.55,0.29,frozen_beta_exaone_k100.json,True
+exaone,L0,0.355,0.355,0.52,0.52,0.315,frozen_beta_exaone_k100.json,True
+exaone,L1cell,0.365,0.365,0.5,0.5,0.33,frozen_beta_exaone_k100.json,True
+deepseek,c0,0.315,0.315,0.59,0.59,0.29,frozen_beta.json,True
+deepseek,L0,0.315,0.315,0.58,0.58,0.285,frozen_beta.json,True
+deepseek,L1cell,0.31,0.31,0.6,0.6,0.28,frozen_beta.json,True
+haiku,c0,0.24,0.24,0.7,0.7,0.21,frozen_beta.json,True
+haiku,L0,0.245,0.245,0.68,0.68,0.215,frozen_beta.json,True
+haiku,L1cell,0.25,0.25,0.66,0.66,0.22,frozen_beta.json,True

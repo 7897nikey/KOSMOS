@@ -1,0 +1,104 @@
+{
+ "script": "research/design_v2_20261112/analysis/exaone_final_v2.py",
+ "script_sha256": "651ef4aa2b227159eddc16221c7f2a3c89c9005d06b0158b8c78632363493597",
+ "command": "python research/design_v2_20261112/analysis/exaone_final_v2.py",
+ "started": "2026-11-15T22:31:19",
+ "finished": "2026-11-15T22:31:56",
+ "git_commit": "0bf0219",
+ "git_branch": "exp/haiku-pilot-recovery",
+ "git_dirty": true,
+ "include_test": true,
+ "inputs": {
+  "raw:exaone": {
+   "path": "research/design_v2_20261112/team_packages/KOSMOS_EXAONE_m1_태우/exaone_p1_merged.jsonl",
+   "bytes": 557492774,
+   "sha256": "41befe3c1743a85e0983c09e910b5760b86bd5ac7c4e960c91b31499c934430c"
+  },
+  "raw:deepseek": {
+   "path": "raw/v2/deepseek_ultrafast_p1.jsonl",
+   "bytes": 158289665,
+   "sha256": "40e2cc40e171506f9436c32db0bf5c3bfb029118a6c18524ab24ae3b28200ce1"
+  },
+  "raw:haiku": {
+   "path": "raw/v2/haiku_p1.jsonl",
+   "bytes": 151947837,
+   "sha256": "592507de3e7bcb35395d0f3859a4535dd30856062348bec9be1e213c807803fd"
+  },
+  "item_manifest": {
+   "path": "research/design_v2_20261112/item_manifest_v2.csv",
+   "bytes": 54617,
+   "sha256": "9681d3da9db7bb218fc206f177cd62e69de73b0f71781795f009005fd3a1599e"
+  },
+  "cells": {
+   "path": "research/design_v2_20261112/cells.csv",
+   "bytes": 1334,
+   "sha256": "ffa63dbcd6c96a19474a2a393dde20780a53580e1ead5c4e06a4ebb4c173e010"
+  },
+  "prompts": {
+   "path": "research/design_v2_20261112/prompts_v2.csv",
+   "bytes": 3191749,
+   "sha256": "b89fa0540c109b0fd5f5caea251605277d59439a9fcde1c401e5cb8cd65280ef"
+  },
+  "kgss": {
+   "path": "inventory/kgss_clean.parquet",
+   "bytes": 6427641,
+   "sha256": "db8fb7f3ccfcd0f622dacc82451dcdb4cb1503ea3fa86a268288bd1160f973ca"
+  },
+  "frozen_deepseek_haiku": {
+   "path": "research/design_v2_20261112/analysis/out_calib/frozen_beta.json",
+   "bytes": 1006,
+   "sha256": "c8b8c12e3589dc009641d2ef88f19d80f180fb765579c01a81cf76a2a84b519a"
+  },
+  "frozen_exaone": {
+   "path": "research/design_v2_20261112/analysis/out_calib/frozen_beta_exaone_k100.json",
+   "bytes": 782,
+   "sha256": "4aa16ca99027559d42144f86e0df654101c5c80e34896d17e457734ccd9b55e2"
+  }
+ },
+ "counts_sha256": {
+  "exaone": "e1c9bbd271a20ff4dd59a91608ddccf734d8aac55887920fce49599a54211f59",
+  "deepseek": "03a7e3594ee8181087462a448a63d26ad0c5f626235afbdfb0a4ca4cbf87315c",
+  "haiku": "03b3173020e59f34b34221f7542e88e25e3af6336ea0bc856fcd4f72020bd18d"
+ },
+ "params": {
+  "alpha": 1.0,
+  "alpha_sensitivity": 0.5,
+  "beta_grid": [
+   0.05,
+   1.5,
+   0.005
+  ],
+  "lambda_grid": [
+   0.0,
+   1.0,
+   0.01
+  ],
+  "B_human": 1000,
+  "seed": 20261112,
+  "k": 100,
+  "bootstrap_mean_ci": 5000,
+  "bootstrap_pairs": 2000,
+  "bootstrap_spearman": 1000
+ },
+ "freeze_status": "이번 실행에서 고정 (2026-11-15T22:31:44)",
+ "outputs": [
+  "beta_frozen_check.csv",
+  "bpr_option_pairs.csv",
+  "cell_spread.csv",
+  "collapse_ladder.csv",
+  "counts_k100.npz",
+  "metrics_by_setting.csv",
+  "mode_radius.csv",
+  "paired_diffs.csv",
+  "pairs_radius.csv",
+  "persona_steps.csv",
+  "run.log",
+  "run.stderr",
+  "sensitivity_collapse.csv",
+  "summary.json",
+  "validity.csv"
+ ],
+ "python": "3.12.6",
+ "pandas": "2.3.3",
+ "numpy": "2.3.4"
+}
