@@ -10,7 +10,7 @@ LLM에 인구통계 페르소나를 프롬프트로 부여해 한국 여론조�
 ## 빠른 시작 (CPU만, 5분)
 
 ```bash
-git clone <이 레포> && cd KOSMOS
+gh repo fork Great-Grace/KOSMOS --clone && cd KOSMOS   # 팀원은 fork해서 쓰고 PR로 올린다
 python3 -m venv .venv && .venv/bin/pip install -r requirements-analysis.txt
 .venv/bin/python -m pytest -q tests/test_silicon.py                 # 환경 점검
 .venv/bin/python experiments/20261115-baseline-calibration/run.py   # 기준선 재현
@@ -18,7 +18,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements-analysis.txt
 
 - 지금까지 모은 응답은 한 장의 표 `research/design_v2_20261112/dataset/kosmos_long.csv.gz`에 들어 있다. 모델 × 페르소나 × 문항 × 보기 단위이고, 사람 분포가 같이 붙어 있다.
 - `silicon.py`(pandas·numpy)로 보정과 평가를 수 초 안에 돌린다. API 키·GPU·KGSS 원자료는 필요 없다.
-- 새 실험과 기록은 [`experiments/`](experiments/)에서 한다. 실험마다 브랜치를 만들어 세팅·코드·결과를 push하고 PR을 연다. GitHub Actions가 기록 형식을 점검한다. 목록은 [`experiments/LOG.md`](experiments/LOG.md)에 있다.
+- 새 실험과 기록은 [`experiments/`](experiments/)에서 한다. 중앙 레포는 [Great-Grace/KOSMOS](https://github.com/Great-Grace/KOSMOS)다. 각자 fork에서 실험마다 브랜치를 만들어 세팅·코드·결과를 push하고 중앙으로 PR을 연다. GitHub Actions가 기록 형식을 점검한다. 목록은 [`experiments/LOG.md`](experiments/LOG.md)에 있다.
 - **AI 에이전트에게 맡길 때**: 클론한 뒤 "AGENTS.md를 읽고 진행해줘"라고 하면 된다. 규칙(test 문항 비공개, 유료 API 금지, 기록 형식)은 [`AGENTS.md`](AGENTS.md)에 있다.
 
 ## 처음 읽는 사람용 요약

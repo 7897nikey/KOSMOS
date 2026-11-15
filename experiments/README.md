@@ -14,10 +14,27 @@ experiments/YYYYMMDD-<이름>/
 
 `LOG.md`는 자동 생성 파일이다. 손으로 고치지 않는다.
 
-## 순서 (세팅 → 실행 → 결과 push)
+## 처음 한 번: fork
+
+중앙 레포는 **https://github.com/Great-Grace/KOSMOS** 다. 팀원은 각자 fork해서 작업하고 중앙 레포로 PR을 보낸다.
 
 ```bash
-git switch -c exp/<날짜>-<이름>                       # 1. 실험마다 브랜치
+gh repo fork Great-Grace/KOSMOS --clone && cd KOSMOS     # 내 계정에 fork + 클론 (origin=내 fork, upstream=중앙)
+git remote set-head upstream --auto                       # upstream/HEAD = 중앙 레포 기본 브랜치
+```
+
+`gh`가 없으면 GitHub에서 Fork 버튼을 누르고 다음처럼 한다.
+
+```bash
+git clone https://github.com/<내아이디>/KOSMOS && cd KOSMOS
+git remote add upstream https://github.com/Great-Grace/KOSMOS
+git fetch upstream && git remote set-head upstream --auto
+```
+
+## 순서 (세팅 → 실행 → 결과 push → PR)
+
+```bash
+git fetch upstream && git switch -c exp/<날짜>-<이름> upstream/HEAD   # 1. 최신 중앙 기준으로 실험 브랜치
 python experiments/new.py <이름> --author 이름 --question "알고 싶은 것"
 # 2. README.md에 질문·가설·판정 기준을 쓴다
 git add experiments/<ID> && git commit -m "exp: <ID> 세팅" && git push -u origin HEAD
@@ -26,13 +43,15 @@ git commit -am "exp: <ID> 코드" && python experiments/<ID>/run.py
 # 4. README 결과·결론, meta.json의 status·conclusion을 채운다
 python experiments/index.py && python experiments/index.py --check
 git add experiments && git commit -m "exp: <ID> <결론 한 줄>" && git push
-# 5. GitHub에서 PR (템플릿 체크리스트가 뜬다). CI가 같은 점검을 다시 돌린다
+# 5. 중앙 레포로 PR (템플릿 체크리스트가 뜬다). CI가 같은 점검을 다시 돌린다
+gh pr create --repo Great-Grace/KOSMOS --fill
 ```
 
+- push는 항상 내 fork(`origin`)로 한다. 중앙 레포에는 PR로만 들어간다.
 - 2단계에서 세팅 커밋을 먼저 push하는 이유: 결과를 보기 전에 기준을 정했다는 기록이 원격에 남는다.
 - 3단계에서 코드를 먼저 커밋해야 `run.json`의 `git_dirty`가 false가 된다. true인 채로는 `--check`가 `완료`를 막는다.
-- 다른 사람과 `LOG.md`가 충돌하면 고치지 말고 `python experiments/index.py`를 다시 돌려 커밋한다.
-- push 권한이 없으면 레포를 fork해서 같은 순서로 하고, 원래 레포에 PR을 연다.
+- PR을 올리기 전에 중앙이 바뀌었으면 `git fetch upstream && git merge upstream/HEAD`를 한다. `LOG.md`가 충돌하면 손으로 고치지 말고 `python experiments/index.py`를 다시 돌려 커밋한다.
+- 처음 PR을 보내는 사람의 CI는 레포 주인이 승인해야 돈다(GitHub 기본 설정). 그 전에는 로컬 `--check` 결과를 PR에 적는다.
 
 ## `index.py --check`가 막는 것
 

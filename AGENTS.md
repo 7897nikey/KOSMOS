@@ -37,9 +37,10 @@ sl.summary(df[df.split == "validation"], beta)
 
 반드시 `experiments/README.md`의 순서를 따른다. 요약하면 다음과 같다.
 
-1. 실험마다 브랜치를 만들고 폴더를 만든다.
+0. 중앙 레포는 `Great-Grace/KOSMOS`다. 사람의 fork를 클론해서 작업한다(`origin` = fork, `upstream` = 중앙). `upstream`이 없으면 `experiments/README.md`의 "처음 한 번: fork"대로 설정한다. push는 fork로만 하고, 중앙에는 PR로만 보낸다.
+1. 최신 중앙 기준으로 실험마다 브랜치를 만들고 폴더를 만든다.
    ```bash
-   git switch -c exp/<날짜>-<영문-이름>
+   git fetch upstream && git switch -c exp/<날짜>-<영문-이름> upstream/HEAD
    .venv/bin/python experiments/new.py <영문-이름> --author <사람 이름> --question "<한 줄>"
    ```
 2. 돌리기 전에 그 폴더의 `README.md`에 질문·가설·판정 기준을 쓰고 커밋·push한다.
@@ -50,10 +51,10 @@ sl.summary(df[df.split == "validation"], beta)
    .venv/bin/python experiments/index.py
    .venv/bin/python experiments/index.py --check
    ```
-6. 커밋·push하고 PR을 연다. PR 템플릿 체크리스트를 채운다. GitHub Actions가 테스트와 `--check`를 다시 돌린다.
+6. fork에 push하고 `gh pr create --repo Great-Grace/KOSMOS --fill`로 중앙에 PR을 연다. PR 템플릿 체크리스트를 채운다. GitHub Actions가 테스트와 `--check`를 다시 돌린다.
 
 - `experiments/LOG.md`는 자동 생성 파일이라 손으로 고치지 않는다. 충돌하면 `index.py`를 다시 돌린다.
-- push 권한이 없으면 사람에게 알린다. 레포 소유자가 협업자로 추가하거나, fork에서 PR을 연다.
+- PR을 보내는 것은 사람 이름으로 남는 일이다. PR 제목·본문을 보여 주고 사람이 확인한 뒤에 연다.
 - 예시는 `experiments/20261115-baseline-calibration/`이다.
 
 ## 4. 지켜야 할 것

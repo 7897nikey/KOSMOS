@@ -35,5 +35,5 @@ meta = {"id": eid, "author": a.author, "date": today.isoformat(), "question": a.
 (d / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1) + "\n")
 subprocess.run([sys.executable, str(HERE / "index.py")], check=True)
 print(f"만듦: {d}")
-print(f"다음: git switch -c exp/{eid} → README.md 질문·가설 작성·커밋 → run.py 실행 → "
-      "README 결과 + meta.json(status·conclusion) → index.py → 커밋·push → PR")
+print(f"다음: (브랜치 exp/{eid}에서) README.md 질문·가설 작성·커밋 → run.py 실행 → "
+      "README 결과 + meta.json(status·conclusion) → index.py → 커밋 → fork에 push → 중앙(Great-Grace/KOSMOS)으로 PR")
