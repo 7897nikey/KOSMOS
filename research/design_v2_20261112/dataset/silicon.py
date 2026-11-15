@@ -99,20 +99,28 @@ def uniform_baseline(df):
 # ── 기록 ─────────────────────────────────────────────────
 def provenance(exclude=None):
     """결과를 다시 만들 수 있게 하는 최소 정보: 커밋, 작업트리 변경 여부, 데이터 해시, 버전.
-    exclude: 변경 여부에서 뺄 경로(이번 실행의 out/ 폴더).
+    exclude: 이번 실행의 out/ 폴더.
+
+    git_dirty가 True인 경우: (1) 추적 중인 파일이 어디서든 커밋 안 된 변경을 가짐,
+    (2) 이번 실험 폴더(out/ 제외) 안에 커밋 안 된 새 파일이 있음. 실험과 무관한 곳의 새 파일은 보지 않는다.
     """
     here = Path(__file__).resolve().parent
     git = lambda *a: subprocess.run(["git", *a], cwd=here, capture_output=True, text=True).stdout.strip()
     top = git("rev-parse", "--show-toplevel")
-    spec = []
-    if top and exclude:
-        rel = Path(exclude).resolve().relative_to(Path(top).resolve())
-        spec = [":(top)", f":(exclude,top){rel.as_posix()}"]
+    dirty = None
+    if top:
+        tracked = git("status", "--porcelain", "--untracked-files=no")
+        new_in_exp = ""
+        if exclude:
+            out = Path(exclude).resolve().relative_to(Path(top).resolve())
+            new_in_exp = git("ls-files", "--others", "--exclude-standard", "--",
+                             f":(top){out.parent.as_posix()}", f":(exclude,top){out.as_posix()}")
+        dirty = bool(tracked or new_in_exp)
     build = Path(__file__).with_name("kosmos_build.json")
     return {
         "time": datetime.datetime.now().isoformat(timespec="seconds"),
         "git_commit": git("rev-parse", "--short", "HEAD") or None,
-        "git_dirty": bool(git("status", "--porcelain", "--", *spec)) if top else None,
+        "git_dirty": dirty,
         "data_sha256": hashlib.sha256(DATA.read_bytes()).hexdigest()[:16],
         "data_built_at": json.loads(build.read_text()).get("built_at") if build.exists() else None,
         "python": platform.python_version(), "pandas": pd.__version__, "numpy": np.__version__,
