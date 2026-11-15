@@ -3,7 +3,7 @@ name: experiments
 on:
   pull_request:
   push:
-    branches: [exp/haiku-pilot-recovery, main]
+    branches: [main]
 
 jobs:
   check:
