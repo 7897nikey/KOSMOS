@@ -26,12 +26,15 @@ ALPHA = 1.0
 BETAS = np.round(np.arange(0.05, 1.5001, 0.005), 3)
 KEY = ["model", "persona", "var"]
 DATA = Path(__file__).with_name("kosmos_long.csv.gz")
+TEST_OPENED = False      # 이 프로세스에서 load(include_test=True)를 부른 적이 있으면 True → run.json에 기록
 LEVELS = ["c0", "L0", "L1"]
 
 
 def load(path=None, include_test=False):
     """test 문항은 사전등록상 k=100이 모인 뒤 한 번만 연다. 기본은 제외한다."""
+    global TEST_OPENED
     df = pd.read_csv(path or DATA)
+    TEST_OPENED = TEST_OPENED or include_test
     return df if include_test else df[df["split"] != "test"].reset_index(drop=True)
 
 
@@ -124,6 +127,7 @@ def save_run(out_dir, params=None, tables=None, notes=""):
         t.to_csv(out / f"{name}.csv", float_format="%.6g")
     fix = lambda o: {"|".join(map(str, k)) if isinstance(k, tuple) else k: fix(v) for k, v in o.items()} \
         if isinstance(o, dict) else o
-    run = {"params": fix(params or {}), "tables": sorted(tables or {}), "notes": notes, **provenance(exclude=out)}
+    run = {"params": fix(params or {}), "tables": sorted(tables or {}), "notes": notes,
+           "include_test": TEST_OPENED, **provenance(exclude=out)}
     (out / "run.json").write_text(json.dumps(run, ensure_ascii=False, indent=1, default=str))
     return run

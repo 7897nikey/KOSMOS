@@ -1,7 +1,7 @@
 # 실험 기록
 
-한 실험 = 한 폴더. 새 실험은 `python experiments/new.py <이름> --author 이름 --question "..."`로 만든다.
-끝나면 이 표의 **결론**과 **상태**(진행 → 완료 / 중단)를 채운다. 기각된 결과도 지우지 않는다.
+자동 생성 파일이다. 손으로 고치지 말고 각 실험의 `meta.json`을 고친 뒤 `python experiments/index.py`를 돌린다.
+새 실험: `python experiments/new.py <이름> --author 이름 --question "..."`. 기각된 결과도 지우지 않는다.
 
 | 날짜 | 실험 | 담당 | 질문 | 결론 | 상태 |
 |---|---|---|---|---|---|

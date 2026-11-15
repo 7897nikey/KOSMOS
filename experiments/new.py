@@ -1,11 +1,14 @@
-"""새 실험 폴더를 만들고 LOG.md에 한 줄 추가한다.
+"""새 실험 폴더를 만들고 LOG.md를 다시 만든다.
 
   python experiments/new.py <짧은-영문-이름> --author 이름 --question "알고 싶은 것 한 줄"
-  → experiments/YYYYMMDD-<이름>/ (README.md, run.py) 생성
+  → experiments/YYYYMMDD-<이름>/ (README.md, run.py, meta.json) 생성, LOG.md 갱신
 """
 import argparse
 import datetime
+import json
 import re
+import subprocess
+import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -27,7 +30,10 @@ for f in (HERE / "_template").iterdir():
     text = f.read_text().replace("{ID}", eid).replace("{AUTHOR}", a.author).replace("{DATE}", today.isoformat())
     (d / f.name).write_text(text)
 
-log = HERE / "LOG.md"
-q = a.question.replace("|", "/") or "(README에 작성)"
-log.write_text(log.read_text().rstrip("\n") + f"\n| {today} | [{eid}]({eid}/) | {a.author} | {q} | | 진행 |\n")
-print(f"만듦: {d}\n다음: README.md의 질문·가설을 먼저 쓰고, run.py를 고쳐 돌린 뒤 결과·결론과 LOG.md 상태를 채운다.")
+meta = {"id": eid, "author": a.author, "date": today.isoformat(), "question": a.question,
+        "status": "진행", "conclusion": ""}
+(d / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1) + "\n")
+subprocess.run([sys.executable, str(HERE / "index.py")], check=True)
+print(f"만듦: {d}")
+print(f"다음: git switch -c exp/{eid} → README.md 질문·가설 작성·커밋 → run.py 실행 → "
+      "README 결과 + meta.json(status·conclusion) → index.py → 커밋·push → PR")

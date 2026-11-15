@@ -1,0 +1,20 @@
+name: experiments
+
+on:
+  pull_request:
+  push:
+    branches: [exp/haiku-pilot-recovery, main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-analysis.txt
+      - name: 분석 환경 점검 (frozen β* 재현)
+        run: python -m pytest -q tests/test_silicon.py
+      - name: 실험 기록 점검 (meta.json, LOG.md, run.json, 용량)
+        run: python experiments/index.py --check

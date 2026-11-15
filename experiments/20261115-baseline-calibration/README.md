@@ -4,7 +4,7 @@
 |---|---|
 | 담당 | 태우 |
 | 시작 | 2026-11-15 |
-| 상태 | 완료 |
+| 상태·결론 | `meta.json` |
 | 데이터 | `research/design_v2_20261112/dataset/kosmos_long.csv.gz` (해시는 `out/run.json`) |
 
 ## 질문 (돌리기 전에 쓴다)

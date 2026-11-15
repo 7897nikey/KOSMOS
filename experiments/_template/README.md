@@ -4,7 +4,7 @@
 |---|---|
 | 담당 | {AUTHOR} |
 | 시작 | {DATE} |
-| 상태 | 진행 |
+| 상태·결론 | `meta.json` (`status`: 진행/완료/중단, `conclusion`: 한 줄) |
 | 데이터 | `research/design_v2_20261112/dataset/kosmos_long.csv.gz` (해시는 `out/run.json`) |
 
 ## 질문 (돌리기 전에 쓴다)

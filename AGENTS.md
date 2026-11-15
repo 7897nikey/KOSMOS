@@ -37,15 +37,24 @@ sl.summary(df[df.split == "validation"], beta)
 
 반드시 `experiments/README.md`의 순서를 따른다. 요약하면 다음과 같다.
 
-1. 실험 폴더를 만든다.
+1. 실험마다 브랜치를 만들고 폴더를 만든다.
    ```bash
+   git switch -c exp/<날짜>-<영문-이름>
    .venv/bin/python experiments/new.py <영문-이름> --author <사람 이름> --question "<한 줄>"
    ```
-2. 돌리기 전에 그 폴더의 `README.md`에 질문·가설·판정 기준을 쓰고 커밋한다.
-3. `run.py`를 고쳐 실행한다. `sl.save_run()`이 `out/`에 표와 `run.json`(커밋·데이터 해시·파라미터)을 남긴다.
-4. `out/`의 숫자로 결과·결론을 채우고, `experiments/LOG.md`의 결론·상태를 고친 뒤 커밋한다.
+2. 돌리기 전에 그 폴더의 `README.md`에 질문·가설·판정 기준을 쓰고 커밋·push한다.
+3. `run.py`를 고쳐 커밋한 뒤 실행한다. `sl.save_run()`이 `out/`에 표와 `run.json`을 남긴다(커밋, 데이터 해시, 파라미터, test 사용 여부).
+4. `out/`의 숫자로 README의 결과·결론을 채운다. `meta.json`의 `status`와 `conclusion`을 고친다.
+5. 아래 두 명령을 차례로 돌려 통과시킨다.
+   ```bash
+   .venv/bin/python experiments/index.py
+   .venv/bin/python experiments/index.py --check
+   ```
+6. 커밋·push하고 PR을 연다. PR 템플릿 체크리스트를 채운다. GitHub Actions가 테스트와 `--check`를 다시 돌린다.
 
-예시는 `experiments/20261115-baseline-calibration/`이다.
+- `experiments/LOG.md`는 자동 생성 파일이라 손으로 고치지 않는다. 충돌하면 `index.py`를 다시 돌린다.
+- push 권한이 없으면 사람에게 알린다. 레포 소유자가 협업자로 추가하거나, fork에서 PR을 연다.
+- 예시는 `experiments/20261115-baseline-calibration/`이다.
 
 ## 4. 지켜야 할 것
 

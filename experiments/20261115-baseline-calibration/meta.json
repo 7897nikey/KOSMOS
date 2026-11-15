@@ -1,0 +1,8 @@
+{
+ "id": "20261115-baseline-calibration",
+ "author": "태우",
+ "date": "2026-11-15",
+ "question": "현재 데이터에서 3모델의 β*와 validation TVD 기준선은?",
+ "status": "완료",
+ "conclusion": "β* 재현 일치. 보정 후 L0·L1 EXAONE 최저(0.243/0.248)"
+}
