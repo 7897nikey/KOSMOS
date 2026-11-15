@@ -6,4 +6,4 @@
 | 날짜 | 실험 | 담당 | 질문 | 결론 | 상태 |
 |---|---|---|---|---|---|
 | 2026-11-15 | [20261115-baseline-calibration](20261115-baseline-calibration/) | 태우 | 현재 데이터에서 3모델의 β*와 validation TVD 기준선은? | β* 재현 일치. 보정 후 L0·L1 EXAONE 최저(0.243/0.248) | 완료 |
-| 2026-11-15 | [20261115-baseline-calibration-k98](20261115-baseline-calibration-k98/) | 태우 | EXAONE k≈98로 늘린 DataFrame에서 3모델 β*와 validation TVD 기준선은 어떻게 바뀌는가? |  | 진행 |
+| 2026-11-15 | [20261115-baseline-calibration-k98](20261115-baseline-calibration-k98/) | 태우 | EXAONE k≈98로 늘린 DataFrame에서 3모델 β*와 validation TVD 기준선은 어떻게 바뀌는가? | EXAONE k 72→98에도 보정 후 TVD 변화 0.01 미만(L0 0.239, L1 0.246). DeepSeek·Haiku 재현 일치 | 완료 |

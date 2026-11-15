@@ -1,0 +1,30 @@
+{
+ "params": {
+  "beta_star": {
+   "deepseek|c0": 0.315,
+   "deepseek|L0": 0.315,
+   "deepseek|L1": 0.31,
+   "exaone|c0": 0.32,
+   "exaone|L0": 0.355,
+   "exaone|L1": 0.37,
+   "haiku|c0": 0.24,
+   "haiku|L0": 0.245,
+   "haiku|L1": 0.25
+  },
+  "alpha": 1.0
+ },
+ "tables": [
+  "validation_tvd_beta1",
+  "validation_tvd_beta_star"
+ ],
+ "notes": "",
+ "include_test": false,
+ "time": "2026-11-15T14:38:14",
+ "git_commit": "b1af917",
+ "git_dirty": false,
+ "data_sha256": "eff54b43fe0cacc1",
+ "data_built_at": "2026-11-15T14:37:21",
+ "python": "3.13.13",
+ "pandas": "2.3.1",
+ "numpy": "2.3.1"
+}

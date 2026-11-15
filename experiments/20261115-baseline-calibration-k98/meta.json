@@ -3,6 +3,6 @@
  "author": "태우",
  "date": "2026-11-15",
  "question": "EXAONE k≈98로 늘린 DataFrame에서 3모델 β*와 validation TVD 기준선은 어떻게 바뀌는가?",
- "status": "진행",
- "conclusion": ""
+ "status": "완료",
+ "conclusion": "EXAONE k 72→98에도 보정 후 TVD 변화 0.01 미만(L0 0.239, L1 0.246). DeepSeek·Haiku 재현 일치"
 }
