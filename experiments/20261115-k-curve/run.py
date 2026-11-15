@@ -79,7 +79,7 @@ for ax, lv in zip(axes, sl.LEVELS):
     ax.grid(alpha=0.3)
 axes[0].set_ylabel("보정 후 validation TVD (낮을수록 좋음)")
 axes[0].legend(fontsize=8)
-fig.suptitle("k에 따른 보정 후 TVD (k마다 β 재선택, 5회 반복 평균±sd)")
+fig.suptitle("k에 따른 보정 후 TVD (k마다 beta 재선택, 5회 반복 평균±sd)")
 fig.tight_layout()
 (HERE / "out").mkdir(exist_ok=True)
 fig.savefig(HERE / "out/k_curve.png", dpi=130)
