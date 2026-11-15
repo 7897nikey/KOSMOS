@@ -1,0 +1,8 @@
+{
+ "id": "20261115-k-curve",
+ "author": "태우",
+ "date": "2026-11-15",
+ "question": "모델별로 프롬프트당 표본 수 k를 늘리면 보정 후 validation TVD가 얼마나 줄어드는가?",
+ "status": "진행",
+ "conclusion": ""
+}
