@@ -28,7 +28,8 @@ def test_table_shape(df):
     assert one.groupby("model").size().eq(12 * 197).all()       # 페르소나 12 × 문항 197
     h = df.groupby(sl.KEY)["human_p"].sum()
     assert np.allclose(h, 1, atol=1e-4)
-    assert (df.groupby(sl.KEY)["count"].sum() == one.set_index(sl.KEY)["n_valid"]).all()
+    total = df.groupby(sl.KEY)["count"].sum()
+    assert total.eq(one.set_index(sl.KEY)["n_valid"].reindex(total.index)).all()
 
 
 def test_calibrated_probs_sum_to_one(df):
