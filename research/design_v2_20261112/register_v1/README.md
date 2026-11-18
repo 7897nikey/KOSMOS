@@ -1,6 +1,9 @@
-# register_v1 — 인칭·화계 프롬프트 변환 초안
+# register_v1 — 인칭·화계 프롬프트 (확정 2026-11-19)
 
-2×2 설계(추론/비추론 × 인칭/화계)의 인칭·화계 축에 쓸 프롬프트 초안이다. **검수 전 초안**이라 파일 이름에 `_draft`가 붙어 있다.
+2×2 설계(추론/비추론 × 인칭/화계)의 인칭·화계 축에 쓸 프롬프트다. 사람 검수(아래 '검수')를 반영해 확정했다.
+
+- 확정 파일: `out/prompts_register_v1.csv` (1,476행, 신규 984행은 `reuse_existing=False`)
+- sha256: `1d1530ca17ee84b15fc1728ede4317541fc90d5ba212223e849a0073f7d06636` (`out/summary.json`의 `prompts_sha256`과 같아야 한다)
 
 ## 조건
 
@@ -43,10 +46,21 @@ PYTHONUTF8=1 python research/design_v2_20261112/register_v1/build_register_promp
 |---|---|
 | `build_register_prompts.py` | 변환·점검·조립·대조표 |
 | `corrections.csv` | 규칙이 못 한 곳을 고친 기록(근거 포함) |
+| `review_log.csv` | 도입부 93종 사람 검수 결과(OK/수정·의견). 대조표 검수 칸에 들어간다 |
 | `out/review_table.xlsx` | 검수용 대조표 (도입부 93종 × B·C·D) |
-| `out/prompts_register_v1_draft.csv` | 조립된 프롬프트 |
+| `out/prompts_register_v1.csv` | 확정 프롬프트. `prompts_v2.csv`와 같은 열(probe_id·phase·level·cell_id·var·codes·system·user)에 cond·person·register·reuse_existing·source_probe_id를 더했다 |
 | `out/lead_table.csv`, `out/summary.json` | 도입부별 규칙안·최종안·점검 결과, 요약 수치 |
 
-## 검수 후
+## 검수 (2026-11-19, 김태우)
 
-검수 의견을 `corrections.csv`에 반영하고 스크립트를 다시 돌린다. 확정하면 `_draft`를 떼고 해시를 기록한다. 설계 고정 파일(`prompts_v2.csv` 등)은 수정하지 않는다.
+대조표 v2(Slack #26-2_nlp, -시- 제거판)를 93행 모두 읽고, 자동 점검(해라체 존댓말 잔존, 3인칭 2인칭 잔존)을 다시 돌렸다. 81행 OK, 12행 수정.
+
+| 유형 | 도입부 | 수정 |
+|---|---|---|
+| 판단 주체가 응답 모델로 읽힘 (C·D) | BEFAIR, HAPPINSS, FINPROS, FINREL05, SATFIN, LIFESAT, KIDSOL06, GOVSPD1, SIMNONKN | '귀하'를 '이 사람'으로만 바꾸면 생략된 "생각하다/만족하다"의 주어가 듣는 사람(모델)으로 남는다. 예: "사람들은 기회만 있으면 이 사람을 이용하려든다고 생각합니까"는 이 사람에 대한 모델의 판단을 묻는다. '이 사람은'을 주어로 명시하고 문장 안 재귀는 '자신/자기'로 바꿨다 |
+| '이 사람' 반복 (C·D) | LOTR323, RESSECUR | "이 사람은 이 사람의 미래" → "자신의 미래" |
+| 진술문 높임 지칭 (C) | EMPLY | '이 분' → '그 사람'. 쟁점 1(3인칭 높임 없음)과 B·D에 맞춤 |
+
+B(당신)는 '당신'이 곧 듣는 사람이라 같은 문제가 없어 고치지 않았다. 자동 점검의 출처 칸에서 D가 '보정'인 어미 변환 행(CESD1 등)은 규칙 목록이 C의 -시- 형태를 못 받아 손으로 고친 것으로, 내용은 B와 같다.
+
+다시 고칠 때는 `corrections.csv`·`review_log.csv`를 고치고 스크립트를 다시 돌린 뒤 위 해시를 갱신한다. 설계 고정 파일(`prompts_v2.csv` 등)은 수정하지 않는다.

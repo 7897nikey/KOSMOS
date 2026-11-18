@@ -15,6 +15,7 @@ prompts_v2.csv(설계 고정 파일, 읽기만 한다)의 c0·L0 프롬프트를
 """
 import csv
 import difflib
+import hashlib
 import re
 from pathlib import Path
 
@@ -108,7 +109,7 @@ for r in src.itertuples():
     assert m, r.probe_id
     stem = m["stem"]
     lead, sep, stmt = stem.partition("...")
-    rows.append(dict(probe_id=r.probe_id, level=r.level, var=r.var, codes=r.codes, system=r.system, user=r.user,
+    rows.append(dict(probe_id=r.probe_id, level=r.level, cell_id=r.cell_id, var=r.var, codes=r.codes, system=r.system, user=r.user,
                      persona=m["persona"], lead=lead, sep=sep, stmt=stmt, opts=m["opts"], instr=m["instr"]))
 P = pd.DataFrame(rows)
 assert (P.loc[P.level == "L0", "persona"] == PERSONA["A"]).all()
@@ -208,10 +209,14 @@ for r in P.itertuples():
         system = SYSTEM[reg]
         if c == "A":
             assert user == r.user and system == r.system, f"A가 원문과 다름: {r.probe_id}"
-        out_rows.append(dict(probe_id=f"{r.level}__{r.var}__{c}", level=r.level, var=r.var, cond=c, person=pron,
-                             register=reg, codes=r.codes, reuse_existing=(c == "A"), system=system, user=user))
+        # 실행기(run_deepseek_eco.py·run_haiku_batch.py)가 prompts_v2.csv와 같은 열로 읽을 수 있게 phase·cell_id를 둔다.
+        out_rows.append(dict(probe_id=f"{r.level}__{r.var}__{c}", phase=1, level=r.level, cell_id=r.cell_id, var=r.var,
+                             codes=r.codes, cond=c, person=pron, register=reg, reuse_existing=(c == "A"),
+                             source_probe_id=r.probe_id, system=system, user=user))
 O = pd.DataFrame(out_rows)
-O.to_csv(OUT / "prompts_register_v1_draft.csv", index=False, encoding="utf-8")
+FINAL = OUT / "prompts_register_v1.csv"
+O.to_csv(FINAL, index=False, encoding="utf-8")
+assert O.probe_id.is_unique
 
 # ── (4) 검수용 대조표 ───────────────────────────────
 from openpyxl import Workbook  # noqa: E402
@@ -224,9 +229,16 @@ head = ["lead_id", "적용 문항 수", "적용 문항", "A 당신·하십시오
         "C 이 사람·하십시오체", "C 출처", "C 자동점검", "D 이 사람·해라체", "D 출처", "D 자동점검",
         "검수자", "검수 결과(OK/수정)", "수정 제안", "메모"]
 ws.append(head)
+# 사람 검수 기록(review_log.csv)이 있으면 검수자·결과·의견 칸을 채운다.
+rev_path = HERE / "review_log.csv"
+rev = pd.read_csv(rev_path, dtype=str).fillna("").set_index("lead_id") if rev_path.exists() else None
+if rev is not None:
+    assert set(rev.index) == set(leads.lead_id), "review_log.csv의 lead_id가 도입부 목록과 다름"
 for _, r in leads.iterrows():
+    rv = rev.loc[r.lead_id] if rev is not None else {"reviewer": "", "result": "", "comment": ""}
     ws.append([r.lead_id, int(r.n_items), r.vars, r.A, r.B, r.B_src, r.B_check, r.C, r.C_src, r.C_check,
-               r.D, r.D_src, r.D_check, "", "", "", r.B_note or r.C_note or r.D_note])
+               r.D, r.D_src, r.D_check, rv["reviewer"], rv["result"], rv["comment"],
+               r.B_note or r.C_note or r.D_note])
 widths = [11, 7, 22, 48, 48, 6, 18, 48, 6, 18, 48, 6, 18, 8, 10, 30, 30]
 for i, w in enumerate(widths):
     ws.column_dimensions[chr(65 + i)].width = w
@@ -279,6 +291,9 @@ summary = {
     "flagged": {c: int((leads[f"{c}_check"] != "").sum()) for c in "BCD"},
     "options_with_honorific": len(opt_hon), "statements_with_honorific": len(stmt_hon),
     "A_matches_original": True,
+    "prompts_file": FINAL.name,
+    "prompts_sha256": hashlib.sha256(FINAL.read_bytes()).hexdigest(),
+    "corrections_sha256": hashlib.sha256(corr_path.read_bytes()).hexdigest(),
 }
 print(summary)
 for c in "BCD":
