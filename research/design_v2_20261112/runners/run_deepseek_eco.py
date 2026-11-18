@@ -10,17 +10,30 @@
   logprobs             제공 안 됨 → 표본 반복으로 분포 추정
 
 표본 순서: 표본 번호를 바깥 루프로 돈다. 멈춰도 모든 프롬프트의 표본 수가 고르다.
+인칭·화계 실험 (2026-11-19 추가): --prompts register
+  register_v1/out/prompts_register_v1.csv(확정본, sha256은 register_v1/README.md)에서
+  신규 조건(reuse_existing=False, c0 B + L0 B·C·D = 984개)만 돈다. A 조건은 기존 데이터를 쓴다.
+  출력 파일 이름에 _register가 붙는다. 해시가 README와 다르면 멈춘다.
+
 이어 돌리기: 출력 파일에 이미 있는 (probe_id, sample_idx)는 건너뛴다(api_error 제외).
+
+추론 low 모드 (2026-11-18 추가): --reasoning low → reasoning_effort "low", max_completion_tokens 4000.
+  출력 파일 이름에 _low가 붙어 추론 끔 결과와 섞이지 않는다. 추론 본문(reasoning_content)도 저장한다.
+스모크: --smoke N → 1단계 프롬프트 중 N개를 시드 고정으로 뽑아 표본 0번만 돈다(파일 이름에 _smoke).
+  Haiku 실행기도 같은 함수(smoke_probes)로 같은 프롬프트를 뽑는다.
 
 사용 (KOSMOS 루트에서):
   set -a; . ./.env.opengateway; set +a
   python3 research/design_v2_20261112/runners/run_deepseek_eco.py --test 5
   python3 research/design_v2_20261112/runners/run_deepseek_eco.py            # 1단계 본실행
+  python3 research/design_v2_20261112/runners/run_deepseek_eco.py --reasoning low --smoke 300
+  python3 research/design_v2_20261112/runners/run_deepseek_eco.py --reasoning low --k 50   # k=50 (2026-11-18 결정)
 """
 from __future__ import annotations
 
 import argparse
 import concurrent.futures
+import http.client
 import csv
 import datetime
 import json
@@ -29,21 +42,40 @@ import re
 import sys
 import threading
 import time
-import urllib.error
-import urllib.request
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 DESIGN = HERE.parent
 ROOT = DESIGN.parents[1]
 PROMPTS = DESIGN / "prompts_v2.csv"
+REGISTER_PROMPTS = DESIGN / "register_v1" / "out" / "prompts_register_v1.csv"
+REGISTER_SHA256 = "1d1530ca17ee84b15fc1728ede4317541fc90d5ba212223e849a0073f7d06636"
+
+
+def read_prompts(which):
+    """v2: prompts_v2.csv 전체. register: 인칭·화계 확정본 중 신규 조건만(해시 확인)."""
+    if which == "v2":
+        return list(csv.DictReader(PROMPTS.open(encoding="utf-8-sig")))
+    import hashlib
+    got = hashlib.sha256(REGISTER_PROMPTS.read_bytes()).hexdigest()
+    if got != REGISTER_SHA256:
+        sys.exit(f"{REGISTER_PROMPTS.name} 해시가 확정본과 다릅니다({got[:12]}…). 중단합니다.")
+    return [r for r in csv.DictReader(REGISTER_PROMPTS.open(encoding="utf-8-sig")) if r["reuse_existing"] == "False"]
 OUT_DIR = ROOT / "raw" / "v2"
 
-URL = "https://apis.opengateway.ai/v1/chat/completions"
+HOST, PATH = "apis.opengateway.ai", "/v1/chat/completions"
 MODEL = "deepseek/deepseek-v4.1-flash-eco"
 PARAMS = {"reasoning_effort": "none", "temperature": 1.0, "max_completion_tokens": 16}
+PARAMS_LOW = {"reasoning_effort": "low", "temperature": 1.0, "max_completion_tokens": 4000}
 PRICE = {"input": 0.030, "cached": 0.0006, "output": 0.120}  # USD / 1M tokens, 2026-11-12 할인가
 K = 100
+SMOKE_SEED = 20261118
+
+
+def smoke_probes(probes, n, seed=SMOKE_SEED):
+    """스모크용 프롬프트 n개. 단계 비율(c0:L0:L1 = 1:1:10)이 대략 유지되는 단순 무작위 추출."""
+    import random
+    return random.Random(seed).sample(probes, n)
 
 SINGLE_NUM_RE = re.compile(r"^\s*(?:정답|답|번호)?\s*[:：]?\s*(\d+)\s*\.?\s*$")
 REFUSAL_RE = re.compile(
@@ -90,6 +122,35 @@ class Gate:
             self.until = max(self.until, time.monotonic() + s)
 
 
+DEADLINE = 90  # 요청 하나의 총 소요 상한(초). 넘으면 연결을 끊고 다시 보낸다 (2026-11-18: Eco가 연결을 몇 시간 붙잡는 일이 있었다)
+
+
+def post(body, key):
+    """POST 한 번. DEADLINE 안에 끝나지 않으면 소켓을 닫아 끊는다. 반환: (상태코드, 헤더, 본문)."""
+    conn = http.client.HTTPSConnection(HOST, timeout=60)
+    box = {}
+
+    def run():
+        try:
+            conn.request("POST", PATH, body=body, headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"})
+            r = conn.getresponse()
+            box["out"] = (r.status, r.headers, r.read())
+        except Exception as e:  # noqa: BLE001
+            box["err"] = e
+
+    t = threading.Thread(target=run, daemon=True)
+    t.start()
+    t.join(DEADLINE)
+    if t.is_alive():
+        conn.close()
+        t.join(5)
+        raise TimeoutError(f"총 {DEADLINE}초 초과")
+    conn.close()
+    if "err" in box:
+        raise box["err"]
+    return box["out"]
+
+
 def call(key, gate, system, user, log):
     body = json.dumps({"model": MODEL, **PARAMS, "messages": [
         {"role": "system", "content": system}, {"role": "user", "content": user}]}).encode("utf-8")
@@ -97,35 +158,38 @@ def call(key, gate, system, user, log):
     attempt = 0
     while attempt < 10:
         gate.wait()
-        req = urllib.request.Request(URL, data=body, method="POST", headers={
-            "Authorization": f"Bearer {key}", "Content-Type": "application/json"})
         t0 = time.monotonic()
         try:
-            with urllib.request.urlopen(req, timeout=300) as r:
-                return json.loads(r.read()), "", time.monotonic() - t0
-        except urllib.error.HTTPError as e:
-            msg = e.read().decode("utf-8", "replace")[:300]
-            err = f"HTTP {e.code}: {msg}"
-            if e.code in (401, 402, 403):
-                log(f"중단: {err}")
-                os._exit(2)
-            ra = e.headers.get("retry-after")
-            if e.code == 429 and "concurrency_limit" in msg:
-                # 키당 동시 한도: 요청이 업스트림에 가지 않았다. 이 요청만 기다렸다 재시도하고 시도 횟수는 세지 않는다.
-                RETRY["429"] += 1
-                time.sleep(float(ra) if ra else 1.0)
-                continue
-            if e.code in (429, 529) or e.code >= 500:
-                RETRY["429" if e.code == 429 else "529" if e.code == 529 else "5xx"] += 1
-                gate.pause(float(ra) if ra else min(60, 2 ** attempt))
-                attempt += 1
-                continue
-            return None, err, time.monotonic() - t0
-        except Exception as e:
+            status, headers, raw = post(body, key)
+        except Exception as e:  # 네트워크 오류·총 소요 초과
             err = f"{type(e).__name__}: {e}"
             RETRY["net"] += 1
-            gate.pause(min(60, 2 ** attempt))
+            w = min(60, 2 ** attempt)
+            log(f"대기 {w}s: 네트워크 {err[:120]}")
+            gate.pause(w)
             attempt += 1
+            continue
+        if status == 200:
+            return json.loads(raw), "", time.monotonic() - t0
+        msg = raw.decode("utf-8", "replace")[:300]
+        err = f"HTTP {status}: {msg}"
+        if status in (401, 402, 403):
+            log(f"중단: {err}")
+            os._exit(2)
+        ra = headers.get("retry-after")
+        if status == 429 and "concurrency_limit" in msg:
+            # 키당 동시 한도: 요청이 업스트림에 가지 않았다. 이 요청만 기다렸다 재시도하고 시도 횟수는 세지 않는다.
+            RETRY["429"] += 1
+            time.sleep(float(ra) if ra else 1.0)
+            continue
+        if status in (429, 529) or status >= 500:
+            RETRY["429" if status == 429 else "529" if status == 529 else "5xx"] += 1
+            wait = min(120.0, float(ra) if ra else min(60, 2 ** attempt))   # 대기 상한 120초
+            log(f"대기 {wait:.0f}s: HTTP {status} retry-after={ra} {msg[:120]!r}")
+            gate.pause(wait)
+            attempt += 1
+            continue
+        return None, err, time.monotonic() - t0
     return None, err, 0.0
 
 
@@ -136,21 +200,33 @@ def main():
     ap.add_argument("--test", type=int, default=0, help="n건만 돌려 확인 (별도 파일에 저장)")
     ap.add_argument("--model", choices=("eco", "ultrafast"), default="eco",
                     help="eco = deepseek-v4.1-flash-eco (기본), ultrafast = deepseek-v4.1-flash-ultrafast")
+    ap.add_argument("--reasoning", choices=("none", "low"), default="none",
+                    help="none = 추론 끔(1단계 설정), low = reasoning_effort low")
+    ap.add_argument("--prompts", choices=("v2", "register"), default="v2",
+                    help="v2: 설계 v2 프롬프트, register: 인칭·화계 신규 조건 984개")
+    ap.add_argument("--smoke", type=int, default=0, help="프롬프트 n개 × 표본 1회만 돈다 (별도 파일)")
+    ap.add_argument("--k", type=int, default=K, help="프롬프트당 표본 수 상한 (표본 번호 0~k-1). 나중에 더 큰 k로 이어 돌릴 수 있다")
     args = ap.parse_args()
-    global MODEL, PRICE
+    global MODEL, PRICE, PARAMS
     if args.model == "ultrafast":
         MODEL = "deepseek/deepseek-v4.1-flash-ultrafast"
         PRICE = {"input": 0.090, "cached": 0.0018, "output": 0.360}  # 2026-11-12 10:00 KST 전 할인가(-70%)
+    if args.reasoning == "low":
+        PARAMS = PARAMS_LOW
 
     key = os.environ.get("OPENGATEWAY_API_KEY", "").strip()
     if not key:
         sys.exit("OPENGATEWAY_API_KEY가 없습니다.  set -a; . ./.env.opengateway; set +a")
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    tag = f"deepseek_{args.model}_p{args.phase}" + ("_test" if args.test else "")
+    tag = (f"deepseek_{args.model}" + ("_low" if args.reasoning == "low" else "") + ("_register" if args.prompts == "register" else "") + f"_p{args.phase}"
+           + ("_smoke" if args.smoke else "") + ("_test" if args.test else ""))
     out, log_path = OUT_DIR / f"{tag}.jsonl", OUT_DIR / f"{tag}.log"
 
-    probes = [r for r in csv.DictReader(PROMPTS.open(encoding="utf-8-sig")) if int(r["phase"]) == args.phase]
+    probes = [r for r in read_prompts(args.prompts) if int(r["phase"]) == args.phase]
+    n_samples = args.k
+    if args.smoke:
+        probes, n_samples = smoke_probes(probes, args.smoke), 1
     done = set()
     if out.exists():
         for line in out.open(encoding="utf-8"):
@@ -158,7 +234,7 @@ def main():
                 r = json.loads(line)
                 if r.get("invalid_type") != "api_error":
                     done.add((r["probe_id"], r["sample_idx"]))
-    tasks = [(s, p) for s in range(K) for p in probes if (p["probe_id"], s) not in done]
+    tasks = [(s, p) for s in range(n_samples) for p in probes if (p["probe_id"], s) not in done]
     if args.test:
         tasks = tasks[: args.test]
 
@@ -171,7 +247,7 @@ def main():
             with log_path.open("a", encoding="utf-8") as f:
                 f.write(line + "\n")
 
-    total = len(probes) * K
+    total = len(probes) * n_samples
     log(f"{MODEL} | 단계 {args.phase} | 설정 {json.dumps(PARAMS)} | 전체 {total}건 중 완료 {len(done)}건, "
         f"이번 실행 {len(tasks)}건 | 동시 {args.workers}")
     if not tasks:
@@ -181,6 +257,7 @@ def main():
     gate = Gate()
     st = {"n": 0, "valid": 0, "err": 0, "in": 0, "cached": 0, "out": 0, "rt": 0}
     t0 = time.monotonic()
+    last_log = [t0]  # 1분마다 진행 기록 (2026-11-18)
     run_date = datetime.date.today().isoformat()
 
     with out.open("a", encoding="utf-8") as fout:
@@ -202,6 +279,9 @@ def main():
                     inv = "length"
                 u = resp.get("usage") or {}
                 rt = (u.get("completion_tokens_details") or {}).get("reasoning_tokens", 0) or 0
+                if args.reasoning == "low":
+                    rc = msg.get("reasoning_content") or msg.get("reasoning") or ""
+                    rec.update({"reasoning_text": rc if isinstance(rc, str) else json.dumps(rc, ensure_ascii=False)})
                 rec.update({"raw_text": raw, "parsed": parsed, "valid": valid, "invalid_type": inv,
                             "finish_reason": ch.get("finish_reason"),
                             "input_tokens": u.get("prompt_tokens", 0),
@@ -219,15 +299,17 @@ def main():
                     st[k_] += rec.get(f_, 0) or 0
                 n = st["n"]
             if args.test:
-                log(f"시험 {n}: {p['probe_id']} s{s} → {rec['raw_text']!r} ({rec['invalid_type'] or 'ok'}, {lat:.1f}s)")
-            elif n % 2000 == 0 or n == len(tasks):
+                log(f"시험 {n}: {p['probe_id']} s{s} → {rec['raw_text']!r} ({rec['invalid_type'] or 'ok'}, "
+                    f"추론 {rec.get('reasoning_tokens', 0)}토큰, {lat:.1f}s)")
+            elif n % (50 if args.smoke else 2000) == 0 or n == len(tasks) or time.monotonic() - last_log[0] > 60:
+                last_log[0] = time.monotonic()
                 el = time.monotonic() - t0
                 cost = ((st["in"] - st["cached"]) * PRICE["input"] + st["cached"] * PRICE["cached"]
                         + st["out"] * PRICE["output"]) / 1e6
                 log(f"진행 {len(done) + n}/{total} | 유효 {st['valid'] / n:.1%} | api_error {st['err']} | "
                     f"추론 토큰 합 {st['rt']} | 누적 비용 ${cost:.3f} | {n / el:.1f}건/s | "
                     f"남은 시간 약 {(len(tasks) - n) * el / n / 60:.0f}분 | 재시도 {RETRY}")
-                if st["rt"] > 0:
+                if st["rt"] > 0 and args.reasoning == "none":
                     log("경고: 추론 토큰이 발생했습니다. 설정을 확인하세요.")
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as ex:

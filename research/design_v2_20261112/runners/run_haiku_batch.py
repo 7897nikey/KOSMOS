@@ -21,8 +21,19 @@
   $R estimate                      # 실측 토큰으로 전체 비용 추정
   $R submit --samples 1:100 --chunk 10   # 본 배치 (표본 10개씩 배치 하나)
   $R wait
+
+추론 low 모드·스모크 (2026-11-18 추가, 서브명령 앞에 둔다):
+  $R --thinking low --smoke 300 submit --samples 0:1 --chunk 1 --budget 0.5
+  $R --thinking low --smoke 300 wait
+  --thinking low|medium → thinking {"type": "adaptive"}, output_config.effort 해당 값, max_tokens 4000.
+  원장·결과 파일은 haiku_low_p1_smoke_batches.json / haiku_low_p1_smoke.jsonl로 따로 쓴다.
+  --smoke N은 DeepSeek 실행기와 같은 smoke_probes()로 같은 프롬프트 N개를 고른다.
 """
 from __future__ import annotations
+# 인칭·화계 실험 (2026-11-19 추가): --prompts register
+#   register_v1/out/prompts_register_v1.csv(확정본, sha256은 register_v1/README.md)에서
+#   신규 조건(reuse_existing=False, c0 B + L0 B·C·D = 984개)만 돈다. A 조건은 기존 데이터를 쓴다.
+#   출력 파일 이름에 _register가 붙는다. 해시가 README와 다르면 멈춘다.
 
 import argparse
 import csv
@@ -41,9 +52,22 @@ HERE = Path(__file__).resolve().parent
 DESIGN = HERE.parent
 ROOT = DESIGN.parents[1]
 sys.path.insert(0, str(HERE))
-from run_deepseek_eco import parse_response  # noqa: E402  (v2 공통 파서)
+from run_deepseek_eco import parse_response, smoke_probes  # noqa: E402  (v2 공통 파서·스모크 추출)
 
 PROMPTS = DESIGN / "prompts_v2.csv"
+REGISTER_PROMPTS = DESIGN / "register_v1" / "out" / "prompts_register_v1.csv"
+REGISTER_SHA256 = "1d1530ca17ee84b15fc1728ede4317541fc90d5ba212223e849a0073f7d06636"
+
+
+def read_prompts(which):
+    """v2: prompts_v2.csv 전체. register: 인칭·화계 확정본 중 신규 조건만(해시 확인)."""
+    if which == "v2":
+        return list(csv.DictReader(PROMPTS.open(encoding="utf-8-sig")))
+    import hashlib
+    got = hashlib.sha256(REGISTER_PROMPTS.read_bytes()).hexdigest()
+    if got != REGISTER_SHA256:
+        sys.exit(f"{REGISTER_PROMPTS.name} 해시가 확정본과 다릅니다({got[:12]}…). 중단합니다.")
+    return [r for r in csv.DictReader(REGISTER_PROMPTS.open(encoding="utf-8-sig")) if r["reuse_existing"] == "False"]
 OUT_DIR = ROOT / "raw" / "v2"
 LEDGER = OUT_DIR / "haiku_p1_batches.json"
 OUT = OUT_DIR / "haiku_p1.jsonl"
@@ -53,6 +77,19 @@ MODEL = "claude-haiku-5-5"
 MAX_TOKENS = 5
 PRICE_IN, PRICE_OUT = 0.05, 0.25  # USD / 1M tokens, Batch 50% 할인가 (정가 $0.10 / $0.50)
 K = 100
+THINKING = "disabled"  # "disabled" | "low" | "medium"
+SMOKE = 0
+PROMPT_SET = "v2"
+
+
+def configure(a):
+    """--thinking·--smoke에 따라 출력 경로와 설정을 바꾼다. 기본값이면 1단계 그대로."""
+    global LEDGER, OUT, MAX_TOKENS, THINKING, SMOKE, PROMPT_SET
+    THINKING, SMOKE, PROMPT_SET = a.thinking, a.smoke, a.prompts
+    if THINKING != "disabled":
+        MAX_TOKENS = 4000
+    tag = "haiku" + ("" if THINKING == "disabled" else f"_{THINKING}") + ("_register" if PROMPT_SET == "register" else "") + "_p1" + ("_smoke" if SMOKE else "")
+    LEDGER, OUT = OUT_DIR / f"{tag}_batches.json", OUT_DIR / f"{tag}.jsonl"
 
 try:
     import certifi
@@ -96,14 +133,19 @@ def http(method, url, key, body=None, timeout=300):
 
 
 def load_probes():
-    probes = [r for r in csv.DictReader(PROMPTS.open(encoding="utf-8-sig")) if r["phase"] == "1"]
+    probes = [r for r in read_prompts(PROMPT_SET) if r["phase"] == "1"]
+    if SMOKE:
+        probes = smoke_probes(probes, SMOKE)
     digest = hashlib.sha256("\n".join(p["probe_id"] + p["system"] + p["user"] for p in probes).encode()).hexdigest()[:16]
     return probes, digest
 
 
 def params(p):
-    return {"model": MODEL, "max_tokens": MAX_TOKENS, "thinking": {"type": "disabled"},
-            "system": p["system"], "messages": [{"role": "user", "content": p["user"]}]}
+    q = {"model": MODEL, "max_tokens": MAX_TOKENS, "thinking": {"type": "disabled"},
+         "system": p["system"], "messages": [{"role": "user", "content": p["user"]}]}
+    if THINKING != "disabled":
+        q["thinking"], q["output_config"] = {"type": "adaptive"}, {"effort": THINKING}
+    return q
 
 
 def load_ledger():
@@ -206,16 +248,22 @@ def collect(key, led, probes):
                 parsed, valid, inv = parse_response(text, json.loads(p["codes"]))
                 u = msg.get("usage", {})
                 stop, rid, model = msg.get("stop_reason"), msg.get("id", ""), msg.get("model", MODEL)
+                n_think = sum(c.get("type") in ("thinking", "redacted_thinking") for c in msg.get("content", []))
+                if stop == "max_tokens" and not valid:
+                    inv = "length"
             else:
                 text, parsed, valid, inv, u, stop, rid, model = "", None, False, "api_error", {}, None, "", MODEL
+                n_think = 0
             tin += u.get("input_tokens", 0)
             tout += u.get("output_tokens", 0)
-            rows.append({"model_id": model, "params": {"thinking": "disabled", "max_tokens": MAX_TOKENS, "temperature": "default"},
+            rows.append({"model_id": model, "params": ({"thinking": "disabled", "max_tokens": MAX_TOKENS, "temperature": "default"} if THINKING == "disabled"
+                                    else {"thinking": "adaptive", "effort": THINKING, "max_tokens": MAX_TOKENS, "temperature": "default"}),
                          "run_date": run_date, "phase": 1, "probe_id": p["probe_id"], "level": p["level"],
                          "cell_id": p["cell_id"], "var": p["var"], "sample_idx": s, "raw_text": text,
                          "parsed": parsed, "valid": valid, "invalid_type": inv, "stop_reason": stop,
                          "result_type": res.get("type"), "input_tokens": u.get("input_tokens", 0),
-                         "output_tokens": u.get("output_tokens", 0), "request_id": rid, "batch_id": b["id"]})
+                         "output_tokens": u.get("output_tokens", 0), "thinking_blocks": n_think,
+                         "request_id": rid, "batch_id": b["id"]})
         with OUT.open("a", encoding="utf-8") as f:
             for r in rows:
                 f.write(json.dumps(r, ensure_ascii=False) + "\n")
@@ -271,6 +319,10 @@ def cmd_estimate(a):
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--thinking", choices=("disabled", "low", "medium"), default="disabled")
+    ap.add_argument("--prompts", choices=("v2", "register"), default="v2",
+                    help="v2: 설계 v2 프롬프트, register: 인칭·화계 신규 조건 984개")
+    ap.add_argument("--smoke", type=int, default=0, help="프롬프트 n개만 (DeepSeek 스모크와 같은 추출)")
     sub = ap.add_subparsers(dest="cmd", required=True)
     s = sub.add_parser("submit")
     s.add_argument("--samples", required=True, help="표본 번호 범위 a:b (b 미포함)")
@@ -282,6 +334,7 @@ def main():
     w.add_argument("--interval", type=int, default=60)
     sub.add_parser("estimate")
     a = ap.parse_args()
+    configure(a)
     {"submit": cmd_submit, "status": cmd_status, "wait": cmd_wait, "estimate": cmd_estimate}[a.cmd](a)
 
 

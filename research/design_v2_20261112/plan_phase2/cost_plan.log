@@ -1,0 +1,10 @@
+{'exp': 'E0', 'name': '추론 효과 (기본 문체)', 'arm': 'deepseek_off', 'status': '진행 중', 'levels': 'c0+L0+L1', 'styles': 1, 'k': 50, 'calls': 147600, 'usd': 0.64, 'hours_fast': 3.7, 'hours_slow': 3.7}
+{'exp': 'E0', 'name': '추론 효과 (기본 문체)', 'arm': 'deepseek_low', 'status': '진행 중', 'levels': 'c0+L0+L1', 'styles': 1, 'k': 50, 'calls': 147600, 'usd': 2.76, 'hours_fast': 6.8, 'hours_slow': 6.8}
+{'exp': 'E1', 'name': '인칭×화계 (register_v1 신규 984개)', 'arm': 'deepseek_off', 'status': '필수', 'levels': 'c0:1+L0:3', 'styles': '-', 'k': 50, 'calls': 49200, 'usd': 0.21, 'hours_fast': 1.2, 'hours_slow': 1.2}
+{'exp': 'E1', 'name': '인칭×화계 (register_v1 신규 984개)', 'arm': 'deepseek_low', 'status': '필수', 'levels': 'c0:1+L0:3', 'styles': '-', 'k': 50, 'calls': 49200, 'usd': 1.02, 'hours_fast': 2.3, 'hours_slow': 2.3}
+{'exp': 'E1', 'name': '인칭×화계 (register_v1 신규 984개)', 'arm': 'haiku_off', 'status': '필수', 'levels': 'c0:1+L0:3', 'styles': '-', 'k': 50, 'calls': 49200, 'usd': 0.54, 'hours_fast': 0.6, 'hours_slow': 0.6}
+{'exp': 'E2', 'name': 'L2 12셀 (기본 문체)', 'arm': 'deepseek_off', 'status': '보류', 'levels': 'L2', 'styles': 1, 'k': 50, 'calls': 147600, 'usd': 0.65, 'hours_fast': 3.7, 'hours_slow': 3.7}
+{'exp': 'E2', 'name': 'L2 12셀 (기본 문체)', 'arm': 'haiku_off', 'status': '보류', 'levels': 'L2', 'styles': 1, 'k': 50, 'calls': 147600, 'usd': 1.64, 'hours_fast': 1.8, 'hours_slow': 1.8}
+{'exp': 'E2+', 'name': 'L2 × 추론', 'arm': 'deepseek_low', 'status': '보류', 'levels': 'L2', 'styles': 1, 'k': 50, 'calls': 147600, 'usd': 2.73, 'hours_fast': 6.8, 'hours_slow': 6.8}
+{'진행 중': (295200, 3.4), '필수': (147600, 1.77), '보류': (442800, 5.02)}
+{'deepseek_off': {'c0': 4.09, 'L0': 4.33, 'L1': 4.39, 'L2': 4.39}, 'deepseek_low': {'L1': 18.49, 'c0': 17.43, 'L0': 21.8, 'L2': 18.49}, 'haiku_off': {'L1': 11.14, 'L0': 11.15, 'c0': 10.49, 'L2': 11.14}, 'exaone_low': {'c0': 0.0, 'L0': 0.0, 'L1': 0.0, 'L2': 0.0}} (USD per 1M calls)

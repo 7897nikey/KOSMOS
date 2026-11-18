@@ -1,0 +1,9 @@
+exp,name,arm,status,levels,styles,k,calls,usd,hours_fast,hours_slow
+E0,추론 효과 (기본 문체),deepseek_off,진행 중,c0+L0+L1,1,50,147600,0.64,3.7,3.7
+E0,추론 효과 (기본 문체),deepseek_low,진행 중,c0+L0+L1,1,50,147600,2.76,6.8,6.8
+E1,인칭×화계 (register_v1 신규 984개),deepseek_off,필수,c0:1+L0:3,-,50,49200,0.21,1.2,1.2
+E1,인칭×화계 (register_v1 신규 984개),deepseek_low,필수,c0:1+L0:3,-,50,49200,1.02,2.3,2.3
+E1,인칭×화계 (register_v1 신규 984개),haiku_off,필수,c0:1+L0:3,-,50,49200,0.54,0.6,0.6
+E2,L2 12셀 (기본 문체),deepseek_off,보류,L2,1,50,147600,0.65,3.7,3.7
+E2,L2 12셀 (기본 문체),haiku_off,보류,L2,1,50,147600,1.64,1.8,1.8
+E2+,L2 × 추론,deepseek_low,보류,L2,1,50,147600,2.73,6.8,6.8
