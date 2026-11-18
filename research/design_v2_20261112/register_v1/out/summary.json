@@ -1,0 +1,30 @@
+{
+ "leads":93,
+ "items":246,
+ "prompts_total":1476,
+ "prompts_new":984,
+ "by_level_cond":{
+  "('L0', 'A')":246,
+  "('L0', 'B')":246,
+  "('L0', 'C')":246,
+  "('L0', 'D')":246,
+  "('c0', 'A')":246,
+  "('c0', 'B')":246
+ },
+ "corrected":{
+  "B":10,
+  "C":21,
+  "D":30
+ },
+ "flagged":{
+  "B":0,
+  "C":0,
+  "D":0
+ },
+ "options_with_honorific":0,
+ "statements_with_honorific":2,
+ "A_matches_original":true,
+ "prompts_file":"prompts_register_v1.csv",
+ "prompts_sha256":"1d1530ca17ee84b15fc1728ede4317541fc90d5ba212223e849a0073f7d06636",
+ "corrections_sha256":"3a6bddfdb596c5f6184a90949589a649ca160db85b80a44b7fab26428dbe4ea7"
+}
