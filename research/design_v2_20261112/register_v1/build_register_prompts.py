@@ -55,6 +55,29 @@ ENDINGS = [
 ]
 
 
+# 3인칭 하십시오체(C)에서는 주체 높임 -시-를 뺀다(팀 결정 2026-11-19, 쟁점 1).
+# 하십시오체 어미(-ㅂ니까/-습니까)는 듣는 사람(모델)을, -시-는 주어(이 사람)를 높인다.
+# -시-를 빼야 C와 D의 차이가 '모델에게 하는 말투'만 남는다. 듣는 사람에게 하는 요청
+# (말씀해 주십시오, 주시기 바랍니다, 두십시오 등)은 그대로 둔다.
+SUBJ_HON = [
+    ("가셨습니까", "갔습니까"), ("가지십니까", "가집니까"), ("계십니까", "있습니까"),
+    ("구성원이십니까", "구성원입니까"), ("느끼셨습니까", "느꼈습니까"), ("느끼십니까", "느낍니까"),
+    ("받으셨습니까", "받았습니까"), ("받으신", "받은"), ("보시기에", "보기에"),
+    ("응해주실 의향이 있으십니까", "응할 의향이 있습니까"), ("있으셨습니까", "있었습니까"),
+    ("있으십니까", "있습니까"), ("졸업하셨습니까", "졸업했습니까"), ("주시겠습니까", "주겠습니까"),
+    ("참여하셨습니까", "참여했습니까"), ("참여하실", "참여할"), ("치르십니까", "치릅니까"),
+    ("투표하셨습니까", "투표했습니까"), ("투표하실", "투표할"),
+    ("여기시는지", "여기는지"), ("하시는지", "하는지"), ("하십니까", "합니까"),
+]
+SUBJ_HON_LEFT = re.compile(r"십니까|셨습|시는지|보시기|하실|으신|이십|계십|주시겠|주실")
+
+
+def drop_subject_honorific(text):
+    for a, b in SUBJ_HON:
+        text = text.replace(a, b)
+    return text
+
+
 def apply_pron(text, p):
     for a, b in PRON:
         text = text.replace(a, b.format(P=p))
@@ -116,6 +139,9 @@ for x in corr.itertuples():
     leads.loc[i, x.cond] = x.text
     leads.loc[i, f"{x.cond}_src"] = "보정"
     leads.loc[i, f"{x.cond}_note"] = x.note
+# C: 규칙·보정 결과 모두에 주체 높임 제거를 마지막으로 적용한다.
+leads["C_with_si"] = leads["C"]
+leads["C"] = leads["C"].map(drop_subject_honorific)
 
 # ── (3) 자동 점검 ────────────────────────────────────
 HON = re.compile(r"귀하|귀댁|께서|니까|십시오|습니다|[가-힣]ㅂ니다|입니다|합니다|됩니다|십니|시는|시기|드립|세요")
@@ -148,6 +174,8 @@ def checks(row, c):
         flags.append("'이 사람' 없음")
     if pron == "당신" and c != "A" and ("귀하" in t or "귀댁" in t):
         flags.append("귀하 남음")
+    if c == "C" and SUBJ_HON_LEFT.search(t):
+        flags.append(f"주체 높임 남음({SUBJ_HON_LEFT.search(t).group()})")
     lost = content_words(a) - content_words(t)
     if len(lost) > 2:
         flags.append("내용어 변화 " + ",".join(sorted(lost)[:6]))
