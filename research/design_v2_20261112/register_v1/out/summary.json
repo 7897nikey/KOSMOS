@@ -1,0 +1,27 @@
+{
+ "leads":93,
+ "items":246,
+ "prompts_total":1476,
+ "prompts_new":984,
+ "by_level_cond":{
+  "('L0', 'A')":246,
+  "('L0', 'B')":246,
+  "('L0', 'C')":246,
+  "('L0', 'D')":246,
+  "('c0', 'A')":246,
+  "('c0', 'B')":246
+ },
+ "corrected":{
+  "B":10,
+  "C":10,
+  "D":19
+ },
+ "flagged":{
+  "B":0,
+  "C":0,
+  "D":0
+ },
+ "options_with_honorific":0,
+ "statements_with_honorific":2,
+ "A_matches_original":true
+}
