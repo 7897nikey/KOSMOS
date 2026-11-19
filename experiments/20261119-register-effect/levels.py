@@ -2,7 +2,7 @@
 실행 (KOSMOS 루트): python experiments/20261119-register-effect/levels.py
 
 모델 설정 × 페르소나(c0·L0) × 문체(A~D)마다
-  사람 TVD(β=1, 197문항), 보정 후 사람 TVD(L0만, β는 calibration에서, validation 49문항),
+  사람 TVD(β=1, 197문항), 보정 후 사람 TVD(β는 calibration 148문항에서, validation 49문항),
   최빈값 일치율(197문항), 보기 순서쌍 일치율(197문항).
 보기 순서쌍 일치율: 문항마다 사람 비율이 다른 보기 쌍에서 모델 비율의 대소가 같으면 1, 모델이 같으면 0.5, 반대면 0.
 문항을 가리지 않고 쌍을 모두 모아 평균한다. (개수+1)^β는 순서를 바꾸지 않으므로 보정과 무관하다.
@@ -66,10 +66,15 @@ for setting, paths in g["RAW"].items():
                        tvd_beta1=float(tvd(prob(X), H[j])[EV].mean()),
                        mode_agree=float((top(share(X)) == top(H[j]))[EV].mean()))
             row["pair_agree"], row["n_pairs"] = pair_agree(share(X), H[j])
-            if lv == "L0":
-                gr = tvd(prob(X[None], BETAS[:, None, None]), H[j][None])
-                b = gr[:, CAL].mean(1).argmin()
-                row["tvd_calibrated_val"], row["beta"] = float(gr[b][VAL].mean()), float(BETAS[b])
+            # 보정: p ∝ (개수+1)^β. β는 그리드 0.05~1.5(0.005 간격)에서 calibration 148문항 평균 TVD가 최소인 값.
+            # 모델 × 페르소나 × 문체마다 따로 고르고, validation 49문항에서 잰다(DESIGN.md 7절과 같은 규칙).
+            gr = tvd(prob(X[None], BETAS[:, None, None]), H[j][None])
+            b = gr[:, CAL].mean(1).argmin()
+            row["beta"] = float(BETAS[b])
+            row["tvd_calibrated_cal148"] = float(gr[b][CAL].mean())
+            row["tvd_calibrated_val"] = float(gr[b][VAL].mean())
+            row["tvd_beta1_val"] = float(gr[np.isclose(BETAS, 1.0)][0][VAL].mean())
+            row["beta_at_grid_edge"] = bool(b in (0, len(BETAS) - 1))
             rows.append(row)
 
 df = pd.DataFrame(rows)
