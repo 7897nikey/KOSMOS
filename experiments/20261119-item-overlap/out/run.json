@@ -1,0 +1,51 @@
+{
+ "time": "2026-11-19T15:34:06",
+ "git_commit": "42a6b27",
+ "git_dirty": true,
+ "script_sha256_16": "8cc9a74f03535bfa",
+ "inputs": {
+  "끔 A": {
+   "path": "raw/v2/deepseek_eco_p1.jsonl",
+   "sha256_16": "d7fdd6591b7ad3ea"
+  },
+  "끔 BCD": {
+   "path": "raw/v2/deepseek_eco_register_p1.jsonl",
+   "sha256_16": "22bf1ce63129cfee"
+  },
+  "low A": {
+   "path": "raw/v2/deepseek_eco_low_p1.jsonl",
+   "sha256_16": "1037909302c4c99c"
+  },
+  "low BCD": {
+   "path": "raw/v2/deepseek_eco_low_register_p1.jsonl",
+   "sha256_16": "2066b1717669030a"
+  },
+  "haiku A": {
+   "path": "raw/v2/haiku_p1.jsonl",
+   "sha256_16": "592507de3e7bcb35"
+  },
+  "haiku BCD": {
+   "path": "raw/v2/haiku_register_p1.jsonl",
+   "sha256_16": "2fba012f304c996c"
+  }
+ },
+ "params": {
+  "k": 50,
+  "bootstrap": 2000,
+  "null_reps": 200,
+  "sim_reps": 1000,
+  "min_n": 20,
+  "seed": 20261119,
+  "n_comparisons": 21,
+  "representative": [
+   "인칭 끔 한국 성인 페르소나 당신·하십시오체→이 사람·하십시오체",
+   "화계 끔 한국 성인 페르소나 당신·하십시오체→당신·해라체",
+   "인칭 low 한국 성인 페르소나 당신·하십시오체→이 사람·하십시오체",
+   "화계 low 한국 성인 페르소나 당신·하십시오체→당신·해라체",
+   "인칭 haiku 한국 성인 페르소나 당신·하십시오체→이 사람·하십시오체",
+   "화계 haiku 한국 성인 페르소나 당신·하십시오체→당신·해라체",
+   "추론 끔→low 한국 성인 페르소나 당신·하십시오체"
+  ]
+ },
+ "include_test": false
+}
