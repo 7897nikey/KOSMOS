@@ -1,0 +1,113 @@
+[끔] {'A': {'응답': 24600, '유효율': np.float64(0.9996), '거부': 0, '표본최소': 50}, 'B': {'응답': 24600, '유효율': np.float64(0.9992), '거부': 1, '표본최소': 50}, 'C': {'응답': 12300, '유효율': np.float64(0.9952), '거부': 8, '표본최소': 50}, 'D': {'응답': 12300, '유효율': np.float64(0.9958), '거부': 16, '표본최소': 50}}
+[low] {'A': {'응답': 24600, '유효율': np.float64(0.9863), '거부': 323, '표본최소': 50}, 'B': {'응답': 24600, '유효율': np.float64(0.9985), '거부': 34, '표본최소': 50}, 'C': {'응답': 12300, '유효율': np.float64(0.9963), '거부': 30, '표본최소': 50}, 'D': {'응답': 12300, '유효율': np.float64(0.9993), '거부': 4, '표본최소': 50}}
+ 설정                             질문                비교       값      하한      상한    유의     참고
+  끔           Q1 민감도 (모델 TVD − 잡음)         c0 B vs A  0.1126  0.0882  0.1375  True 0.1725
+  끔           Q1 민감도 (모델 TVD − 잡음)         L0 B vs A  0.0861  0.0681  0.1058  True 0.1454
+  끔           Q1 민감도 (모델 TVD − 잡음)         L0 C vs A  0.2058  0.1739  0.2397  True 0.2727
+  끔           Q1 민감도 (모델 TVD − 잡음)         L0 D vs A  0.2108  0.1785  0.2425  True 0.2827
+  끔                 수준 사람 TVD(β=1)              c0 A  0.4242     NaN     NaN False    NaN
+  끔                 수준 사람 TVD(β=1)              c0 B  0.4359     NaN     NaN False    NaN
+  끔                 수준 사람 TVD(β=1)              L0 A  0.4029     NaN     NaN False    NaN
+  끔                 수준 사람 TVD(β=1)              L0 B  0.4085     NaN     NaN False    NaN
+  끔                 수준 사람 TVD(β=1)              L0 C  0.3790     NaN     NaN False    NaN
+  끔                 수준 사람 TVD(β=1)              L0 D  0.3718     NaN     NaN False    NaN
+  끔             Q2 사람 TVD(β=1) X−A            c0 B−A  0.0118 -0.0076  0.0325 False    NaN
+  끔             Q2 사람 TVD(β=1) X−A            L0 B−A  0.0057 -0.0120  0.0245 False    NaN
+  끔             Q2 사람 TVD(β=1) X−A            L0 C−A -0.0239 -0.0495  0.0021 False    NaN
+  끔             Q2 사람 TVD(β=1) X−A            L0 D−A -0.0310 -0.0565 -0.0026  True    NaN
+  끔      수준 보정 TVD(L0, validation)    L0 A (β=0.355)  0.2689     NaN     NaN False    NaN
+  끔      수준 보정 TVD(L0, validation)     L0 B (β=0.35)  0.2804     NaN     NaN False    NaN
+  끔      수준 보정 TVD(L0, validation)    L0 C (β=0.375)  0.2700     NaN     NaN False    NaN
+  끔      수준 보정 TVD(L0, validation)     L0 D (β=0.38)  0.2736     NaN     NaN False    NaN
+  끔 Q2' 보정 TVD(L0, validation) X−A            L0 B−A  0.0115 -0.0039  0.0282 False    NaN
+  끔 Q2' 보정 TVD(L0, validation) X−A            L0 C−A  0.0011 -0.0277  0.0286 False    NaN
+  끔 Q2' 보정 TVD(L0, validation) X−A            L0 D−A  0.0047 -0.0233  0.0337 False    NaN
+  끔             Q3 L0 2×2 (사람 TVD) 인칭 효과 (이 사람 − 당신) -0.0303 -0.0533 -0.0064  True    NaN
+  끔             Q3 L0 2×2 (사람 TVD) 화계 효과 (해라 − 하십시오) -0.0007 -0.0131  0.0129 False    NaN
+  끔             Q3 L0 2×2 (사람 TVD)  상호작용 (D−C)−(B−A) -0.0128 -0.0378  0.0110 False    NaN
+  끔                  수준 최빈값 일치(L0)              L0 A  0.5076     NaN     NaN False    NaN
+  끔                  수준 최빈값 일치(L0)              L0 B  0.4721     NaN     NaN False    NaN
+  끔                  수준 최빈값 일치(L0)              L0 C  0.5330     NaN     NaN False    NaN
+  끔                  수준 최빈값 일치(L0)              L0 D  0.5228     NaN     NaN False    NaN
+  끔              Q4 최빈값 일치(L0) X−A            L0 B−A -0.0355 -0.0812  0.0102 False    NaN
+  끔              Q4 최빈값 일치(L0) X−A            L0 C−A  0.0254 -0.0457  0.0964 False    NaN
+  끔              Q4 최빈값 일치(L0) X−A            L0 D−A  0.0152 -0.0457  0.0761 False    NaN
+  끔                    수준 c0→L0 변화            A 하십시오 -0.0213     NaN     NaN False    NaN
+  끔                    수준 c0→L0 변화              B 해라 -0.0274     NaN     NaN False    NaN
+  끔                Q5 c0→L0 변화 B−A         해라 − 하십시오 -0.0061 -0.0292  0.0179 False    NaN
+low           Q1 민감도 (모델 TVD − 잡음)         c0 B vs A  0.0474  0.0338  0.0620  True 0.0850
+low           Q1 민감도 (모델 TVD − 잡음)         L0 B vs A  0.0509  0.0371  0.0663  True 0.1032
+low           Q1 민감도 (모델 TVD − 잡음)         L0 C vs A  0.1412  0.1156  0.1670  True 0.1978
+low           Q1 민감도 (모델 TVD − 잡음)         L0 D vs A  0.1515  0.1241  0.1791  True 0.2087
+low                 수준 사람 TVD(β=1)              c0 A  0.4511     NaN     NaN False    NaN
+low                 수준 사람 TVD(β=1)              c0 B  0.4647     NaN     NaN False    NaN
+low                 수준 사람 TVD(β=1)              L0 A  0.3796     NaN     NaN False    NaN
+low                 수준 사람 TVD(β=1)              L0 B  0.4017     NaN     NaN False    NaN
+low                 수준 사람 TVD(β=1)              L0 C  0.3550     NaN     NaN False    NaN
+low                 수준 사람 TVD(β=1)              L0 D  0.3749     NaN     NaN False    NaN
+low             Q2 사람 TVD(β=1) X−A            c0 B−A  0.0136  0.0008  0.0262  True    NaN
+low             Q2 사람 TVD(β=1) X−A            L0 B−A  0.0221  0.0096  0.0345  True    NaN
+low             Q2 사람 TVD(β=1) X−A            L0 C−A -0.0246 -0.0482 -0.0012  True    NaN
+low             Q2 사람 TVD(β=1) X−A            L0 D−A -0.0047 -0.0253  0.0175 False    NaN
+low      수준 보정 TVD(L0, validation)     L0 A (β=0.36)  0.2644     NaN     NaN False    NaN
+low      수준 보정 TVD(L0, validation)    L0 B (β=0.345)  0.2787     NaN     NaN False    NaN
+low      수준 보정 TVD(L0, validation)     L0 C (β=0.38)  0.2450     NaN     NaN False    NaN
+low      수준 보정 TVD(L0, validation)     L0 D (β=0.37)  0.2469     NaN     NaN False    NaN
+low Q2' 보정 TVD(L0, validation) X−A            L0 B−A  0.0143  0.0021  0.0278  True    NaN
+low Q2' 보정 TVD(L0, validation) X−A            L0 C−A -0.0194 -0.0450  0.0044 False    NaN
+low Q2' 보정 TVD(L0, validation) X−A            L0 D−A -0.0175 -0.0396  0.0041 False    NaN
+low             Q3 L0 2×2 (사람 TVD) 인칭 효과 (이 사람 − 당신) -0.0257 -0.0484 -0.0044  True    NaN
+low             Q3 L0 2×2 (사람 TVD) 화계 효과 (해라 − 하십시오)  0.0210  0.0095  0.0317  True    NaN
+low             Q3 L0 2×2 (사람 TVD)  상호작용 (D−C)−(B−A) -0.0022 -0.0181  0.0141 False    NaN
+low                  수준 최빈값 일치(L0)              L0 A  0.5584     NaN     NaN False    NaN
+low                  수준 최빈값 일치(L0)              L0 B  0.5228     NaN     NaN False    NaN
+low                  수준 최빈값 일치(L0)              L0 C  0.6244     NaN     NaN False    NaN
+low                  수준 최빈값 일치(L0)              L0 D  0.5736     NaN     NaN False    NaN
+low              Q4 최빈값 일치(L0) X−A            L0 B−A -0.0355 -0.0761  0.0051 False    NaN
+low              Q4 최빈값 일치(L0) X−A            L0 C−A  0.0660  0.0051  0.1168  True    NaN
+low              Q4 최빈값 일치(L0) X−A            L0 D−A  0.0152 -0.0457  0.0761 False    NaN
+low                    수준 c0→L0 변화            A 하십시오 -0.0714     NaN     NaN False    NaN
+low                    수준 c0→L0 변화              B 해라 -0.0629     NaN     NaN False    NaN
+low                Q5 c0→L0 변화 B−A         해라 − 하십시오  0.0085 -0.0080  0.0238 False    NaN
+{
+ "끔 Q1 c0 B": {
+  "관측평균": 0.1725417194023935,
+  "잡음평균": 0.05991950193451913,
+  "잡음보다큰문항비율": 0.736
+ },
+ "끔 Q1 L0 B": {
+  "관측평균": 0.14541606144563884,
+  "잡음평균": 0.05936034584478569,
+  "잡음보다큰문항비율": 0.706
+ },
+ "끔 Q1 L0 C": {
+  "관측평균": 0.2726879797404536,
+  "잡음평균": 0.06690988522543771,
+  "잡음보다큰문항비율": 0.843
+ },
+ "끔 Q1 L0 D": {
+  "관측평균": 0.2826602051798956,
+  "잡음평균": 0.07181840363062145,
+  "잡음보다큰문항비율": 0.827
+ },
+ "low Q1 c0 B": {
+  "관측평균": 0.08495684941661005,
+  "잡음평균": 0.03757820437681476,
+  "잡음보다큰문항비율": 0.523
+ },
+ "low Q1 L0 B": {
+  "관측평균": 0.10316801747112626,
+  "잡음평균": 0.052238524231872814,
+  "잡음보다큰문항비율": 0.594
+ },
+ "low Q1 L0 C": {
+  "관측평균": 0.19780816231976056,
+  "잡음평균": 0.05665271811603627,
+  "잡음보다큰문항비율": 0.721
+ },
+ "low Q1 L0 D": {
+  "관측평균": 0.2086880638514134,
+  "잡음평균": 0.05721933094490444,
+  "잡음보다큰문항비율": 0.761
+ }
+}
