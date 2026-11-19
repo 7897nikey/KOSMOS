@@ -1,8 +1,8 @@
 {
- "time": "2026-11-19T13:40:18",
- "git_commit": "8d48363",
+ "time": "2026-11-19T13:46:06",
+ "git_commit": "05638a2",
  "git_dirty": true,
- "script_sha256_16": "a4d87fea4d04e9a0",
+ "script_sha256_16": "43e2b04825f22b05",
  "inputs": {
   "끔 A": {
    "path": "raw/v2/deepseek_eco_p1.jsonl",
@@ -32,13 +32,13 @@
  "params": {
   "k": 50,
   "bootstrap": 2000,
-  "null_reps": 2,
+  "null_reps": 50,
   "min_n": 20,
   "seed": 20261119,
   "tau_grid": [
-   0.2,
-   3.0,
-   0.1
+   0.05,
+   2.8699,
+   "log step 0.05"
   ],
   "delta_grid": [
    -2.0,
