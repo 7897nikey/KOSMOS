@@ -1,0 +1,20 @@
+{
+ "time": "2026-11-19T12:51:18",
+ "git_commit": "fa7806d",
+ "git_dirty": false,
+ "script_sha256_16": "bee8e1699454e3f6",
+ "inputs": {
+  "끔 A": "d7fdd6591b7ad3ea",
+  "끔 BCD": "22bf1ce63129cfee",
+  "low A": "1037909302c4c99c",
+  "low BCD": "2066b1717669030a",
+  "haiku A": "592507de3e7bcb35",
+  "haiku BCD": "2fba012f304c996c"
+ },
+ "params": {
+  "k": 50,
+  "items_main": "calibration+validation 197",
+  "items_calibrated": "validation 49"
+ },
+ "include_test": false
+}
