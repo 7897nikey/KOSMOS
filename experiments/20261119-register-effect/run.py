@@ -24,7 +24,9 @@ PROMPTS_V2 = DESIGN / "prompts_v2.csv"
 PROMPTS_REG = DESIGN / "register_v1/out/prompts_register_v1.csv"
 REG_SHA = "1d1530ca17ee84b15fc1728ede4317541fc90d5ba212223e849a0073f7d06636"
 RAW = {"끔": {"A": ROOT / "raw/v2/deepseek_eco_p1.jsonl", "BCD": ROOT / "raw/v2/deepseek_eco_register_p1.jsonl"},
-       "low": {"A": ROOT / "raw/v2/deepseek_eco_low_p1.jsonl", "BCD": ROOT / "raw/v2/deepseek_eco_low_register_p1.jsonl"}}
+       "low": {"A": ROOT / "raw/v2/deepseek_eco_low_p1.jsonl", "BCD": ROOT / "raw/v2/deepseek_eco_low_register_p1.jsonl"},
+       # 2026-11-19 추가: Haiku 5.5 추론 끔. 원문은 1단계(k=100)의 표본 0~49, 새 문체는 Batch API로 같은 설정(max_tokens 5).
+       "haiku": {"A": ROOT / "raw/v2/haiku_p1.jsonl", "BCD": ROOT / "raw/v2/haiku_register_p1.jsonl"}}
 K, B, NULL_REPS = 50, 2000, 200
 BETAS = np.round(np.arange(0.05, 1.5001, 0.005), 3)
 rng = np.random.default_rng(20261119)
