@@ -117,6 +117,9 @@ def metrics(CA, CB, sel):
     dm = FREE_DELTA[sel]
     r = {"TVD": tvd(share(CA), shB), "맞추기 전 TVD": tvd(pA, shB), "τ만 맞춘 뒤 TVD": tvd(pt, shB), "τ·δ 맞춘 뒤 TVD": tvd(pf, shB),
          "ln τ": np.log(tau), "δ": np.where(dm, dl, np.nan), "τ 격자 끝": np.isin(tau, GRID_EDGE_TAU).astype(float)}
+    same = (share(CA).argmax(-1) == shB.argmax(-1)).astype(float)               # 최빈 보기가 같은 문항 (결과를 본 뒤 추가)
+    r.update({"최빈 보기 바뀜": 1 - same, "같음": same, "ln τ ×같음": r["ln τ"] * same, "맞추기 전 TVD ×같음": r["맞추기 전 TVD"] * same,
+              "τ만 맞춘 뒤 TVD ×같음": r["τ만 맞춘 뒤 TVD"] * same, "τ·δ 맞춘 뒤 TVD ×같음": r["τ·δ 맞춘 뒤 TVD"] * same})
     rm = roles(pA, M, sel)
     for nm, mk in zip(("최빈 보기", "양 끝 보기", "중간 보기"), rm):
         r[f"맞추기 전 차이 {nm}"] = np.where(dm, ((shB - pA) * mk).sum(-1), np.nan)
@@ -183,8 +186,19 @@ def explained(key):
     return f
 
 
+def ratio(num, den):
+    return lambda d, ix: d[num][ix].sum(1) / d[den][ix].sum(1)
+
+
+def explained_same(key):
+    return lambda d, ix: 1 - d[key][ix].sum(1) / d["맞추기 전 TVD ×같음"][ix].sum(1)
+
+
 STATS = [("변화 크기 TVD", mean_of("TVD")), ("ln τ (날카로움)", mean_of("ln τ")), ("δ (순서 기울기)", mean_of("δ")),
          ("설명 비율 τ만", explained("τ만 맞춘 뒤 TVD")), ("설명 비율 τ·δ", explained("τ·δ 맞춘 뒤 TVD"))]
+STATS += [("최빈 보기 바뀐 문항 비율", mean_of("최빈 보기 바뀜")), ("ln τ (최빈 보기 같은 문항)", ratio("ln τ ×같음", "같음")),
+          ("설명 비율 τ만 (최빈 보기 같은 문항)", explained_same("τ만 맞춘 뒤 TVD ×같음")),
+          ("설명 비율 τ·δ (최빈 보기 같은 문항)", explained_same("τ·δ 맞춘 뒤 TVD ×같음"))]
 for nm in ("최빈 보기", "양 끝 보기", "중간 보기"):
     STATS += [(f"맞추기 전 차이 {nm}", mean_of(f"맞추기 전 차이 {nm}")), (f"맞춘 뒤 잔차 {nm}", mean_of(f"맞춘 뒤 잔차 {nm}"))]
 
