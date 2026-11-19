@@ -198,6 +198,7 @@ pd.set_option("display.width", 220)
 pd.set_option("display.max_rows", 200)
 log(res.round(4).to_string(index=False))
 log(json.dumps({k: v for k, v in info.items() if "Q1" in k}, ensure_ascii=False, indent=1))
+logf.close()  # git 상태를 보기 전에 run.log를 다 써 둔다(덜 쓰인 파일이 dirty로 잡히지 않게)
 
 git = lambda *x: subprocess.run(["git", *x], cwd=ROOT, capture_output=True, text=True).stdout.strip()
 json.dump({"time": datetime.datetime.now().isoformat(timespec="seconds"), "git_commit": git("rev-parse", "--short", "HEAD"),
