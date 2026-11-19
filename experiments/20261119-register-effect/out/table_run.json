@@ -1,0 +1,10 @@
+{
+ "time": "2026-11-19T13:39:54",
+ "git_commit": "3c03a7f",
+ "git_dirty": true,
+ "script_sha256_16": "ad8dfae9ead1dedc",
+ "inputs": {
+  "levels.csv": "83a929eda2d8cd1f"
+ },
+ "include_test": false
+}
