@@ -1,0 +1,24 @@
+{
+ "time": "2026-11-23T02:02:50",
+ "git_commit": "8675212",
+ "git_dirty": true,
+ "script_sha256_16": "7816263c75c31f31",
+ "inputs": {
+  "끔": {
+   "path": "raw/v2/deepseek_eco_p1.jsonl",
+   "sha256_16": "d7fdd6591b7ad3ea"
+  },
+  "low": {
+   "path": "raw/v2/deepseek_eco_low_p1.jsonl",
+   "sha256_16": "1037909302c4c99c"
+  }
+ },
+ "params": {
+  "k": 50,
+  "bootstrap": 2000,
+  "null_reps": 200,
+  "seed": 20261123
+ },
+ "paid_calls": 0,
+ "include_test": false
+}
