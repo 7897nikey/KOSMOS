@@ -1,0 +1,58 @@
+full 완료
+k = 5 완료
+k = 10 완료
+k = 15 완료
+k = 20 완료
+k = 30 완료
+k = 40 완료
+k = 50 완료
+adaptive target = 20 완료
+adaptive target = 30 완료
+adaptive target = 50 완료
+  method  k  calls_mean  worst_d_tvd_L0L1  min_sign_agree  min_model_cmp  c1_tvd  c2_persona  c3_model_cmp  pass_all
+adaptive 20     15.5519            0.0184          0.8937            1.0   False       False          True     False
+adaptive 30     21.1440            0.0210          0.9299            1.0   False        True          True     False
+adaptive 50     32.2960            0.0151          0.9613            1.0   False        True          True     False
+     raw  5      5.0000            0.0340          0.6980            1.0   False       False          True     False
+     raw 10     10.0000            0.0242          0.8141            1.0   False       False          True     False
+     raw 15     15.0000            0.0204          0.8734            1.0   False       False          True     False
+     raw 20     20.0000            0.0171          0.9076            1.0   False        True          True     False
+     raw 30     30.0000            0.0127          0.9466            1.0   False        True          True     False
+     raw 40     40.0000            0.0115          0.9719            1.0   False        True          True     False
+     raw 50     50.0000            0.0064          0.9858            1.0    True        True          True      True
+  shrink  5      5.0000            0.0321          0.6996            1.0   False       False          True     False
+  shrink 10     10.0000            0.0242          0.8151            1.0   False       False          True     False
+  shrink 20     20.0000            0.0171          0.9082            1.0   False        True          True     False
+  shrink 30     30.0000            0.0127          0.9470            1.0   False        True          True     False
+model        deepseek          exaone           haiku        
+level              L0      L1      L0      L1      L0      L1
+method   k                                                   
+adaptive 20    0.0155  0.0129  0.0184  0.0172 -0.0025  0.0044
+         30    0.0165  0.0113  0.0210  0.0150 -0.0007  0.0037
+         50    0.0140  0.0089  0.0151  0.0119 -0.0012  0.0033
+full     100   0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
+raw      5     0.0264  0.0223  0.0321  0.0340  0.0007  0.0073
+         10    0.0212  0.0167  0.0242  0.0234 -0.0015  0.0048
+         15    0.0174  0.0133  0.0204  0.0183  0.0001  0.0036
+         20    0.0134  0.0105  0.0171  0.0151 -0.0014  0.0033
+         30    0.0110  0.0080  0.0127  0.0105 -0.0015  0.0022
+         40    0.0092  0.0064  0.0115  0.0076 -0.0008  0.0015
+         50    0.0064  0.0046  0.0045  0.0060 -0.0002  0.0010
+shrink   5     0.0264  0.0055  0.0321  0.0084  0.0007 -0.0098
+         10    0.0212  0.0036  0.0242  0.0053 -0.0015 -0.0102
+         20    0.0134  0.0008  0.0171  0.0037 -0.0014 -0.0095
+         30    0.0110 -0.0000  0.0127  0.0014 -0.0015 -0.0091
+적응형: 모델별 평균 호출 수 / 멈춘 비율
+             calls_mean  stopped_share
+k  model                              
+20 deepseek      16.617          0.338
+   exaone        17.124          0.288
+   haiku         12.915          0.700
+30 deepseek      23.320          0.334
+   exaone        24.290          0.285
+   haiku         15.822          0.701
+50 deepseek      36.809          0.330
+   exaone        38.552          0.286
+   haiku         21.527          0.702
+
+기록: /Users/taewoo/Developer/KOSMOS/experiments/20261118-k-compromise/out/run.json (commit ddbeada, dirty=True)

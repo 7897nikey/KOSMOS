@@ -1,0 +1,41 @@
+{
+ "time": "2026-11-18T14:39:24",
+ "git_commit": "ddbeada",
+ "git_dirty": true,
+ "data": "research/design_v2_20261112/analysis/out_final_k100/counts_k100.npz",
+ "data_sha256": "18e3890f3c8e69d5",
+ "params": {
+  "ks": [
+   5,
+   10,
+   15,
+   20,
+   25,
+   30,
+   35,
+   40,
+   45,
+   50,
+   55,
+   60,
+   65,
+   70,
+   75,
+   80,
+   85,
+   90,
+   95,
+   100
+  ],
+  "reps": 20,
+  "bootstrap": 2000,
+  "pass": 0.9,
+  "beta_grid": [
+   0.05,
+   1.5,
+   0.005
+  ]
+ },
+ "k_min": 40,
+ "include_test": false
+}

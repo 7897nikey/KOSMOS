@@ -1,0 +1,30 @@
+{
+ "time": "2026-11-19T03:26:31",
+ "git_commit": "ff16b57",
+ "git_dirty": true,
+ "inputs": {
+  "끔": {
+   "path": "raw/v2/deepseek_eco_p1.jsonl",
+   "sha256_16": "d7fdd6591b7ad3ea"
+  },
+  "low": {
+   "path": "raw/v2/deepseek_eco_low_p1.jsonl",
+   "sha256_16": "1037909302c4c99c"
+  },
+  "끔 Ultrafast": {
+   "path": "raw/v2/deepseek_ultrafast_p1.jsonl",
+   "sha256_16": "40e2cc40e171506f"
+  }
+ },
+ "params": {
+  "k": 50,
+  "bootstrap": 2000,
+  "beta_grid": [
+   0.05,
+   1.5,
+   0.005
+  ]
+ },
+ "reasoning_effect": true,
+ "include_test": false
+}

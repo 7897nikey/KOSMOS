@@ -1,0 +1,42 @@
+[
+ {
+  "plan": "k=100 전체 (현행)",
+  "calls": 295200,
+  "share": 1.0,
+  "eco_low": 5.51,
+  "eco_off": 1.29,
+  "paired": 6.8
+ },
+ {
+  "plan": "A. k=50 전체 (사전 기준 통과)",
+  "calls": 147600,
+  "share": 0.5,
+  "eco_low": 2.76,
+  "eco_off": 0.64,
+  "paired": 3.4
+ },
+ {
+  "plan": "B. c0·L0 k=50 + L1 k=40",
+  "calls": 123000,
+  "share": 0.417,
+  "eco_low": 2.3,
+  "eco_off": 0.54,
+  "paired": 2.84
+ },
+ {
+  "plan": "C. c0·L0 k=50 + L1 k=20 + 축소 (사후)",
+  "calls": 73800,
+  "share": 0.25,
+  "eco_low": 1.39,
+  "eco_off": 0.32,
+  "paired": 1.71
+ },
+ {
+  "plan": "D. c0·L0 k=30 + L1 k=20 + 축소",
+  "calls": 63960,
+  "share": 0.217,
+  "eco_low": 1.2,
+  "eco_off": 0.28,
+  "paired": 1.48
+ }
+]

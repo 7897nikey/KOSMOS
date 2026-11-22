@@ -1,0 +1,61 @@
+{
+ "params": {
+  "ks": [
+   5,
+   10,
+   15,
+   20,
+   30,
+   40,
+   50
+  ],
+  "ks_shrink": [
+   5,
+   10,
+   20,
+   30
+  ],
+  "taus": [
+   0,
+   2,
+   5,
+   10,
+   20
+  ],
+  "adapt_targets": [
+   20,
+   30,
+   50
+  ],
+  "k0": 10,
+  "reps": 10,
+  "beta_full": {
+   "deepseek|c0": 0.32,
+   "deepseek|L0": 0.32,
+   "deepseek|L1": 0.31,
+   "exaone|c0": 0.32,
+   "exaone|L0": 0.36,
+   "exaone|L1": 0.37,
+   "haiku|c0": 0.24,
+   "haiku|L0": 0.25,
+   "haiku|L1": 0.25
+  },
+  "alpha": 1.0
+ },
+ "tables": [
+  "model_compare_sign",
+  "reps",
+  "summary",
+  "verdict"
+ ],
+ "notes": "",
+ "include_test": false,
+ "time": "2026-11-18T11:11:05",
+ "git_commit": "ddbeada",
+ "git_dirty": true,
+ "data_sha256": "b1c212b6f721dcdc",
+ "data_built_at": "2026-11-15T22:29:13",
+ "python": "3.13.13",
+ "pandas": "2.3.1",
+ "numpy": "2.3.1"
+}

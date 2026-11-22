@@ -1,0 +1,13 @@
+est,model,level,mean,max
+no_shrink,deepseek,L0,0.0071,0.0112
+no_shrink,deepseek,L1,0.011,0.0126
+no_shrink,exaone,L0,0.0073,0.0113
+no_shrink,exaone,L1,0.0144,0.0171
+no_shrink,haiku,L0,0,0.001
+no_shrink,haiku,L1,0.0031,0.0037
+shrink_EB,deepseek,L0,0.0071,0.0112
+shrink_EB,deepseek,L1,0.0071,0.0086
+shrink_EB,exaone,L0,0.0073,0.0113
+shrink_EB,exaone,L1,0.0076,0.0099
+shrink_EB,haiku,L0,0,0.001
+shrink_EB,haiku,L1,0.0014,0.0019

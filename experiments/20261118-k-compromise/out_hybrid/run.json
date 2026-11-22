@@ -1,0 +1,24 @@
+{
+ "params": {
+  "k_top": 50,
+  "k_l1": 20,
+  "reps": 10,
+  "calls": 73800,
+  "post_hoc": true
+ },
+ "tables": [
+  "model_compare",
+  "reps",
+  "summary"
+ ],
+ "notes": "",
+ "include_test": false,
+ "time": "2026-11-18T11:13:55",
+ "git_commit": "ddbeada",
+ "git_dirty": true,
+ "data_sha256": "b1c212b6f721dcdc",
+ "data_built_at": "2026-11-15T22:29:13",
+ "python": "3.13.13",
+ "pandas": "2.3.1",
+ "numpy": "2.3.1"
+}

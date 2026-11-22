@@ -1,0 +1,30 @@
+{'arm': 'DeepSeek Eco 추론 low', 'K': 5, 'calls': 14760, 'in_avg': 161.8, 'out_avg': 115.19, 'input_usd': 0.072, 'output_usd': 0.204, 'total_usd': 0.28, 'total_lo': 0.26, 'total_hi': 0.29}
+{'arm': 'DeepSeek Eco 추론 low', 'K': 10, 'calls': 29520, 'in_avg': 161.8, 'out_avg': 115.19, 'input_usd': 0.143, 'output_usd': 0.408, 'total_usd': 0.55, 'total_lo': 0.53, 'total_hi': 0.57}
+{'arm': 'DeepSeek Eco 추론 low', 'K': 20, 'calls': 59040, 'in_avg': 161.8, 'out_avg': 115.19, 'input_usd': 0.287, 'output_usd': 0.816, 'total_usd': 1.1, 'total_lo': 1.06, 'total_hi': 1.15}
+{'arm': 'DeepSeek Eco 추론 low', 'K': 30, 'calls': 88560, 'in_avg': 161.8, 'out_avg': 115.19, 'input_usd': 0.43, 'output_usd': 1.224, 'total_usd': 1.65, 'total_lo': 1.59, 'total_hi': 1.72}
+{'arm': 'DeepSeek Eco 추론 low', 'K': 50, 'calls': 147600, 'in_avg': 161.8, 'out_avg': 115.19, 'input_usd': 0.716, 'output_usd': 2.04, 'total_usd': 2.76, 'total_lo': 2.65, 'total_hi': 2.87}
+{'arm': 'DeepSeek Eco 추론 low', 'K': 100, 'calls': 295200, 'in_avg': 161.8, 'out_avg': 115.19, 'input_usd': 1.433, 'output_usd': 4.081, 'total_usd': 5.51, 'total_lo': 5.29, 'total_hi': 5.74}
+{'arm': 'Haiku Batch 추론 low', 'K': 5, 'calls': 14760, 'in_avg': 207.1, 'out_avg': 3.8, 'input_usd': 0.153, 'output_usd': 0.014, 'total_usd': 0.17, 'total_lo': 0.16, 'total_hi': 0.17, 'total_cache_hyp_usd': 0.14}
+{'arm': 'Haiku Batch 추론 low', 'K': 10, 'calls': 29520, 'in_avg': 207.1, 'out_avg': 3.8, 'input_usd': 0.306, 'output_usd': 0.028, 'total_usd': 0.33, 'total_lo': 0.33, 'total_hi': 0.34, 'total_cache_hyp_usd': 0.19}
+{'arm': 'Haiku Batch 추론 low', 'K': 20, 'calls': 59040, 'in_avg': 207.1, 'out_avg': 3.8, 'input_usd': 0.611, 'output_usd': 0.056, 'total_usd': 0.67, 'total_lo': 0.66, 'total_hi': 0.68, 'total_cache_hyp_usd': 0.29}
+{'arm': 'Haiku Batch 추론 low', 'K': 30, 'calls': 88560, 'in_avg': 207.1, 'out_avg': 3.8, 'input_usd': 0.917, 'output_usd': 0.084, 'total_usd': 1.0, 'total_lo': 0.98, 'total_hi': 1.03, 'total_cache_hyp_usd': 0.4}
+{'arm': 'Haiku Batch 추론 low', 'K': 50, 'calls': 147600, 'in_avg': 207.1, 'out_avg': 3.8, 'input_usd': 1.528, 'output_usd': 0.14, 'total_usd': 1.67, 'total_lo': 1.64, 'total_hi': 1.71, 'total_cache_hyp_usd': 0.6}
+{'arm': 'Haiku Batch 추론 low', 'K': 100, 'calls': 295200, 'in_avg': 207.1, 'out_avg': 3.8, 'input_usd': 3.057, 'output_usd': 0.28, 'total_usd': 3.34, 'total_lo': 3.28, 'total_hi': 3.42, 'total_cache_hyp_usd': 1.12}
+{'arm': 'Haiku Batch 추론 medium', 'K': 5, 'calls': 14760, 'in_avg': 207.1, 'out_avg': 10.14, 'input_usd': 0.153, 'output_usd': 0.037, 'total_usd': 0.19, 'total_lo': 0.18, 'total_hi': 0.2, 'total_cache_hyp_usd': 0.16}
+{'arm': 'Haiku Batch 추론 medium', 'K': 10, 'calls': 29520, 'in_avg': 207.1, 'out_avg': 10.14, 'input_usd': 0.306, 'output_usd': 0.075, 'total_usd': 0.38, 'total_lo': 0.36, 'total_hi': 0.41, 'total_cache_hyp_usd': 0.24}
+{'arm': 'Haiku Batch 추론 medium', 'K': 20, 'calls': 59040, 'in_avg': 207.1, 'out_avg': 10.14, 'input_usd': 0.611, 'output_usd': 0.15, 'total_usd': 0.76, 'total_lo': 0.71, 'total_hi': 0.82, 'total_cache_hyp_usd': 0.39}
+{'arm': 'Haiku Batch 추론 medium', 'K': 30, 'calls': 88560, 'in_avg': 207.1, 'out_avg': 10.14, 'input_usd': 0.917, 'output_usd': 0.224, 'total_usd': 1.14, 'total_lo': 1.07, 'total_hi': 1.22, 'total_cache_hyp_usd': 0.54}
+{'arm': 'Haiku Batch 추론 medium', 'K': 50, 'calls': 147600, 'in_avg': 207.1, 'out_avg': 10.14, 'input_usd': 1.528, 'output_usd': 0.374, 'total_usd': 1.9, 'total_lo': 1.79, 'total_hi': 2.04, 'total_cache_hyp_usd': 0.84}
+{'arm': 'Haiku Batch 추론 medium', 'K': 100, 'calls': 295200, 'in_avg': 207.1, 'out_avg': 10.14, 'input_usd': 3.057, 'output_usd': 0.748, 'total_usd': 3.81, 'total_lo': 3.57, 'total_hi': 4.08, 'total_cache_hyp_usd': 1.59}
+{'arm': '(참고) DeepSeek Eco 추론 끔', 'K': 5, 'calls': 14760, 'in_avg': 137.3, 'out_avg': 2.0, 'input_usd': 0.061, 'output_usd': 0.004, 'total_usd': 0.06, 'total_lo': 0.06, 'total_hi': 0.06}
+{'arm': '(참고) DeepSeek Eco 추론 끔', 'K': 10, 'calls': 29520, 'in_avg': 137.3, 'out_avg': 2.0, 'input_usd': 0.122, 'output_usd': 0.007, 'total_usd': 0.13, 'total_lo': 0.13, 'total_hi': 0.13}
+{'arm': '(참고) DeepSeek Eco 추론 끔', 'K': 20, 'calls': 59040, 'in_avg': 137.3, 'out_avg': 2.0, 'input_usd': 0.243, 'output_usd': 0.014, 'total_usd': 0.26, 'total_lo': 0.26, 'total_hi': 0.26}
+{'arm': '(참고) DeepSeek Eco 추론 끔', 'K': 30, 'calls': 88560, 'in_avg': 137.3, 'out_avg': 2.0, 'input_usd': 0.365, 'output_usd': 0.021, 'total_usd': 0.39, 'total_lo': 0.39, 'total_hi': 0.39}
+{'arm': '(참고) DeepSeek Eco 추론 끔', 'K': 50, 'calls': 147600, 'in_avg': 137.3, 'out_avg': 2.0, 'input_usd': 0.608, 'output_usd': 0.035, 'total_usd': 0.64, 'total_lo': 0.64, 'total_hi': 0.64}
+{'arm': '(참고) DeepSeek Eco 추론 끔', 'K': 100, 'calls': 295200, 'in_avg': 137.3, 'out_avg': 2.0, 'input_usd': 1.216, 'output_usd': 0.071, 'total_usd': 1.29, 'total_lo': 1.29, 'total_hi': 1.29}
+{'arm': '(참고) Haiku Batch 추론 끔', 'K': 5, 'calls': 14760, 'in_avg': 206.6, 'out_avg': 3.03, 'input_usd': 0.153, 'output_usd': 0.011, 'total_usd': 0.16, 'total_lo': 0.16, 'total_hi': 0.16, 'total_cache_hyp_usd': 0.14}
+{'arm': '(참고) Haiku Batch 추론 끔', 'K': 10, 'calls': 29520, 'in_avg': 206.6, 'out_avg': 3.03, 'input_usd': 0.305, 'output_usd': 0.022, 'total_usd': 0.33, 'total_lo': 0.33, 'total_hi': 0.33, 'total_cache_hyp_usd': 0.18}
+{'arm': '(참고) Haiku Batch 추론 끔', 'K': 20, 'calls': 59040, 'in_avg': 206.6, 'out_avg': 3.03, 'input_usd': 0.61, 'output_usd': 0.045, 'total_usd': 0.65, 'total_lo': 0.65, 'total_hi': 0.65, 'total_cache_hyp_usd': 0.28}
+{'arm': '(참고) Haiku Batch 추론 끔', 'K': 30, 'calls': 88560, 'in_avg': 206.6, 'out_avg': 3.03, 'input_usd': 0.915, 'output_usd': 0.067, 'total_usd': 0.98, 'total_lo': 0.98, 'total_hi': 0.98, 'total_cache_hyp_usd': 0.38}
+{'arm': '(참고) Haiku Batch 추론 끔', 'K': 50, 'calls': 147600, 'in_avg': 206.6, 'out_avg': 3.03, 'input_usd': 1.525, 'output_usd': 0.112, 'total_usd': 1.64, 'total_lo': 1.64, 'total_hi': 1.64, 'total_cache_hyp_usd': 0.58}
+{'arm': '(참고) Haiku Batch 추론 끔', 'K': 100, 'calls': 295200, 'in_avg': 206.6, 'out_avg': 3.03, 'input_usd': 3.05, 'output_usd': 0.224, 'total_usd': 3.27, 'total_lo': 3.27, 'total_hi': 3.27, 'total_cache_hyp_usd': 1.07}

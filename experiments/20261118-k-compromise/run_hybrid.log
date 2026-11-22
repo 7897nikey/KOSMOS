@@ -1,0 +1,27 @@
+rep 0 tau 20
+rep 1 tau 20
+rep 2 tau 20
+rep 3 tau 20
+rep 4 tau 20
+rep 5 tau 20
+rep 6 tau 20
+rep 7 tau 20
+rep 8 tau 20
+rep 9 tau 20
+                 d_tvd  d_tvd_max  sign_agree
+model    level                               
+deepseek L0     0.0071     0.0112      0.9290
+         L1     0.0014     0.0030      0.9290
+         c0     0.0040     0.0084      0.9290
+exaone   L0     0.0073     0.0113      0.9104
+         L1     0.0027     0.0048      0.9104
+         c0     0.0019     0.0040      0.9104
+haiku    L0     0.0000     0.0010      0.9736
+         L1    -0.0098    -0.0091      0.9736
+         c0     0.0006     0.0053      0.9736
+pair
+exaone-deepseek    1.0
+exaone-haiku       1.0
+Name: same, dtype: float64
+tau 분포 {20: 10}
+호출 수 73800 (k=100 대비 0.25 )

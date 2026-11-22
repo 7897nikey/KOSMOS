@@ -1,0 +1,26 @@
+{
+ "params": {
+  "tau_eb": {
+   "deepseek": 4.64,
+   "exaone": 7.12,
+   "haiku": 0.88
+  },
+  "k_top": 50,
+  "k_l1": 20,
+  "post_hoc": true
+ },
+ "tables": [
+  "reps",
+  "summary"
+ ],
+ "notes": "",
+ "include_test": false,
+ "time": "2026-11-18T12:02:15",
+ "git_commit": "ddbeada",
+ "git_dirty": true,
+ "data_sha256": "b1c212b6f721dcdc",
+ "data_built_at": "2026-11-15T22:29:13",
+ "python": "3.13.13",
+ "pandas": "2.3.1",
+ "numpy": "2.3.1"
+}

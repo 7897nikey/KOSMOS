@@ -1,0 +1,15 @@
+method,k,calls_mean,worst_d_tvd_L0L1,min_sign_agree,min_model_cmp,c1_tvd,c2_persona,c3_model_cmp,pass_all
+adaptive,20,15.5519,0.018409,0.893726,1,False,False,True,False
+adaptive,30,21.144,0.0209577,0.929908,1,False,True,True,False
+adaptive,50,32.296,0.0151468,0.961271,1,False,True,True,False
+raw,5,5,0.0339895,0.698026,1,False,False,True,False
+raw,10,10,0.0242158,0.814116,1,False,False,True,False
+raw,15,15,0.0204477,0.873391,1,False,False,True,False
+raw,20,20,0.0171281,0.907626,1,False,True,True,False
+raw,30,30,0.0126588,0.946647,1,False,True,True,False
+raw,40,40,0.0114542,0.971877,1,False,True,True,False
+raw,50,50,0.00642489,0.985803,1,True,True,True,True
+shrink,5,5,0.0321093,0.699594,1,False,False,True,False
+shrink,10,10,0.0242158,0.815143,1,False,False,True,False
+shrink,20,20,0.0171281,0.908248,1,False,True,True,False
+shrink,30,30,0.0126588,0.946971,1,False,True,True,False
