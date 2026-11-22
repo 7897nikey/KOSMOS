@@ -1,0 +1,40 @@
+{
+ "time": "2026-11-23T01:59:55",
+ "git_commit": "68b5cab",
+ "git_dirty": true,
+ "script_sha256_16": "9ad28b60c4e051ea",
+ "inputs": {
+  "끔 A": {
+   "path": "raw/v2/deepseek_eco_p1.jsonl",
+   "sha256_16": "d7fdd6591b7ad3ea"
+  },
+  "끔 BCD": {
+   "path": "raw/v2/deepseek_eco_register_p1.jsonl",
+   "sha256_16": "22bf1ce63129cfee"
+  },
+  "low A": {
+   "path": "raw/v2/deepseek_eco_low_p1.jsonl",
+   "sha256_16": "1037909302c4c99c"
+  },
+  "low BCD": {
+   "path": "raw/v2/deepseek_eco_low_register_p1.jsonl",
+   "sha256_16": "2066b1717669030a"
+  },
+  "haiku A": {
+   "path": "raw/v2/haiku_p1.jsonl",
+   "sha256_16": "592507de3e7bcb35"
+  },
+  "haiku BCD": {
+   "path": "raw/v2/haiku_register_p1.jsonl",
+   "sha256_16": "2fba012f304c996c"
+  }
+ },
+ "params": {
+  "k": 50,
+  "bootstrap": 2000,
+  "seed": 20261123,
+  "beta_rule": "설정 × 페르소나 유무, 문체 공유"
+ },
+ "paid_calls": 0,
+ "include_test": false
+}
