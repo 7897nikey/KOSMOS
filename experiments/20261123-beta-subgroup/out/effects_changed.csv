@@ -1,0 +1,77 @@
+﻿분류,설정,비교,단위,셀마다_차이,단위_차이,셀마다_유의,단위_유의,부호_바뀜,유의성_바뀜,바뀜
+페르소나(없음→한국 성인),K-EXAONE 2.5,,단계별,-0.060380323070172354,-0.060380323070172354,True,True,False,False,False
+페르소나(없음→한국 성인),K-EXAONE 2.5,,페르소나 유무,-0.060380323070172354,-0.059829607638402754,True,True,False,False,False
+페르소나(없음→한국 성인),K-EXAONE 2.5,,설정별,-0.060380323070172354,-0.06714866515308769,True,True,False,False,False
+페르소나(없음→한국 성인),K-EXAONE 2.5,,전체 하나,-0.060380323070172354,-0.06125947563419324,True,True,False,False,False
+페르소나(없음→한국 성인),DeepSeek Ultrafast 추론 끔,,단계별,-0.021559484205974283,-0.021559484205974283,False,False,False,False,False
+페르소나(없음→한국 성인),DeepSeek Ultrafast 추론 끔,,페르소나 유무,-0.021559484205974283,-0.021559484205974283,False,False,False,False,False
+페르소나(없음→한국 성인),DeepSeek Ultrafast 추론 끔,,설정별,-0.021559484205974283,-0.021559484205974283,False,False,False,False,False
+페르소나(없음→한국 성인),DeepSeek Ultrafast 추론 끔,,전체 하나,-0.021559484205974283,-0.021076039532676876,False,False,False,False,False
+페르소나(없음→한국 성인),Haiku 5.5 추론 끔,,단계별,-0.0068888248894243215,-0.0068888248894243215,False,False,False,False,False
+페르소나(없음→한국 성인),Haiku 5.5 추론 끔,,페르소나 유무,-0.0068888248894243215,-0.006383336071091816,False,False,False,False,False
+페르소나(없음→한국 성인),Haiku 5.5 추론 끔,,설정별,-0.0068888248894243215,-0.007245521888518357,False,False,False,False,False
+페르소나(없음→한국 성인),Haiku 5.5 추론 끔,,전체 하나,-0.0068888248894243215,-0.005677368357427286,False,False,False,False,False
+페르소나(없음→한국 성인),DeepSeek Eco 추론 끔,,단계별,-0.019813017813933496,-0.019813017813933496,False,False,False,False,False
+페르소나(없음→한국 성인),DeepSeek Eco 추론 끔,,페르소나 유무,-0.019813017813933496,-0.02002514375610474,False,False,False,False,False
+페르소나(없음→한국 성인),DeepSeek Eco 추론 끔,,설정별,-0.019813017813933496,-0.02103716751587431,False,False,False,False,False
+페르소나(없음→한국 성인),DeepSeek Eco 추론 끔,,전체 하나,-0.019813017813933496,-0.018168870773946237,False,False,False,False,False
+페르소나(없음→한국 성인),DeepSeek Eco 추론 low,,단계별,-0.04566909620271444,-0.04566909620271444,True,True,False,False,False
+페르소나(없음→한국 성인),DeepSeek Eco 추론 low,,페르소나 유무,-0.04566909620271444,-0.04532062227551575,True,True,False,False,False
+페르소나(없음→한국 성인),DeepSeek Eco 추론 low,,설정별,-0.04566909620271444,-0.05402230898734389,True,True,False,False,False
+페르소나(없음→한국 성인),DeepSeek Eco 추론 low,,전체 하나,-0.04566909620271444,-0.0477058383766822,True,True,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),K-EXAONE 2.5,셀 정답 기준,단계별,-0.016287783759272586,-0.01629034953503571,True,True,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),K-EXAONE 2.5,셀 정답 기준,페르소나 유무,-0.016287783759272586,-0.016854887188781302,True,True,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),K-EXAONE 2.5,셀 정답 기준,설정별,-0.016287783759272586,-0.015989701062141513,True,True,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),K-EXAONE 2.5,셀 정답 기준,전체 하나,-0.016287783759272586,-0.013784051424034736,True,True,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),DeepSeek Ultrafast 추론 끔,셀 정답 기준,단계별,0.0036702145033937874,0.003649061759570454,False,False,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),DeepSeek Ultrafast 추론 끔,셀 정답 기준,페르소나 유무,0.0036702145033937874,0.0036626882895393733,False,False,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),DeepSeek Ultrafast 추론 끔,셀 정답 기준,설정별,0.0036702145033937874,0.0036626882895393733,False,False,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),DeepSeek Ultrafast 추론 끔,셀 정답 기준,전체 하나,0.0036702145033937874,0.003633637607806905,False,False,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),Haiku 5.5 추론 끔,셀 정답 기준,단계별,-0.02675502615784693,-0.02671469396757065,True,True,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),Haiku 5.5 추론 끔,셀 정답 기준,페르소나 유무,-0.02675502615784693,-0.027069370415668016,True,True,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),Haiku 5.5 추론 끔,셀 정답 기준,설정별,-0.02675502615784693,-0.026602596809506086,True,True,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),Haiku 5.5 추론 끔,셀 정답 기준,전체 하나,-0.02675502615784693,-0.03181231252756894,True,True,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),DeepSeek Eco 추론 끔,셀 정답 기준,단계별,-0.0028374707497298103,-0.0028514454946282023,False,False,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),DeepSeek Eco 추론 끔,셀 정답 기준,페르소나 유무,-0.0028374707497298103,-0.0026401993514387845,False,False,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),DeepSeek Eco 추론 끔,셀 정답 기준,설정별,-0.0028374707497298103,-0.0026136217019979043,False,False,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),DeepSeek Eco 추론 끔,셀 정답 기준,전체 하나,-0.0028374707497298103,-0.0023698816506279,False,False,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),DeepSeek Eco 추론 low,셀 정답 기준,단계별,-0.0021655893290871563,-0.0021150394638774403,False,False,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),DeepSeek Eco 추론 low,셀 정답 기준,페르소나 유무,-0.0021655893290871563,-0.0025691540755073093,False,False,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),DeepSeek Eco 추론 low,셀 정답 기준,설정별,-0.0021655893290871563,-0.002205785680088558,False,False,False,False,False
+셀 페르소나(한국 성인 분포→10셀 분포),DeepSeek Eco 추론 low,셀 정답 기준,전체 하나,-0.0021655893290871563,-0.0014204366414646546,False,False,False,False,False
+추론(Eco 끔→low),DeepSeek Eco,페르소나 없음,단계별,0.021393102242398866,0.021393102242398866,False,False,False,False,False
+추론(Eco 끔→low),DeepSeek Eco,페르소나 없음,페르소나 유무,0.021393102242398866,0.021393102242398866,False,False,False,False,False
+추론(Eco 끔→low),DeepSeek Eco,페르소나 없음,설정별,0.021393102242398866,0.027981056715222538,False,True,False,True,True
+추론(Eco 끔→low),DeepSeek Eco,페르소나 없음,전체 하나,0.021393102242398866,0.024047524408927115,False,True,False,True,True
+추론(Eco 끔→low),DeepSeek Eco,한국 성인,단계별,-0.004462976146382076,-0.004462976146382076,False,False,False,False,False
+추론(Eco 끔→low),DeepSeek Eco,한국 성인,페르소나 유무,-0.004462976146382076,-0.0039023762770121445,False,False,False,False,False
+추론(Eco 끔→low),DeepSeek Eco,한국 성인,설정별,-0.004462976146382076,-0.005004084756247047,False,False,False,False,False
+추론(Eco 끔→low),DeepSeek Eco,한국 성인,전체 하나,-0.004462976146382076,-0.005489443193808851,False,False,False,False,False
+추론(Eco 끔→low),DeepSeek Eco,성별×연령 10셀,단계별,-0.005349487143296978,-0.0052849625331888705,False,False,False,False,False
+추론(Eco 끔→low),DeepSeek Eco,성별×연령 10셀,페르소나 유무,-0.005349487143296978,-0.005592911467273701,False,False,False,False,False
+추론(Eco 끔→low),DeepSeek Eco,성별×연령 10셀,설정별,-0.005349487143296978,-0.0059740296114538785,False,False,False,False,False
+추론(Eco 끔→low),DeepSeek Eco,성별×연령 10셀,전체 하나,-0.005349487143296978,-0.005781732374200041,False,False,False,False,False
+모델 비교,Haiku 5.5 추론 끔 − K-EXAONE 2.5,한국 성인,단계별,0.054472655833265715,0.054472655833265715,True,True,False,False,False
+모델 비교,Haiku 5.5 추론 끔 − K-EXAONE 2.5,한국 성인,페르소나 유무,0.054472655833265715,0.05442742921982863,True,True,False,False,False
+모델 비교,Haiku 5.5 추론 끔 − K-EXAONE 2.5,한국 성인,설정별,0.054472655833265715,0.05549243738754822,True,True,False,False,False
+모델 비교,Haiku 5.5 추론 끔 − K-EXAONE 2.5,한국 성인,전체 하나,0.054472655833265715,0.06742939059260311,True,True,False,False,False
+모델 비교,Haiku 5.5 추론 끔 − K-EXAONE 2.5,성별×연령 10셀,단계별,0.03804870879205534,0.03809160675809475,True,True,False,False,False
+모델 비교,Haiku 5.5 추론 끔 − K-EXAONE 2.5,성별×연령 10셀,페르소나 유무,0.03804870879205534,0.038255763524099304,True,True,False,False,False
+모델 비교,Haiku 5.5 추론 끔 − K-EXAONE 2.5,성별×연령 10셀,설정별,0.03804870879205534,0.038614762129372024,True,True,False,False,False
+모델 비교,Haiku 5.5 추론 끔 − K-EXAONE 2.5,성별×연령 10셀,전체 하나,0.03804870879205534,0.040750896340469564,True,True,False,False,False
+모델 비교,DeepSeek Ultrafast 추론 끔 − K-EXAONE 2.5,한국 성인,단계별,0.02235753223276545,0.02235753223276545,False,False,False,False,False
+모델 비교,DeepSeek Ultrafast 추론 끔 − K-EXAONE 2.5,한국 성인,페르소나 유무,0.02235753223276545,0.02180681680099586,False,False,False,False,False
+모델 비교,DeepSeek Ultrafast 추론 끔 − K-EXAONE 2.5,한국 성인,설정별,0.02235753223276545,0.023377313787047955,False,False,False,False,False
+모델 비교,DeepSeek Ultrafast 추론 끔 − K-EXAONE 2.5,한국 성인,전체 하나,0.02235753223276545,0.02545331145358363,False,False,False,False,False
+모델 비교,DeepSeek Ultrafast 추론 끔 − K-EXAONE 2.5,성별×연령 10셀,단계별,0.03881078168746202,0.038792194719401804,True,True,False,False,False
+모델 비교,DeepSeek Ultrafast 추론 끔 − K-EXAONE 2.5,성별×연령 10셀,페르소나 유무,0.03881078168746202,0.03896997801537528,True,True,False,False,False
+모델 비교,DeepSeek Ultrafast 추론 끔 − K-EXAONE 2.5,성별×연령 10셀,설정별,0.03881078168746202,0.03921687946258343,True,True,False,False,False
+모델 비교,DeepSeek Ultrafast 추론 끔 − K-EXAONE 2.5,성별×연령 10셀,전체 하나,0.03881078168746202,0.03835911199423684,True,True,False,False,False
+모델 비교,Haiku 5.5 추론 끔 − DeepSeek Ultrafast 추론 끔,한국 성인,단계별,0.03211512360050026,0.03211512360050026,False,False,False,False,False
+모델 비교,Haiku 5.5 추론 끔 − DeepSeek Ultrafast 추론 끔,한국 성인,페르소나 유무,0.03211512360050026,0.03262061241883277,False,False,False,False,False
+모델 비교,Haiku 5.5 추론 끔 − DeepSeek Ultrafast 추론 끔,한국 성인,설정별,0.03211512360050026,0.03211512360050026,False,False,False,False,False
+모델 비교,Haiku 5.5 추론 끔 − DeepSeek Ultrafast 추론 끔,한국 성인,전체 하나,0.03211512360050026,0.04197607913901949,False,True,False,True,True
+모델 비교,Haiku 5.5 추론 끔 − DeepSeek Ultrafast 추론 끔,성별×연령 10셀,단계별,-0.0007620728954066694,-0.0007005879613070572,False,False,False,False,False
+모델 비교,Haiku 5.5 추론 끔 − DeepSeek Ultrafast 추론 끔,성별×연령 10셀,페르소나 유무,-0.0007620728954066694,-0.000714214491275975,False,False,False,False,False
+모델 비교,Haiku 5.5 추론 끔 − DeepSeek Ultrafast 추론 끔,성별×연령 10셀,설정별,-0.0007620728954066694,-0.0006021173332114171,False,False,False,False,False
+모델 비교,Haiku 5.5 추론 끔 − DeepSeek Ultrafast 추론 끔,성별×연령 10셀,전체 하나,-0.0007620728954066694,0.002391784346232723,False,False,True,False,True

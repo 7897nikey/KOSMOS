@@ -1,0 +1,30 @@
+{
+ "time": "2026-11-23T01:43:41",
+ "git_commit": "1a73fd1",
+ "git_dirty": true,
+ "script_sha256_16": "cbcc0b8d352ada51",
+ "inputs": {
+  "research/design_v2_20261112/analysis/out_final_k100/counts_k100.npz": "18e3890f3c8e69d5",
+  "raw/v2/deepseek_eco_p1.jsonl": "d7fdd6591b7ad3ea",
+  "raw/v2/deepseek_eco_low_p1.jsonl": "1037909302c4c99c"
+ },
+ "params": {
+  "k_eco": 50,
+  "bootstrap": 2000,
+  "seed": 20261123,
+  "beta_grid": [
+   0.05,
+   1.5,
+   0.005
+  ],
+  "schemes": [
+   "셀마다",
+   "단계별",
+   "페르소나 유무",
+   "설정별",
+   "전체 하나"
+  ]
+ },
+ "paid_calls": 0,
+ "include_test": false
+}
