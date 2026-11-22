@@ -1,7 +1,7 @@
 {
- "time": "2026-11-19T03:26:31",
- "git_commit": "ff16b57",
- "git_dirty": true,
+ "time": "2026-11-23T01:41:29",
+ "git_commit": "3ef61a1",
+ "git_dirty": false,
  "inputs": {
   "끔": {
    "path": "raw/v2/deepseek_eco_p1.jsonl",
