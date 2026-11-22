@@ -1,0 +1,130 @@
+{
+  "batches": [
+    {
+      "id": "msgbatch_01X62CkkfJb9pFTj2prdVMxD",
+      "samples": [
+        0,
+        10
+      ],
+      "n": 9840,
+      "cost_upper": 0.14523,
+      "created_at": "2026-11-19T03:00:24.457990+00:00",
+      "status": "ended",
+      "counts": {
+        "processing": 0,
+        "succeeded": 9840,
+        "errored": 0,
+        "canceled": 0,
+        "expired": 0
+      },
+      "results_url": "https://api.anthropic.com/v1/messages/batches/msgbatch_01X62CkkfJb9pFTj2prdVMxD/results",
+      "ended_at": "2026-11-19T03:09:25.638617+00:00",
+      "collected": true,
+      "rows": 9840,
+      "input_tokens": 2001530,
+      "output_tokens": 30906,
+      "cost_actual": 0.1078
+    },
+    {
+      "id": "msgbatch_013tSW28ABbKpbhYHHJZCAJS",
+      "samples": [
+        10,
+        20
+      ],
+      "n": 9840,
+      "cost_upper": 0.14523,
+      "created_at": "2026-11-19T03:00:27.849997+00:00",
+      "status": "ended",
+      "counts": {
+        "processing": 0,
+        "succeeded": 9840,
+        "errored": 0,
+        "canceled": 0,
+        "expired": 0
+      },
+      "results_url": "https://api.anthropic.com/v1/messages/batches/msgbatch_013tSW28ABbKpbhYHHJZCAJS/results",
+      "ended_at": "2026-11-19T03:09:25.533389+00:00",
+      "collected": true,
+      "rows": 9840,
+      "input_tokens": 2001530,
+      "output_tokens": 30926,
+      "cost_actual": 0.10781
+    },
+    {
+      "id": "msgbatch_01TbDK7YuLKszxJZTbeq89rp",
+      "samples": [
+        20,
+        30
+      ],
+      "n": 9840,
+      "cost_upper": 0.14523,
+      "created_at": "2026-11-19T03:00:30.802145+00:00",
+      "status": "ended",
+      "counts": {
+        "processing": 0,
+        "succeeded": 9840,
+        "errored": 0,
+        "canceled": 0,
+        "expired": 0
+      },
+      "results_url": "https://api.anthropic.com/v1/messages/batches/msgbatch_01TbDK7YuLKszxJZTbeq89rp/results",
+      "ended_at": "2026-11-19T03:09:25.744279+00:00",
+      "collected": true,
+      "rows": 9840,
+      "input_tokens": 2001530,
+      "output_tokens": 30954,
+      "cost_actual": 0.10781
+    },
+    {
+      "id": "msgbatch_01PvKpXPwEbgyQ5eSgFMMcdF",
+      "samples": [
+        30,
+        40
+      ],
+      "n": 9840,
+      "cost_upper": 0.14523,
+      "created_at": "2026-11-19T03:00:33.778801+00:00",
+      "status": "ended",
+      "counts": {
+        "processing": 0,
+        "succeeded": 9840,
+        "errored": 0,
+        "canceled": 0,
+        "expired": 0
+      },
+      "results_url": "https://api.anthropic.com/v1/messages/batches/msgbatch_01PvKpXPwEbgyQ5eSgFMMcdF/results",
+      "ended_at": "2026-11-19T03:09:13.857323+00:00",
+      "collected": true,
+      "rows": 9840,
+      "input_tokens": 2001530,
+      "output_tokens": 30934,
+      "cost_actual": 0.10781
+    },
+    {
+      "id": "msgbatch_01EQanHzCn6ThXWVunCSYKou",
+      "samples": [
+        40,
+        50
+      ],
+      "n": 9840,
+      "cost_upper": 0.14523,
+      "created_at": "2026-11-19T03:00:37.081166+00:00",
+      "status": "ended",
+      "counts": {
+        "processing": 0,
+        "succeeded": 9840,
+        "errored": 0,
+        "canceled": 0,
+        "expired": 0
+      },
+      "results_url": "https://api.anthropic.com/v1/messages/batches/msgbatch_01EQanHzCn6ThXWVunCSYKou/results",
+      "ended_at": "2026-11-19T03:10:32.942640+00:00",
+      "collected": true,
+      "rows": 9840,
+      "input_tokens": 2001530,
+      "output_tokens": 30932,
+      "cost_actual": 0.10781
+    }
+  ],
+  "digest": "8ccac0d3343e1e08"
+}
