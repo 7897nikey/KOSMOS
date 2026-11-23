@@ -1,4 +1,4 @@
-# T1. 추론 medium (DeepSeek Eco, 246문항)
+# 추론 medium (DeepSeek Eco, 246문항)
 
 ## 수집
 | 항목 | 값 |

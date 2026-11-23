@@ -1,6 +1,6 @@
-# T3. 인칭 요소 분해, 추론 끔 (DeepSeek Eco)
+# 인칭 요소 분해, 추론 끔 (DeepSeek Eco)
 
-조건·분석은 [`_decomp_common.md`](_decomp_common.md)를 따른다.
+조건·분석은 [`register-decomp-common.md`](register-decomp-common.md)를 따른다.
 
 | 항목 | 값 |
 |---|---|

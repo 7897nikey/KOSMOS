@@ -2,17 +2,19 @@
 
 사람마다 테스크 하나를 맡는다. 자기 OpenGateway 키와 충전한 크레딧으로 돌린다.
 **AI(Claude Code, Codex 등)에게는 이 파일과 맡은 테스크 파일을 함께 넘긴다.**
-예: "`tasks/README.md`와 `tasks/T1-reasoning-medium.md`를 읽고 그대로 진행해."
+예: "`tasks/README.md`와 `tasks/reasoning-medium.md`를 읽고 그대로 진행해."
 사람이 테스크 파일을 넘긴 것이 그 테스크의 유료 호출 승인이다. 단, 테스크 파일의 `--max-usd` 상한 안에서만 유효하다.
 
-| 테스크 | 모델 | 추론 | 인칭/화계 | 페르소나 | 문항 | 호출 수 | 예상 비용 | 상한 `--max-usd` |
+| 테스크 파일 | 모델 | 추론 | 인칭/화계 | 페르소나 | 문항 | 호출 수 | 예상 비용 | 상한 `--max-usd` |
 |---|---|---|---|---|---|---|---|---|
-| [T1](T1-reasoning-medium.md) | DeepSeek Eco | medium | 원문 | 페르소나 없음, 한국 성인, 성별×연령 10셀 | 246 | 147,600 | $4~8 | 12 |
-| [T2](T2-reasoning-high.md) | DeepSeek Eco | high | 원문 | 페르소나 없음, 한국 성인, 성별×연령 10셀 | 60 (`subsets/high60.csv`) | 36,000 | $3~5 | 8 |
-| [T3](T3-register-decomp-off.md) | DeepSeek Eco | 끔 | 요소 분해 8조건 | 한국 성인 | 246 | 98,400 | $0.4 | 2 |
-| [T4](T4-register-decomp-low.md) | DeepSeek Eco | low | 요소 분해 8조건 | 한국 성인 | 246 | 98,400 | $2.1~2.7 | 5 |
+| [추론 medium](reasoning-medium.md) | DeepSeek Eco | medium | 원문 | 페르소나 없음, 한국 성인, 성별×연령 10셀 | 246 | 147,600 | $4~8 | 12 |
+| [추론 high](reasoning-high.md) | DeepSeek Eco | high | 원문 | 페르소나 없음, 한국 성인, 성별×연령 10셀 | 60 (`subsets/high60.csv`) | 36,000 | $3~5 | 8 |
+| [요소 분해, 추론 끔](register-decomp-off.md) | DeepSeek Eco | 끔 | 요소 분해 8조건 | 한국 성인 | 246 | 98,400 | $0.4 | 2 |
+| [요소 분해, 추론 low](register-decomp-low.md) | DeepSeek Eco | low | 요소 분해 8조건 | 한국 성인 | 246 | 98,400 | $2.1~2.7 | 5 |
 
-반복 수는 모두 k=50이다. 테스크끼리 의존하지 않는다. 다만 T2 분석에 T1 결과가 있으면 medium도 같이 비교한다.
+반복 수는 모두 k=50이다. 테스크끼리 의존하지 않는다. 다만 추론 high 분석은 추론 medium 결과가 있으면 같이 비교한다.
+
+**담당자별 에이전트 프롬프트는 [`PROMPTS.md`](PROMPTS.md)에 있다.** 복사해서 그대로 붙여 넣는다.
 
 ## 0. 처음 한 번 (공통)
 
@@ -21,7 +23,7 @@
 gh repo fork Great-Grace/KOSMOS --clone && cd KOSMOS
 git fetch upstream
 # 2) 기준 브랜치에서 작업 브랜치 만들기 (이 테스크 파일들이 main에 합쳐지기 전까지는 exp/haiku-pilot-recovery가 기준)
-git switch -c exp/<테스크ID>-<이름> upstream/exp/haiku-pilot-recovery
+git switch -c exp/<테스크 파일 이름>-<이름> upstream/exp/haiku-pilot-recovery
 # 3) 기존 원응답 풀기 (분석에 필요)
 mkdir -p raw/v2 && for f in results/raw_gz/v2/*.jsonl.gz; do gzip -dc "$f" > "raw/v2/$(basename "$f" .gz)"; done
 # 4) 키 넣기 — 파일 이름은 .env.opengateway (gitignore 대상). 키 값은 출력·로그·대화에 남기지 않는다
