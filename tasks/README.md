@@ -56,10 +56,10 @@ R=`research/design_v2_20261112/runners/run_deepseek_eco.py`, 테스크 파일의
 
 `experiments/README.md`의 순서를 그대로 따른다.
 
-1. `python experiments/new.py <이름> --author <이름> --question "<테스크 파일의 질문>"`
+1. `python3 experiments/new.py <이름> --author <이름> --question "<테스크 파일의 질문>"`
 2. README에 테스크 파일의 "질문·가설·판정 기준"을 옮겨 적고 **결과를 보기 전에** 세팅 커밋을 push한다.
 3. `run.py`를 쓰고 커밋한 뒤 실행한다(커밋 전에 돌린 결과는 `git_dirty`로 막힌다).
-4. README 결과·결론, `meta.json` 상태·결론을 채운다. `python experiments/index.py && python experiments/index.py --check`.
+4. README 결과·결론, `meta.json` 상태·결론을 채운다. `python3 experiments/index.py && python3 experiments/index.py --check`.
 5. 커밋·push 후 중앙 레포로 PR. PR 제목·본문은 사람이 확인한 뒤 연다.
 
 ## 3. 지킬 것
