@@ -19,6 +19,11 @@
 
 추론 low 모드 (2026-11-18 추가): --reasoning low → reasoning_effort "low", max_completion_tokens 4000.
   출력 파일 이름에 _low가 붙어 추론 끔 결과와 섞이지 않는다. 추론 본문(reasoning_content)도 저장한다.
+추론 medium·high, 요소 분해, 문항 선택, 예산 상한 (2026-11-23 추가):
+  --reasoning medium|high → max_completion_tokens 8000|16000, 요청 상한 180|300초. 파일 이름에 _medium|_high.
+  --prompts decomp → register_decomp/out/prompts_decomp.csv(한국 성인 8조건 1,968개, 해시 확인). 파일 이름에 _decomp.
+  --items PATH → PATH(csv, var 열)의 문항만 돈다. 파일 이름에 _<PATH 파일 이름>(예: _high60).
+  --max-usd X → 누적 추정 비용이 X달러를 넘으면 새 요청을 멈춘다(이미 보낸 요청은 끝까지 기록). 같은 명령으로 이어 돌린다.
 스모크: --smoke N → 1단계 프롬프트 중 N개를 시드 고정으로 뽑아 표본 0번만 돈다(파일 이름에 _smoke).
   Haiku 실행기도 같은 함수(smoke_probes)로 같은 프롬프트를 뽑는다.
 
@@ -50,6 +55,8 @@ ROOT = DESIGN.parents[1]
 PROMPTS = DESIGN / "prompts_v2.csv"
 REGISTER_PROMPTS = DESIGN / "register_v1" / "out" / "prompts_register_v1.csv"
 REGISTER_SHA256 = "1d1530ca17ee84b15fc1728ede4317541fc90d5ba212223e849a0073f7d06636"
+DECOMP_PROMPTS = DESIGN / "register_decomp" / "out" / "prompts_decomp.csv"
+DECOMP_SHA256 = "4a5e226f7062009948120919e8da79b5051a7f2ca6c876cc8a02f3b9c38e99c8"
 
 
 def read_prompts(which):
@@ -57,6 +64,11 @@ def read_prompts(which):
     if which == "v2":
         return list(csv.DictReader(PROMPTS.open(encoding="utf-8-sig")))
     import hashlib
+    if which == "decomp":
+        got = hashlib.sha256(DECOMP_PROMPTS.read_bytes()).hexdigest()
+        if got != DECOMP_SHA256:
+            sys.exit(f"{DECOMP_PROMPTS.name} 해시가 확정본과 다릅니다({got[:12]}…). 중단합니다.")
+        return list(csv.DictReader(DECOMP_PROMPTS.open(encoding="utf-8-sig")))
     got = hashlib.sha256(REGISTER_PROMPTS.read_bytes()).hexdigest()
     if got != REGISTER_SHA256:
         sys.exit(f"{REGISTER_PROMPTS.name} 해시가 확정본과 다릅니다({got[:12]}…). 중단합니다.")
@@ -67,6 +79,10 @@ HOST, PATH = "apis.opengateway.ai", "/v1/chat/completions"
 MODEL = "deepseek/deepseek-v4.1-flash-eco"
 PARAMS = {"reasoning_effort": "none", "temperature": 1.0, "max_completion_tokens": 16}
 PARAMS_LOW = {"reasoning_effort": "low", "temperature": 1.0, "max_completion_tokens": 4000}
+PARAMS_R = {"low": PARAMS_LOW,
+            "medium": {"reasoning_effort": "medium", "temperature": 1.0, "max_completion_tokens": 8000},
+            "high": {"reasoning_effort": "high", "temperature": 1.0, "max_completion_tokens": 16000}}
+DEADLINE_R = {"none": 90, "low": 90, "medium": 180, "high": 300}
 PRICE = {"input": 0.030, "cached": 0.0006, "output": 0.120}  # USD / 1M tokens, 2026-11-12 할인가
 K = 100
 SMOKE_SEED = 20261118
@@ -200,30 +216,40 @@ def main():
     ap.add_argument("--test", type=int, default=0, help="n건만 돌려 확인 (별도 파일에 저장)")
     ap.add_argument("--model", choices=("eco", "ultrafast"), default="eco",
                     help="eco = deepseek-v4.1-flash-eco (기본), ultrafast = deepseek-v4.1-flash-ultrafast")
-    ap.add_argument("--reasoning", choices=("none", "low"), default="none",
-                    help="none = 추론 끔(1단계 설정), low = reasoning_effort low")
-    ap.add_argument("--prompts", choices=("v2", "register"), default="v2",
-                    help="v2: 설계 v2 프롬프트, register: 인칭·화계 신규 조건 984개")
+    ap.add_argument("--reasoning", choices=("none", "low", "medium", "high"), default="none",
+                    help="none = 추론 끔(1단계 설정), 그 밖 = reasoning_effort 값")
+    ap.add_argument("--prompts", choices=("v2", "register", "decomp"), default="v2",
+                    help="v2: 설계 v2 프롬프트, register: 인칭·화계 신규 조건 984개, decomp: 인칭 요소 분해 1,968개")
+    ap.add_argument("--items", default="", help="이 csv의 var 열에 있는 문항만 돈다 (예: subsets/high60.csv)")
+    ap.add_argument("--dry-run", action="store_true", help="키 없이 출력 파일 이름·남은 호출 수만 보여 주고 끝낸다")
+    ap.add_argument("--max-usd", type=float, default=0, help="누적 추정 비용 상한(달러). 0이면 없음")
     ap.add_argument("--smoke", type=int, default=0, help="프롬프트 n개 × 표본 1회만 돈다 (별도 파일)")
     ap.add_argument("--k", type=int, default=K, help="프롬프트당 표본 수 상한 (표본 번호 0~k-1). 나중에 더 큰 k로 이어 돌릴 수 있다")
     args = ap.parse_args()
-    global MODEL, PRICE, PARAMS
+    global MODEL, PRICE, PARAMS, DEADLINE
     if args.model == "ultrafast":
         MODEL = "deepseek/deepseek-v4.1-flash-ultrafast"
         PRICE = {"input": 0.090, "cached": 0.0018, "output": 0.360}  # 2026-11-12 10:00 KST 전 할인가(-70%)
-    if args.reasoning == "low":
-        PARAMS = PARAMS_LOW
+    if args.reasoning != "none":
+        PARAMS = PARAMS_R[args.reasoning]
+    DEADLINE = DEADLINE_R[args.reasoning]
 
     key = os.environ.get("OPENGATEWAY_API_KEY", "").strip()
-    if not key:
+    if not key and not args.dry_run:
         sys.exit("OPENGATEWAY_API_KEY가 없습니다.  set -a; . ./.env.opengateway; set +a")
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    tag = (f"deepseek_{args.model}" + ("_low" if args.reasoning == "low" else "") + ("_register" if args.prompts == "register" else "") + f"_p{args.phase}"
+    items = Path(args.items).stem if args.items else ""
+    tag = (f"deepseek_{args.model}" + (f"_{args.reasoning}" if args.reasoning != "none" else "")
+           + (f"_{args.prompts}" if args.prompts != "v2" else "") + (f"_{items}" if items else "") + f"_p{args.phase}"
            + ("_smoke" if args.smoke else "") + ("_test" if args.test else ""))
     out, log_path = OUT_DIR / f"{tag}.jsonl", OUT_DIR / f"{tag}.log"
 
     probes = [r for r in read_prompts(args.prompts) if int(r["phase"]) == args.phase]
+    if args.items:
+        keep = {r["var"] for r in csv.DictReader(open(args.items, encoding="utf-8-sig"))}
+        probes = [r for r in probes if r["var"] in keep]
+        assert probes, f"{args.items}의 문항이 프롬프트에 없습니다"
     n_samples = args.k
     if args.smoke:
         probes, n_samples = smoke_probes(probes, args.smoke), 1
@@ -248,6 +274,10 @@ def main():
                 f.write(line + "\n")
 
     total = len(probes) * n_samples
+    if args.dry_run:
+        print(f"출력 {out.relative_to(ROOT)} | 모델 {MODEL} | 설정 {json.dumps(PARAMS)} | 프롬프트 {len(probes)}개 × 표본 {n_samples} = {total}건, "
+              f"완료 {len(done)}건, 남은 호출 {len(tasks)}건")
+        return
     log(f"{MODEL} | 단계 {args.phase} | 설정 {json.dumps(PARAMS)} | 전체 {total}건 중 완료 {len(done)}건, "
         f"이번 실행 {len(tasks)}건 | 동시 {args.workers}")
     if not tasks:
@@ -261,8 +291,12 @@ def main():
     run_date = datetime.date.today().isoformat()
 
     with out.open("a", encoding="utf-8") as fout:
+        stop = threading.Event()
+
         def work(task):
             s, p = task
+            if stop.is_set():
+                return
             codes = json.loads(p["codes"])
             resp, err, lat = call(key, gate, p["system"], p["user"], log)
             rec = {"model_id": MODEL, "params": PARAMS, "run_date": run_date, "phase": args.phase,
@@ -279,7 +313,7 @@ def main():
                     inv = "length"
                 u = resp.get("usage") or {}
                 rt = (u.get("completion_tokens_details") or {}).get("reasoning_tokens", 0) or 0
-                if args.reasoning == "low":
+                if args.reasoning != "none":
                     rc = msg.get("reasoning_content") or msg.get("reasoning") or ""
                     rec.update({"reasoning_text": rc if isinstance(rc, str) else json.dumps(rc, ensure_ascii=False)})
                 rec.update({"raw_text": raw, "parsed": parsed, "valid": valid, "invalid_type": inv,
@@ -298,6 +332,10 @@ def main():
                                ("out", "output_tokens"), ("rt", "reasoning_tokens")):
                     st[k_] += rec.get(f_, 0) or 0
                 n = st["n"]
+                spent = ((st["in"] - st["cached"]) * PRICE["input"] + st["cached"] * PRICE["cached"] + st["out"] * PRICE["output"]) / 1e6
+                if args.max_usd and spent > args.max_usd and not stop.is_set():
+                    stop.set()
+                    log(f"예산 상한 ${args.max_usd} 도달(추정 ${spent:.3f}). 새 요청을 멈춘다. 같은 명령으로 이어 돌릴 수 있다.")
             if args.test:
                 log(f"시험 {n}: {p['probe_id']} s{s} → {rec['raw_text']!r} ({rec['invalid_type'] or 'ok'}, "
                     f"추론 {rec.get('reasoning_tokens', 0)}토큰, {lat:.1f}s)")

@@ -72,6 +72,7 @@ sl.summary(df[df.split == "validation"], beta)
 | 경로 | 내용 |
 |---|---|
 | `experiments/` | **실험과 기록(여기서 작업)**. `LOG.md`가 전체 목록이다 |
+| `tasks/` | 분담 실험 테스크(수집+분석). 사람이 테스크 파일을 넘기면 그 파일의 예산 상한 안에서 유료 호출이 승인된 것이다 |
 | `research/design_v2_20261112/dataset/` | 분석용 표, `silicon.py`, `build_dataset.py`(원응답 → 표) |
 | `research/design_v2_20261112/DESIGN.md`, `FORMULAS.md` | 확정 설계와 수식 |
 | `research/design_v2_20261112/analysis/` | 지금까지의 본 분석(노트북, `out_calib/`, `out_exaone_interim/REPORT.md`) |

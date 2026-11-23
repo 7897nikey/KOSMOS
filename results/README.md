@@ -10,6 +10,14 @@ v2 실험의 응답 원본이다. 로컬 원본은 `raw/v2/`에 있고, 용량 �
 mkdir -p raw/v2 && for f in results/raw_gz/v2/*.jsonl.gz; do gzip -dc "$f" > "raw/v2/$(basename "$f" .gz)"; done
 ```
 
+90MB가 넘어 나눠 올린 파일(`*.jsonl.partNN.gz`, 2026-11-23부터)은 이어 붙여 푼다.
+
+```bash
+for f in results/raw_gz/v2/*.jsonl.part01.gz; do b=$(basename "$f" .part01.gz); cat results/raw_gz/v2/$b.part*.gz | gzip -dc > raw/v2/$b; done
+```
+
+새로 수집한 원응답은 `python3 research/design_v2_20261112/runners/pack_raw.py raw/v2/<이름>.jsonl`로 묶어 올린다.
+
 사람 분포와 세 모델의 k=100 개수 벡터는 `research/design_v2_20261112/analysis/out_final_k100/counts_k100.npz`에 커밋돼 있어서 풀 필요가 없다.
 
 ## 본실험 (프롬프트 2,952개 × 표본 100번)

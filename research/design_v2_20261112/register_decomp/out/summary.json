@@ -1,0 +1,19 @@
+{
+ "prompts_sha256": "4a5e226f7062009948120919e8da79b5051a7f2ca6c876cc8a02f3b9c38e99c8",
+ "n_rows": 1968,
+ "n_items": 246,
+ "conds": {
+  "persona": "페르소나 문장만 '이 사람'",
+  "address": "문항 호칭만 '이 사람'",
+  "instr": "지시문만 '이 사람이 고를'",
+  "persona_address": "페르소나 문장 + 문항 호칭",
+  "persona_instr": "페르소나 문장 + 지시문",
+  "address_instr": "문항 호칭 + 지시문",
+  "all_keep_si": "세 요소 모두 '이 사람', 주체 높임 유지",
+  "dangsin_address": "문항 호칭만 귀하→당신 (하십시오체)"
+ },
+ "flags": {
+  "주체 높임 없는 문항 (all_keep_si = 기존 이 사람·하십시오체와 같은 문장)": 95,
+  "원문에 2인칭 없음 (register_v1 보정으로 '이 사람'을 넣은 문항)": 25
+ }
+}
