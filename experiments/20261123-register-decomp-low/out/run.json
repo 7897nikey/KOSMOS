@@ -1,7 +1,7 @@
 {
- "time": "2026-11-23T18:07:48",
- "git_commit": "a419139",
- "git_dirty": true,
+ "time": "2026-11-23T18:08:04",
+ "git_commit": "78f78d6",
+ "git_dirty": false,
  "script_sha256_16": "b88a51615fb40918",
  "inputs": {
   "원문": {
